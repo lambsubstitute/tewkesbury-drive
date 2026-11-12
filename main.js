@@ -13,6 +13,7 @@ let loaded = 0;
 const META = await (await fetch(D + 'meta.json', { cache: 'no-store' })).json();
 // every data file carries the map build stamp, so an updated map never mixes with cached old files
 const BUILD = META.build || '';
+if (META.title) { document.title = META.title; const h = document.querySelector('#loading h1'); if (h) h.textContent = META.title; }
 const REGIONS = META.regions || [];
 const FILES = 36 + REGIONS.length * 40;
 const tick = () => { loaded++; bar.style.width = `${Math.min(100, loaded / FILES * 100)}%`; };
@@ -492,11 +493,11 @@ scene.add(car);
 // ------------------------------------------------------------------ state
 const S = { x: meta.spawn[0], z: meta.spawn[1], y: 0, h: 0, v: 0, vl: 0, steer: 0, pitch: 0, roll: 0, yv: 0, sinking: 0 };
 {
-  const r = nearestRoad(S.x, S.z, 80, r => r.n === 'High Street') || nearestRoad(S.x, S.z, 80);
+  const r = nearestRoad(S.x, S.z, 80, r => r.n === meta.spawnRoad) || nearestRoad(S.x, S.z, 80);
   if (r) { S.x = r.x; S.z = r.z; S.h = r.heading; }
   S.y = driveY(S.x, S.z);
 }
-const _initRoad = nearestRoad(S.x, S.z, 80, r => r.n === 'High Street');
+const _initRoad = nearestRoad(S.x, S.z, 80, r => r.n === meta.spawnRoad);
 let lastSafe = { x: S.x, z: S.z, h: S.h }, safeTimer = 0;
 
 const keys = {};
@@ -533,29 +534,16 @@ function respawn(to) {
   S.v = 0; S.vl = 0; S.sinking = 0; S.yv = 0; S.y = driveY(S.x, S.z);
 }
 
-// teleports to well-known spots
-const TP = [
-  // [label, landmark name or [x,z], road name to snap to]
-  ['The Cross', null, 'High Street'],
-  ['Tewkesbury Abbey', 'Tewkesbury Abbey', 'Church Street'],
-  ['Town Hall', 'Tewkesbury Town Hall', 'High Street'],
-  ['Morrisons', 'Morrisons', null],
-  ['Leisure Centre', 'Tewkesbury Leisure Centre', null],
-  ["King John's Bridge", 'bridge:Mythe Road', 'Mythe Road'],
-  ['Mythe Bridge (Severn)', 'bridge:Mythe Bridge', 'Mythe Bridge'],
-  ['Rye Cross (A438 / B4211)', [-4052, -557], 'B4211'],
-  ['Longdon (St Mary\'s church)', [-5218, -3505], 'B4211'],
-].filter(t => !Array.isArray(t[1]) || gridAt(t[1][0], t[1][1]));
+// teleports to well-known spots: [label, x, z, road to snap to] from meta.json (town + any loaded regions)
+const TP = [...(meta.teleports || [[meta.title || 'Start', meta.spawn[0], meta.spawn[1], meta.spawnRoad]]),
+  ...REGIONS.flatMap(r => (meta.regionTeleports || {})[r] || [])].slice(0, 9);
 function teleport(i) {
   const t = TP[i]; if (!t) return;
-  let x = meta.spawn[0], z = meta.spawn[1];
-  if (Array.isArray(t[1])) { [x, z] = t[1]; }
-  else if (t[1]?.startsWith('bridge:')) { const br = roads.filter(r => r.b && r.n === t[1].slice(7)).sort((a, b) => b.pts.length - a.pts.length)[0]; if (br) { const p = br.pts[br.pts.length >> 1]; x = p[0]; z = p[1]; } }
-  else if (t[1]) { const l = landmarks.find(l => l.n === t[1]); if (l) { x = l.x; z = l.z; } }
-  const r = (t[2] && nearestRoad(x, z, 300, r => r.n === t[2]))
+  const [label, x, z, road] = t;
+  const r = (road && nearestRoad(x, z, 300, r => r.n === road || r.r === road))
     || nearestRoad(x, z, 300, r => r.t !== 'track' && r.t !== 'service') || nearestRoad(x, z, 300);
   if (r) respawn(r);
-  flash(t[0]);
+  flash(label);
 }
 document.getElementById('tps').innerHTML = TP.map((t, i) => `${i + 1} ${t[0]}`).join(' · ');
 
