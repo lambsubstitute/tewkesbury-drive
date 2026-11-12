@@ -4,45 +4,97 @@ import { buildStreet, buildPavements } from './street.js';
 import { buildShopfronts } from './shopfronts.js';
 
 // ------------------------------------------------------------------ loading
+// The world is the town tile (data/) plus any countryside regions listed in meta.json (data/<region>/),
+// all in one local frame. Their buildings, roads, trees and street objects are merged into one set;
+// terrain stays per grid (town: one 2.5 m grid, regions: one 2.5 m grid per 500 m cell).
 const D = 'data/';
 const bar = document.querySelector('#bar i');
 let loaded = 0;
-const FILES = 37;
-const tick = () => { loaded++; bar.style.width = `${Math.min(100, loaded / FILES * 100)}%`; };
+const META = await (await fetch(D + 'meta.json', { cache: 'no-store' })).json();
 // every data file carries the map build stamp, so an updated map never mixes with cached old files
-const BUILD = (await (await fetch(D + 'meta.json', { cache: 'no-store' })).json()).build || '';
+const BUILD = META.build || '';
+const REGIONS = META.regions || [];
+const FILES = 36 + REGIONS.length * 40;
+const tick = () => { loaded++; bar.style.width = `${Math.min(100, loaded / FILES * 100)}%`; };
 const V = (f) => D + f + (BUILD ? `?v=${BUILD}` : '');
 const bin = async (f, T) => { const b = await (await fetch(V(f))).arrayBuffer(); tick(); return new T(b); };
 const json = async (f) => { const j = await (await fetch(V(f))).json(); tick(); return j; };
 
-const [terrMeta, terrH, driveH, kindG, roads, foots, water, trees, meta, shopUnits, street] = await Promise.all([
-  json('terrain.json'), bin('terrain.bin', Uint16Array), bin('drive.bin', Uint16Array), bin('kind.bin', Uint8Array),
-  json('roads.json'), json('footprints.json'), json('water.json'), json('trees.json'), json('meta.json'), json('shopfronts.json'), json('street.json'),
-]);
-const wallData = await Promise.all([0, 1, 2, 3, 4, 5].map(async s => ({
-  pos: await bin(`walls${s}_pos.bin`, Float32Array), uv: await bin(`walls${s}_uv.bin`, Float32Array),
-  col: await bin(`walls${s}_col.bin`, Uint8Array), kind: await bin(`walls${s}_kind.bin`, Uint8Array),
-})));
-const roof = { pos: await bin('roof_pos.bin', Float32Array), uv: await bin('roof_uv.bin', Float32Array), col: await bin('roof_col.bin', Uint8Array) };
-const paveTris = await bin('pave_tris.bin', Float32Array), kerbSegs = await bin('kerbs.bin', Float32Array);
+async function loadSet(p) {
+  const [tm, th, dh, kg, roads, foots, water, trees, shops, street] = await Promise.all([
+    json(p + 'terrain.json'), bin(p + 'terrain.bin', Uint16Array), bin(p + 'drive.bin', Uint16Array), bin(p + 'kind.bin', Uint8Array),
+    json(p + 'roads.json'), json(p + 'footprints.json'), json(p + 'water.json'), json(p + 'trees.json'), json(p + 'shopfronts.json'), json(p + 'street.json'),
+  ]);
+  const walls = await Promise.all([0, 1, 2, 3, 4, 5].map(async s => ({
+    pos: await bin(`${p}walls${s}_pos.bin`, Float32Array), uv: await bin(`${p}walls${s}_uv.bin`, Float32Array),
+    col: await bin(`${p}walls${s}_col.bin`, Uint8Array), kind: await bin(`${p}walls${s}_kind.bin`, Uint8Array),
+  })));
+  const roof = { pos: await bin(p + 'roof_pos.bin', Float32Array), uv: await bin(p + 'roof_uv.bin', Float32Array), col: await bin(p + 'roof_col.bin', Uint8Array) };
+  const pave = await bin(p + 'pave_tris.bin', Float32Array), kerbs = await bin(p + 'kerbs.bin', Float32Array);
+  let horizon = null;
+  if (tm.horizon) horizon = { ...tm.horizon, p, h: await bin(p + 'horizon.bin', Uint16Array) };
+  return { p, tm, th, dh, kg, roads, foots, water, trees, shops, street, walls, roof, pave, kerbs, horizon };
+}
+const SETS = await Promise.all(['', ...REGIONS.map(r => r + '/')].map(loadSet));
+const cat = (arrs, T) => { const o = new T(arrs.reduce((a, b) => a + b.length, 0)); let k = 0; for (const a of arrs) { o.set(a, k); k += a.length; } return o; };
+const roads = SETS.flatMap(s => s.roads), foots = SETS.flatMap(s => s.foots), water = SETS.flatMap(s => s.water);
+const trees = SETS.flatMap(s => s.trees), shopUnits = SETS.flatMap(s => s.shops), meta = META;
+const street = { furniture: SETS.flatMap(s => s.street.furniture), barriers: SETS.flatMap(s => s.street.barriers) };
+const wallData = [0, 1, 2, 3, 4, 5].map(k => ({
+  pos: cat(SETS.map(s => s.walls[k].pos), Float32Array), uv: cat(SETS.map(s => s.walls[k].uv), Float32Array),
+  col: cat(SETS.map(s => s.walls[k].col), Uint8Array), kind: cat(SETS.map(s => s.walls[k].kind), Uint8Array),
+}));
+const roof = { pos: cat(SETS.map(s => s.roof.pos), Float32Array), uv: cat(SETS.map(s => s.roof.uv), Float32Array), col: cat(SETS.map(s => s.roof.col), Uint8Array) };
 
 // ------------------------------------------------------------------ grids
-const GN = terrMeta.n, GS = terrMeta.s, GO = terrMeta.origin, HMIN = terrMeta.min;
-const HALF = -GO;
-function bilinear(arr, x, z) {
-  let fx = (x - GO) / GS - 0.5, fz = (z - GO) / GS - 0.5;
-  fx = Math.max(0, Math.min(GN - 1.001, fx)); fz = Math.max(0, Math.min(GN - 1.001, fz));
-  const i = Math.floor(fx), j = Math.floor(fz), tx = fx - i, tz = fz - j;
-  const a = arr[j * GN + i], b = arr[j * GN + i + 1], c = arr[(j + 1) * GN + i], d = arr[(j + 1) * GN + i + 1];
-  return HMIN + ((a * (1 - tx) + b * tx) * (1 - tz) + (c * (1 - tx) + d * tx) * tz) / 100;
+// G: {x0, z0, n, s, c (0.5 = samples at cell centres, 0 = on nodes), min, w (extent), h, d, k}
+const TOWN = SETS[0].tm;
+const GRIDS = [{ x0: TOWN.origin, z0: TOWN.origin, n: TOWN.n, s: TOWN.s, c: 0.5, min: TOWN.min, w: TOWN.n * TOWN.s, h: SETS[0].th, d: SETS[0].dh, k: SETS[0].kg }];
+const CELLMAP = new Map();
+const cellKey = (x, z) => Math.floor((x - 250) / 500) * 100003 + Math.floor((z - 250) / 500);   // region cells: 500 m, edges at 250 mod 500
+let HZ = null;
+for (const S_ of SETS.slice(1)) {
+  const t = S_.tm, nn = t.n * t.n;
+  t.cells.forEach(([ox, oz], i) => {
+    const G = { x0: ox, z0: oz, n: t.n, s: t.s, c: 0, min: t.min, w: t.cell, h: S_.th.subarray(i * nn, (i + 1) * nn),
+                d: S_.dh.subarray(i * nn, (i + 1) * nn), k: S_.kg.subarray(i * nn, (i + 1) * nn), set: S_, slot: i };
+    GRIDS.push(G); CELLMAP.set(cellKey(ox + 1, oz + 1), G);
+  });
+  if (S_.horizon) HZ = S_.horizon;
 }
-const terrainY = (x, z) => bilinear(terrH, x, z);
-const driveY = (x, z) => bilinear(driveH, x, z);
+const HMIN = TOWN.min, HALF = -TOWN.origin;
+function gridAt(x, z) {
+  const T = GRIDS[0];
+  if (x >= T.x0 && z >= T.z0 && x < T.x0 + T.w && z < T.z0 + T.w) return T;
+  return CELLMAP.get(cellKey(x, z));
+}
+function bilinear(G, arr, x, z) {
+  const m = G.n - 1.001;
+  let fx = (x - G.x0) / G.s - G.c, fz = (z - G.z0) / G.s - G.c;
+  fx = Math.max(0, Math.min(m, fx)); fz = Math.max(0, Math.min(m, fz));
+  const i = Math.floor(fx), j = Math.floor(fz), tx = fx - i, tz = fz - j, n = G.n;
+  const a = arr[j * n + i], b = arr[j * n + i + 1], c = arr[(j + 1) * n + i], d = arr[(j + 1) * n + i + 1];
+  return G.min + ((a * (1 - tx) + b * tx) * (1 - tz) + (c * (1 - tx) + d * tx) * tz) / 100;
+}
+// far landscape (10 m EA LIDAR resampled to 20 m) wherever no detailed grid exists
+function horizonY(x, z) {
+  if (!HZ) return HMIN + 3;
+  let fx = (x - HZ.x0) / HZ.s, fz = (z - HZ.z0) / HZ.s;
+  fx = Math.max(0, Math.min(HZ.nx - 1.001, fx)); fz = Math.max(0, Math.min(HZ.nz - 1.001, fz));
+  const i = Math.floor(fx), j = Math.floor(fz), tx = fx - i, tz = fz - j, n = HZ.nx, A = HZ.h;
+  return HZ.min + ((A[j * n + i] * (1 - tx) + A[j * n + i + 1] * tx) * (1 - tz) + (A[(j + 1) * n + i] * (1 - tx) + A[(j + 1) * n + i + 1] * tx) * tz) / 100;
+}
+const terrainY = (x, z) => { const G = gridAt(x, z); return G ? bilinear(G, G.h, x, z) : horizonY(x, z); };
+const driveY = (x, z) => { const G = gridAt(x, z); return G ? bilinear(G, G.d, x, z) : horizonY(x, z); };
 function kindAt(x, z) {
-  const i = Math.floor((x - GO) / GS), j = Math.floor((z - GO) / GS);
-  if (i < 0 || j < 0 || i >= GN || j >= GN) return 0;
-  return kindG[j * GN + i];
+  const G = gridAt(x, z); if (!G) return 0;
+  const i = Math.floor((x - G.x0) / G.s + 0.5 - G.c), j = Math.floor((z - G.z0) / G.s + 0.5 - G.c);
+  if (i < 0 || j < 0 || i >= G.n || j >= G.n) return 0;
+  return G.k[j * G.n + i];
 }
+// world bounds: every detailed grid (minimap) and the horizon (where the car may go)
+const WB_ = GRIDS.reduce((b, G) => [Math.min(b[0], G.x0), Math.min(b[1], G.z0), Math.max(b[2], G.x0 + G.w), Math.max(b[3], G.z0 + G.w)], [1e9, 1e9, -1e9, -1e9]);
+const DRIVE_B = HZ ? [HZ.x0 + 40, HZ.z0 + 40, HZ.x0 + (HZ.nx - 1) * HZ.s - 40, HZ.z0 + (HZ.nz - 1) * HZ.s - 40] : [WB_[0] + 5, WB_[1] + 5, WB_[2] - 5, WB_[3] - 5];
 
 // ------------------------------------------------------------------ renderer / scene
 const canvas = document.getElementById('gl');
@@ -115,29 +167,74 @@ const roadTex = (marked) => canvasTex(64, 256, (x, w, h) => {
 });
 
 // ------------------------------------------------------------------ terrain
-{
-  const pos = new Float32Array(GN * GN * 3), uv = new Float32Array(GN * GN * 2);
-  for (let j = 0; j < GN; j++) for (let i = 0; i < GN; i++) {
-    const k = j * GN + i, x = GO + (i + 0.5) * GS, z = GO + (j + 0.5) * GS;
-    pos[k * 3] = x; pos[k * 3 + 1] = HMIN + terrH[k] / 100; pos[k * 3 + 2] = z;
-    uv[k * 2] = (x - GO) / (2 * HALF); uv[k * 2 + 1] = 1 - (z - GO) / (2 * HALF);
+function gridMesh(G, mat, uvOf) {
+  const n = G.n, pos = new Float32Array(n * n * 3), uv = new Float32Array(n * n * 2);
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+    const k = j * n + i;
+    // town samples sit at cell centres: stretch its outer ring of vertices to the tile edge so grids meet
+    const x = i === 0 ? G.x0 : i === n - 1 ? G.x0 + G.w : G.x0 + (i + G.c) * G.s;
+    const z = j === 0 ? G.z0 : j === n - 1 ? G.z0 + G.w : G.z0 + (j + G.c) * G.s;
+    pos[k * 3] = x; pos[k * 3 + 1] = G.min + G.h[k] / 100; pos[k * 3 + 2] = z;
+    const [u, v] = uvOf((x - G.x0) / G.w, (z - G.z0) / G.w); uv[k * 2] = u; uv[k * 2 + 1] = v;
   }
-  const idx = new Uint32Array((GN - 1) * (GN - 1) * 6);
-  let n = 0;
-  for (let j = 0; j < GN - 1; j++) for (let i = 0; i < GN - 1; i++) {
-    const a = j * GN + i, b = a + 1, c = a + GN, d = c + 1;
-    idx[n++] = a; idx[n++] = c; idx[n++] = b; idx[n++] = b; idx[n++] = c; idx[n++] = d;
+  const idx = new Uint32Array((n - 1) * (n - 1) * 6);
+  let m = 0;
+  for (let j = 0; j < n - 1; j++) for (let i = 0; i < n - 1; i++) {
+    const a = j * n + i, b = a + 1, c = a + n, d = c + 1;
+    idx[m++] = a; idx[m++] = c; idx[m++] = b; idx[m++] = b; idx[m++] = c; idx[m++] = d;
   }
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   g.setIndex(new THREE.BufferAttribute(idx, 1));
   g.computeVertexNormals();
-  const tex = new THREE.TextureLoader().load(V('ground.jpg'), tick);
-  tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-  const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95 }));
+  const mesh = new THREE.Mesh(g, mat);
+  mesh.receiveShadow = true;
+  scene.add(mesh);
+  return mesh;
+}
+const groundTex = (f) => {
+  const t = new THREE.TextureLoader().load(V(f), tick);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  return new THREE.MeshStandardMaterial({ map: t, roughness: 0.95 });
+};
+gridMesh(GRIDS[0], groundTex('ground.jpg'), (u, v) => [u, 1 - v]);
+{
+  // region cells: 1024 px per cell, packed 4 x 4 into ground atlases
+  const mats = new Map();
+  for (const G of GRIDS.slice(1)) {
+    const per = G.set.tm.atlas.per, a = Math.floor(G.slot / (per * per)), k = G.slot % (per * per);
+    const key = G.set.p + a;
+    if (!mats.has(key)) mats.set(key, groundTex(`${G.set.p}ground${a}.jpg`));
+    const e = 0.5 / 1024;
+    gridMesh(G, mats.get(key), (u, v) => [((k % per) + e + u * (1 - 2 * e)) / per, 1 - (Math.floor(k / per) + e + v * (1 - 2 * e)) / per]);
+  }
+}
+if (HZ) {
+  // far landscape: 20 m mesh, sunk 2.5 m under the detailed grids (and dropped where a detailed grid covers it)
+  const { nx, nz, s: hs, x0, z0 } = HZ;
+  const pos = new Float32Array(nx * nz * 3), uv = new Float32Array(nx * nz * 2), inside = new Uint8Array(nx * nz);
+  for (let j = 0; j < nz; j++) for (let i = 0; i < nx; i++) {
+    const k = j * nx + i, x = x0 + i * hs, z = z0 + j * hs;
+    inside[k] = gridAt(x, z) ? 1 : 0;
+    pos[k * 3] = x; pos[k * 3 + 1] = HZ.min + HZ.h[k] / 100 - (inside[k] ? 2.5 : 0.05); pos[k * 3 + 2] = z;
+    uv[k * 2] = i / (nx - 1); uv[k * 2 + 1] = 1 - j / (nz - 1);
+  }
+  const idx = [];
+  for (let j = 0; j < nz - 1; j++) for (let i = 0; i < nx - 1; i++) {
+    const a = j * nx + i, b = a + 1, c = a + nx, d = c + 1;
+    if (inside[a] && inside[b] && inside[c] && inside[d]) continue;
+    idx.push(a, c, b, b, c, d);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  const m = new THREE.Mesh(g, groundTex(`${HZ.p}horizon.jpg`));
   m.receiveShadow = true;
   scene.add(m);
+} else {
   // surrounding countryside
   const outer = new THREE.Mesh(new THREE.RingGeometry(HALF * 1.0, 3000, 4, 1, Math.PI / 4), new THREE.MeshStandardMaterial({ color: 0x6f8a4c, roughness: 1 }));
   outer.rotation.x = -Math.PI / 2; outer.scale.set(1.4142, 1.4142, 1); outer.position.y = HMIN + 3;
@@ -191,14 +288,20 @@ const ROAD_RANK = { primary: 6, trunk: 7, secondary: 5, tertiary: 4, primary_lin
     }
     // round caps at both ends to close joints
     for (const k of [0, n - 1]) {
+      if (r.x && r.x[k ? 1 : 0]) continue;   // cut at a map edge: the road carries on in the next region
       const [cx, cz] = pts[k];
       const cy = r.b ? pts[k][2] + lift : terrainY(cx, cz) + lift - 0.003;
+      // cap texture continues the carriageway's asphalt (u kept between the edge lines and the centre dashes)
+      const a = pts[Math.max(0, k - 1)], b = pts[Math.min(n - 1, k + 1)];
+      let tx = b[0] - a[0], tz = b[1] - a[1]; const tl = Math.hypot(tx, tz) || 1; tx /= tl; tz /= tl;
+      const d0 = k ? dist : 0;
+      const capUV = (ox, oz) => [0.12 + 0.3 * (0.5 + (ox * -tz + oz * tx) / (2 * hw)), (d0 + ox * tx + oz * tz) / 6];
       const o = G.p.length / 3;
-      G.p.push(cx, cy, cz); G.uv.push(0.02, 0);
+      G.p.push(cx, cy, cz); G.uv.push(...capUV(0, 0));
       const seg = 10;
       for (let s = 0; s <= seg; s++) {
-        const ang = s / seg * Math.PI * 2, x = cx + Math.cos(ang) * hw, z = cz + Math.sin(ang) * hw;
-        G.p.push(x, r.b ? cy : Math.max(terrainY(x, z) + lift - 0.003, cy), z); G.uv.push(0.02, 0);
+        const ang = s / seg * Math.PI * 2, ox = Math.cos(ang) * hw, oz = Math.sin(ang) * hw, x = cx + ox, z = cz + oz;
+        G.p.push(x, r.b ? cy : Math.max(terrainY(x, z) + lift - 0.003, cy), z); G.uv.push(...capUV(ox, oz));
         if (s > 0) G.i.push(o, o + s + 1, o + s);
       }
     }
@@ -307,7 +410,8 @@ for (const [x, , z, h] of trees) {
 // street furniture + garden walls/fences/hedges (OSM); poles and walls block the car
 let onPavement = () => false;
 {
-  onPavement = buildPavements(scene, paveTris, kerbSegs, terrainY);
+  const pv = SETS.map(s => buildPavements(scene, s.pave, s.kerbs, terrainY));
+  onPavement = (x, z) => pv.some(f => f(x, z));
   const groundY = (x, z) => terrainY(x, z) + (onPavement(x, z) ? 0.31 : 0);
   const { posts, segs } = buildStreet(scene, street, groundY);
   buildShopfronts(scene, shopUnits, groundY);
@@ -404,7 +508,7 @@ addEventListener('keydown', e => {
   if (e.code === 'KeyR') respawn();
   if (e.code === 'KeyH') { const h = document.getElementById('help'); h.style.display = h.style.display === 'none' ? '' : 'none'; }
   if (e.code === 'KeyV') toggleSound();
-  if (/^Digit[1-7]$/.test(e.code)) teleport(+e.code.slice(5) - 1);
+  if (/^Digit[1-9]$/.test(e.code)) teleport(+e.code.slice(5) - 1);
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) e.preventDefault();
 });
 addEventListener('keyup', e => { keys[e.code] = false; });
@@ -439,11 +543,14 @@ const TP = [
   ['Leisure Centre', 'Tewkesbury Leisure Centre', null],
   ["King John's Bridge", 'bridge:Mythe Road', 'Mythe Road'],
   ['Mythe Bridge (Severn)', 'bridge:Mythe Bridge', 'Mythe Bridge'],
-];
+  ['Rye Cross (A438 / B4211)', [-4052, -557], 'B4211'],
+  ['Longdon (St Mary\'s church)', [-5218, -3505], 'B4211'],
+].filter(t => !Array.isArray(t[1]) || gridAt(t[1][0], t[1][1]));
 function teleport(i) {
   const t = TP[i]; if (!t) return;
   let x = meta.spawn[0], z = meta.spawn[1];
-  if (t[1]?.startsWith('bridge:')) { const br = roads.filter(r => r.b && r.n === t[1].slice(7)).sort((a, b) => b.pts.length - a.pts.length)[0]; if (br) { const p = br.pts[br.pts.length >> 1]; x = p[0]; z = p[1]; } }
+  if (Array.isArray(t[1])) { [x, z] = t[1]; }
+  else if (t[1]?.startsWith('bridge:')) { const br = roads.filter(r => r.b && r.n === t[1].slice(7)).sort((a, b) => b.pts.length - a.pts.length)[0]; if (br) { const p = br.pts[br.pts.length >> 1]; x = p[0]; z = p[1]; } }
   else if (t[1]) { const l = landmarks.find(l => l.n === t[1]); if (l) { x = l.x; z = l.z; } }
   const r = (t[2] && nearestRoad(x, z, 300, r => r.n === t[2]))
     || nearestRoad(x, z, 300, r => r.t !== 'track' && r.t !== 'service') || nearestRoad(x, z, 300);
@@ -528,7 +635,7 @@ function physics(dt) {
   const fx = Math.sin(S.h), fz = Math.cos(S.h);
   S.x += (fx * S.v + fz * S.vl) * dt;
   S.z += (fz * S.v - fx * S.vl) * dt;
-  S.x = Math.max(-HALF + 5, Math.min(HALF - 5, S.x)); S.z = Math.max(-HALF + 5, Math.min(HALF - 5, S.z));
+  S.x = Math.max(DRIVE_B[0], Math.min(DRIVE_B[2], S.x)); S.z = Math.max(DRIVE_B[1], Math.min(DRIVE_B[3], S.z));
   const hit = collide();
   if (hit > 6) { flash('Crunch!', 700); shake = Math.min(1, hit / 20); }
   // ground follow
@@ -565,11 +672,15 @@ function updateHUD(dt) {
   else elLm.style.opacity = 0;
 }
 
-// minimap: pre-render whole town once
-const MM = document.createElement('canvas'); const MMS = 2048; MM.width = MM.height = MMS;
+// minimap: pre-render the whole world once (town + countryside cells)
+const WX0 = WB_[0], WZ0 = WB_[1], WXR = WB_[2] - WB_[0], WZR = WB_[3] - WB_[1];
+const MMK = Math.min(2048 / (2 * HALF), 4096 / Math.max(WXR, WZR));        // px per metre
+const MM = document.createElement('canvas'); MM.width = Math.ceil(WXR * MMK); MM.height = Math.ceil(WZR * MMK);
 {
-  const c = MM.getContext('2d'), k = MMS / (2 * HALF), P = (x, z) => [(x + HALF) * k, (z + HALF) * k];
-  c.fillStyle = '#7d9a5e'; c.fillRect(0, 0, MMS, MMS);
+  const c = MM.getContext('2d'), k = MMK, P = (x, z) => [(x - WX0) * k, (z - WZ0) * k];
+  c.fillStyle = '#6f8c55'; c.fillRect(0, 0, MM.width, MM.height);
+  c.fillStyle = '#7d9a5e';
+  for (const G of GRIDS) c.fillRect((G.x0 - WX0) * k, (G.z0 - WZ0) * k, G.w * k + 1, G.w * k + 1);
   c.fillStyle = '#6f9fbf';
   for (const w of water) { c.beginPath(); w.p.forEach(([x, z], i) => c[i ? 'lineTo' : 'moveTo'](...P(x, z))); for (const h of w.h) h.forEach(([x, z], i) => c[i ? 'lineTo' : 'moveTo'](...P(x, z))); c.fill('evenodd'); }
   c.fillStyle = '#c8b494';
@@ -577,21 +688,42 @@ const MM = document.createElement('canvas'); const MMS = 2048; MM.width = MM.hei
   c.lineCap = 'round'; c.lineJoin = 'round';
   for (const pass of [0, 1]) for (const r of [...roads].sort((a, b) => (ROAD_RANK[a.t] ?? 2) - (ROAD_RANK[b.t] ?? 2))) {
     c.strokeStyle = pass ? (ROAD_RANK[r.t] >= 5 ? '#f3d27a' : '#ffffff') : '#5b5b5b';
-    c.lineWidth = r.w * k + (pass ? 0 : 2);
+    c.lineWidth = Math.max(pass ? 1.2 : 2.2, r.w * k + (pass ? 0 : 2));
     c.beginPath(); r.pts.forEach(([x, z], i) => c[i ? 'lineTo' : 'moveTo'](...P(x, z))); c.stroke();
   }
 }
 const mm = document.getElementById('minimap'), mctx = mm.getContext('2d');
+// big map: whole world, roads redrawn as crisp lines at the big map's own scale (once)
+let BIG = null;
+function bigMapImage(W, s, cx, cz) {
+  if (BIG && BIG.width === W) return BIG;
+  BIG = document.createElement('canvas'); BIG.width = BIG.height = W;
+  const c = BIG.getContext('2d'), k = MMK * s;
+  c.fillStyle = '#6f8c55'; c.fillRect(0, 0, W, W);
+  c.save(); c.translate(W / 2, W / 2); c.scale(s, s); c.translate(-(cx - WX0) * MMK, -(cz - WZ0) * MMK); c.drawImage(MM, 0, 0); c.restore();
+  const P = (x, z) => [W / 2 + (x - cx) * k, W / 2 + (z - cz) * k];
+  c.lineCap = 'round'; c.lineJoin = 'round';
+  for (const r of [...roads].sort((a, b) => (ROAD_RANK[a.t] ?? 2) - (ROAD_RANK[b.t] ?? 2))) {
+    const major = (ROAD_RANK[r.t] ?? 2) >= 5 || r.t.startsWith('motorway');
+    if (!major && (ROAD_RANK[r.t] ?? 2) < 2) continue;
+    c.strokeStyle = major ? '#f3d27a' : '#ffffff'; c.lineWidth = major ? 2.4 : 1.1;
+    c.beginPath(); r.pts.forEach(([x, z], i) => c[i ? 'lineTo' : 'moveTo'](...P(x, z))); c.stroke();
+  }
+  return BIG;
+}
 function drawMinimap() {
-  const W = mm.width, k = MMS / (2 * HALF);
-  const view = bigMap ? 2 * HALF : 380; // metres across
+  const W = mm.width, k = MMK;
+  const view = bigMap ? Math.max(WXR, WZR) : 380; // metres across
   const s = W / (view * k);
-  mctx.save(); mctx.fillStyle = '#6f8c55'; mctx.fillRect(0, 0, W, W);
-  const cx = bigMap ? 0 : S.x, cz = bigMap ? 0 : S.z;
-  mctx.translate(W / 2, W / 2); mctx.scale(s, s);
-  mctx.translate(-(cx + HALF) * k, -(cz + HALF) * k);
-  mctx.drawImage(MM, 0, 0);
-  mctx.restore();
+  const cx = bigMap ? WX0 + WXR / 2 : S.x, cz = bigMap ? WZ0 + WZR / 2 : S.z;
+  if (bigMap) mctx.drawImage(bigMapImage(W, s, cx, cz), 0, 0);
+  else {
+    mctx.save(); mctx.fillStyle = '#6f8c55'; mctx.fillRect(0, 0, W, W);
+    mctx.translate(W / 2, W / 2); mctx.scale(s, s);
+    mctx.translate(-(cx - WX0) * k, -(cz - WZ0) * k);
+    mctx.drawImage(MM, 0, 0);
+    mctx.restore();
+  }
   // car arrow
   const px = W / 2 + (S.x - cx) * k * s, pz = W / 2 + (S.z - cz) * k * s;
   mctx.save(); mctx.translate(px, pz); mctx.rotate(Math.PI - S.h);

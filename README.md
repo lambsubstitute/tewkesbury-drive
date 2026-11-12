@@ -1,6 +1,6 @@
 # Tewkesbury Drive
 
-Browser driving game set in a 2.5 km x 2.5 km square of real Tewkesbury (British National Grid E 387800–390300, N 231500–234000).
+Browser driving game set in real Tewkesbury: a 2.5 km x 2.5 km square of the town (British National Grid E 387800–390300, N 231500–234000), plus the road out to Longdon village, about 3.5 miles north-west.
 
 ## Play
 
@@ -8,7 +8,7 @@ Browser driving game set in a 2.5 km x 2.5 km square of real Tewkesbury (British
 python3 -m http.server 8765 -d game
 ```
 
-Open http://localhost:8765. WASD/arrows drive, Space handbrake, C camera (chase / bonnet / high / drone), M big map, R back on road, V engine sound (off by default), 1–7 teleport.
+Open http://localhost:8765. WASD/arrows drive, Space handbrake, C camera (chase / bonnet / high / drone), M big map, R back on road, V engine sound (off by default), 1–9 teleport (8 Rye Cross, 9 Longdon).
 
 ## Data pipeline (`tools/process.py`)
 
@@ -101,6 +101,37 @@ The OSM extracts (`data/osm.json`, `data/osm_street.json`) can be refreshed by P
 
 The Commons photo thumbnails used to classify materials aren't in the repo either. `data/wd_images.json` lists each photo's Commons URL.
 
+## The road to Longdon (`tools/region.py`, `process.py --region longdon`)
+
+The countryside is a second region in the same local frame as the town, so it loads into one world. It's built from 500 m cells on the town tile's grid. `tools/region.py` routes the fastest drive over OSM roads from The Cross to Longdon: A38 Mythe Road, then the A438 over Mythe Bridge to Rye Cross, then the B4211 north into the village. It then picks every cell within 220 m of that route, plus every cell with buildings within 1.1 km of the village. That comes to 34 cells (8.5 km²).
+
+For each cell, the 1 m EA DTM, first-return DSM and last-return DSM are fetched with a 60 m margin. `process.py --region longdon` stitches them into one mosaic and runs the same building, roof, road and street pipeline as the town, so nothing is cut at a cell edge. A few things differ in the country:
+
+- **Buildings:** OSM maps only a handful of Longdon's buildings, so the outlines come from Ordnance Survey OpenMap Local (OGL), wherever OSM has nothing overlapping. That's 1,892 outlines in the region. Names and churches come from the same product's Important Buildings layer. Heights and roofs still come from the LIDAR.
+- **Listed buildings:** Historic England lists 92 in and around the area, 29 of them inside the map. Wall materials for the 17 with a Wikimedia Commons photo were read by eye into `data/longdon/materials_by_photo.txt`: black-and-white and brick-infilled timber framing, red brick farmhouses, and lias and limestone churches. Most of those stand in neighbouring parishes, so only four are inside the map: St Mary's church, Greenstreet Lodge, Lower Swell Farmhouse and Paynes Place.
+- **Hedgerows:** traced from the LIDAR. Long, narrow strips of 0.8–7 m vegetation that aren't buildings, water or road are thinned to a centre line and become hedges, at their median measured height (capped at 3 m, since taller growth along them is modelled as trees). That gives 68 km of hedge. Like garden walls in town, they block the car.
+- **Roofs under trees:** the first-return LIDAR records tree canopy where it overhangs a cottage. Where the last return (which passes through foliage) is more than 1 m lower, the roof height comes from the last return instead.
+- **Street objects:** Mapillary detections along the route add the real 30/40/50 speed-limit signs, bend and horse-rider warnings, and telegraph poles.
+- **Roads:** untagged country roads get country widths (B-road 6.2 m, lanes 4.2 m), and the lanes have no centre lines.
+- **No lamps or pavements:** there are no street lamps, and pavements appear only where OSM maps a footway.
+- **Trees:** in both regions, LIDAR canopy peaks that fall on a carriageway aren't turned into trunks, since that's an overhanging branch, not a tree in the road.
+- **Far landscape:** beyond the detailed cells the landscape uses 10 m EA LIDAR on a 20 m mesh, darkened wherever the surface model shows woodland or hedgerow.
+
+To rebuild (the LIDAR cells and the OS download aren't in the repo):
+
+```bash
+curl -L -o data/os/opmplc_essh_so.zip "https://api.os.uk/downloads/v1/products/OpenMapLocal/downloads?area=SO&format=ESRI%C2%AE+Shapefile&redirect"
+.venv/bin/pip install pyshp scikit-image
+.venv/bin/python tools/region.py os
+.venv/bin/python tools/region.py cells
+.venv/bin/python tools/region.py lidar
+.venv/bin/python tools/region.py horizon
+.venv/bin/python tools/region.py nhle
+.venv/bin/python tools/process.py --region longdon
+```
+
+The OSM extracts for the region (`data/longdon/osm.json`, `osm_street.json`) come from `data/longdon/q.txt` and `q2.txt`.
+
 ## Publishing
 
 GitHub Pages serves the `gh-pages` branch, which holds the contents of `game/`. To publish after changes:
@@ -109,4 +140,4 @@ GitHub Pages serves the `gh-pages` branch, which holds the contents of `game/`. 
 git subtree push --prefix game origin gh-pages
 ```
 
-Attribution: © OpenStreetMap contributors (ODbL); © Environment Agency (OGL); © Historic England (OGL).
+Attribution: © OpenStreetMap contributors (ODbL); © Environment Agency (OGL); © Historic England (OGL); contains OS data © Crown copyright and database right 2026 (OGL).

@@ -1,11 +1,17 @@
 """Turn OSM + EA LIDAR + Historic England data into game-ready Tewkesbury map files.
 
 Local coords: x = Easting - E0 (east +), z = N0 - Northing (south +), y = metres above OD.
-Tile covers E 387800..390300, N 231500..234000 => x,z in [-1250, 1250].
+Town tile covers E 387800..390300, N 231500..234000 => x,z in [-1250, 1250].
+
+  process.py                   the town tile -> game/data/
+  process.py --region longdon  the countryside cells set up by tools/region.py -> game/data/longdon/
+                               (same local origin, so both load into one world)
 """
 import json, math, os, sys, hashlib
 import numpy as np
 import tifffile
+import logging
+logging.getLogger("tifffile").setLevel(logging.ERROR)   # EA GeoTIFF nodata tag warning
 import pyproj
 from pyproj import Transformer
 from scipy import ndimage
@@ -20,12 +26,34 @@ import buildgeo
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
-OUT = os.path.join(ROOT, "game", "data")
+REGION = sys.argv[sys.argv.index("--region") + 1] if "--region" in sys.argv else None
+E0, N0 = 389050.0, 232750.0          # local origin: centre of the town tile, shared by every region
+if REGION:
+    # a set of 500 m cells (tools/region.py). TILE = the ground this run owns; the LIDAR raster is one
+    # square mosaic covering every cell plus a margin, so buildings and roads on cell edges come out whole.
+    RDATA = os.path.join(DATA, REGION)
+    REG = json.load(open(os.path.join(RDATA, "region.json")))
+    CELLS, CS, PAD = REG["cells"], REG["cell"], REG["pad"]
+    OUT = os.path.join(ROOT, "game", "data", REGION)
+    TILE = shapely.union_all([box(e_, n_, e_ + CS, n_ + CS) for e_, n_ in CELLS])
+    E_MIN = min(c[0] for c in CELLS) - PAD
+    N_MAX = max(c[1] for c in CELLS) + CS + PAD
+    SIZE = max(max(c[0] for c in CELLS) + CS + PAD - E_MIN, N_MAX - (min(c[1] for c in CELLS) - PAD))
+    RURAL = True                     # no generated lamps; pavements only where OSM maps them
+    TOWN_BOX = box(*REG["town"])
+else:
+    RDATA = DATA
+    OUT = os.path.join(ROOT, "game", "data")
+    E_MIN, N_MAX, SIZE = 387800, 234000, 2500
+    TILE = box(E_MIN, N_MAX - SIZE, E_MIN + SIZE, N_MAX)
+    RURAL = False
+RAST = box(E_MIN, N_MAX - SIZE, E_MIN + SIZE, N_MAX)
+shapely.prepare(TILE)
 os.makedirs(OUT, exist_ok=True)
 
-E_MIN, N_MAX, SIZE = 387800, 234000, 2500
-E0, N0 = E_MIN + SIZE / 2, N_MAX - SIZE / 2
-TILE = box(E_MIN, N_MAX - SIZE, E_MIN + SIZE, N_MAX)
+
+def in_tile(E, N):
+    return bool(shapely.contains_xy(TILE, E, N))
 
 pyproj.network.set_network_enabled(True)  # OSTN15 grid for metre-accurate OSM->BNG
 TF = Transformer.from_crs(4326, 27700, always_xy=True)
@@ -41,8 +69,42 @@ def rnd(seed, i=0):
 
 # ---------------------------------------------------------------- rasters
 print("loading lidar")
-dtm = tifffile.imread(os.path.join(DATA, "dtm.tif")).astype(np.float32)
-dsm = tifffile.imread(os.path.join(DATA, "dsm.tif")).astype(np.float32)
+
+
+def mosaic(kind, optional=False):
+    """Region raster: every cell's 1 m LIDAR (with its margin) placed into one square grid. Pixels no cell
+    covers take the 10 m horizon terrain (bare ground), so filters near the edge see sensible values.
+    optional: cells without this layer are left NaN."""
+    A = np.full((SIZE, SIZE), np.nan, np.float32)
+    for e_, n_ in CELLS:
+        if optional and not os.path.exists(os.path.join(RDATA, "lidar", f"{e_}_{n_}_{kind}.tif")):
+            continue
+        a = tifffile.imread(os.path.join(RDATA, "lidar", f"{e_}_{n_}_{kind}.tif")).astype(np.float32)
+        a[(a < -100) | (a > 2000)] = np.nan
+        r0, c0 = N_MAX - (n_ + CS + PAD), (e_ - PAD) - E_MIN
+        blk = A[r0:r0 + a.shape[0], c0:c0 + a.shape[1]]
+        np.copyto(blk, a[:blk.shape[0], :blk.shape[1]], where=~np.isnan(a[:blk.shape[0], :blk.shape[1]]))
+    if optional:
+        print(" ", kind, "mosaic: cells with data", sum(os.path.exists(os.path.join(RDATA, "lidar", f"{e_}_{n_}_{kind}.tif")) for e_, n_ in CELLS))
+        return A
+    hp_ = os.path.join(RDATA, "horizon_dtm.npy")
+    hz = np.load(hp_) if os.path.exists(hp_) else np.full((10, 10), np.nanmedian(A), np.float32)
+    hz = np.where(np.isnan(hz), np.nanmedian(hz), hz)
+    miss = np.isnan(A)
+    rr, cc = np.nonzero(miss)
+    HE0, HN1 = 380500, 240000                       # horizon box west / north edge (tools/region.py)
+    A[rr, cc] = ndimage.map_coordinates(hz, [(HN1 - (N_MAX - rr - 0.5)) / 10 - 0.5, ((E_MIN + cc + 0.5) - HE0) / 10 - 0.5],
+                                        order=1, mode="nearest")
+    print(" ", kind, "mosaic", A.shape, "filled from horizon", int(miss.sum()))
+    return A
+
+
+if REGION:
+    dtm = mosaic("dtm")
+    dsm = np.maximum(mosaic("dsm"), dtm)
+else:
+    dtm = tifffile.imread(os.path.join(DATA, "dtm.tif")).astype(np.float32)
+    dsm = tifffile.imread(os.path.join(DATA, "dsm.tif")).astype(np.float32)
 dsm_s = ndimage.median_filter(dsm, size=3)
 
 
@@ -57,7 +119,7 @@ def sample(grid, E, N):
 
 # ---------------------------------------------------------------- OSM
 print("loading osm")
-osm = json.load(open(os.path.join(DATA, "osm.json")))["elements"]
+osm = json.load(open(os.path.join(RDATA, "osm.json")))["elements"]
 
 
 def proj(geom):
@@ -138,9 +200,39 @@ def polys_of(g):
     return [x for x in getattr(g, "geoms", []) if isinstance(x, Polygon)]
 
 
+# ---------------------------------------------------------------- building outlines
+BLDG = []   # (key, OSM-style tags, BNG polygon) for every building outline
+for e in osm:
+    t = e.get("tags", {})
+    if "building" in t and t.get("building") not in ("no", "roof", "canopy", "carport"):
+        g = element_polygon(e)
+        if g is not None:
+            BLDG.append((f"{e['type']}{e['id']}", t, g))
+if REGION and os.path.exists(os.path.join(RDATA, "os_buildings.json")):
+    # OSM maps only a handful of rural buildings; Ordnance Survey OpenMap Local (OGL) has every one.
+    # OS outlines fill in wherever OSM has nothing overlapping.
+    _osm_tree = shapely.STRtree([g for _, _, g in BLDG]) if BLDG else None
+    _n_os = 0
+    for b in json.load(open(os.path.join(RDATA, "os_buildings.json"))):
+        try:
+            p = Polygon(b["p"], b["h"]).buffer(0)
+        except Exception:
+            continue
+        if p.is_empty or not p.intersects(RAST) or p.area < 6:
+            continue
+        if _osm_tree is not None and any(p.intersection(BLDG[i][2]).area > 0.3 * min(p.area, BLDG[i][2].area)
+                                         for i in _osm_tree.query(p)):
+            continue
+        t = {"building": "church" if b.get("cls") == "Place Of Worship" else "yes"}
+        if b.get("n"):
+            t["name"] = b["n"]
+        BLDG.append((f"os{b['id']}", t, p))
+        _n_os += 1
+    print("OS OpenMap Local buildings added:", _n_os, "OSM buildings:", len(BLDG) - _n_os)
+
 # ---------------------------------------------------------------- Historic England
 print("loading listed buildings")
-he = json.load(open(os.path.join(DATA, "lb_polys.json")))["features"]
+he = json.load(open(os.path.join(RDATA, "lb_polys.json")))["features"]
 he_polys = []
 for f in he:
     rings = f["geometry"].get("rings", [])
@@ -170,6 +262,14 @@ for line in open(os.path.join(DATA, "materials_by_photo.txt")):
     kind, _, hexc = code.partition(":")
     col = tuple(int(hexc[i:i + 2], 16) for i in (0, 2, 4)) if hexc else None
     PHOTO_MAT[str(_idx[n])] = (kind, col)
+if REGION and os.path.exists(os.path.join(RDATA, "materials_by_photo.txt")):
+    for line in open(os.path.join(RDATA, "materials_by_photo.txt")):   # "<list entry> <code>"
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        le_, code = line.split()
+        kind, _, hexc = code.partition(":")
+        PHOTO_MAT[le_] = (kind, tuple(int(hexc[i:i + 2], 16) for i in (0, 2, 4)) if hexc else None)
 BRICK_TINTS = [(255, 255, 255), (255, 238, 225), (238, 224, 218), (255, 246, 236), (226, 214, 210)]
 
 
@@ -206,13 +306,7 @@ ORPHANS = {}  # osm element key -> markers whose listing sits just outside that 
 
 
 def link_orphans():
-    blds = []
-    for e in osm:
-        t = e.get("tags", {})
-        if "building" in t and t.get("building") not in ("no", "roof", "canopy", "carport"):
-            g = element_polygon(e)
-            if g is not None:
-                blds.append((f"{e['type']}{e['id']}", g))
+    blds = [(k_, g_) for k_, _, g_ in BLDG]
     tree = shapely.STRtree([g for _, g in blds])
     claimed = set()
     for m in MARKERS:
@@ -446,22 +540,23 @@ def roof_model(ipm, base, cx, cy, bid):
 # ---- context for building geometry: all footprints, drivable roads, shops
 print("context")
 _all = []
-for e in osm:
-    t = e.get("tags", {})
-    if "building" in t and t.get("building") not in ("no", "roof", "canopy", "carport"):
-        g = element_polygon(e)
-        if g is not None:
-            _all += [p for p in polys_of(g.intersection(TILE)) if p.area >= 6]
+for _k, t, g in BLDG:
+    _all += [p for p in polys_of(g.intersection(RAST if REGION else TILE)) if p.area >= 6]
 ALL_B = shapely.union_all(_all)
 shapely.prepare(ALL_B)
 
 _DRIVE_W = {"motorway": 11, "trunk": 9, "primary": 7.5, "secondary": 7, "tertiary": 6.5, "unclassified": 5.5,
             "residential": 5.5, "living_street": 5, "pedestrian": 6, "primary_link": 5.5, "secondary_link": 5,
             "tertiary_link": 5, "trunk_link": 6, "road": 5, "service": 3.6}
+if RURAL:
+    # untagged country roads are narrower than town streets: B-roads ~6 m, lanes single-track with passing places
+    _DRIVE_W.update({"primary": 7.0, "secondary": 6.2, "tertiary": 5.4, "unclassified": 4.2, "residential": 4.8, "service": 3.0})
+
+
 def road_width(t):
     """carriageway width (m) used for rendering, pavements, kerbs and collisions alike"""
     hw = t.get("highway")
-    w = _DRIVE_W.get(hw, 5.0) if hw != "service" else 3.6
+    w = _DRIVE_W.get(hw, 5.0)
     try:
         if "width" in t:
             return max(2.5, min(14, float(str(t["width"]).split()[0])))
@@ -495,7 +590,7 @@ def road_near(x, y):
     return pt.distance(q), _rw[i], (q.x, q.y)
 
 
-street_osm = json.load(open(os.path.join(DATA, "osm_street.json")))["elements"]
+street_osm = json.load(open(os.path.join(RDATA, "osm_street.json")))["elements"]
 SHOP_AMEN = {"cafe", "restaurant", "pub", "fast_food", "bank", "pharmacy", "post_office", "bar", "veterinary",
              "dentist", "doctors", "bureau_de_change", "ice_cream", "library", "estate_agent"}
 SHOPS = []
@@ -525,7 +620,45 @@ if os.path.exists(_fn):
     print("shopfront colours from photos:", len(PHOTO_SHOP))
 signs_out = []
 shopfront_out = []
-ctx = {"E_MIN": E_MIN, "N_MAX": N_MAX, "E0": E0, "N0": N0, "dsm_s": dsm_s, "dtm": dtm, "sample": sample,
+# Roof heights read from DSM_B. In the country many cottages stand under trees, and the LIDAR first return
+# records the canopy instead of the roof. The last return passes through foliage to the roof (or ground)
+# beneath, so where first - last > 1 m the roof height comes from the last return instead.
+DSM_B = dsm_s
+VEG = None
+if RURAL and any(os.path.exists(os.path.join(RDATA, "lidar", f"{e_}_{n_}_lz.tif")) for e_, n_ in CELLS):
+    _lz = mosaic("lz", optional=True)
+    _lz = ndimage.median_filter(np.where(np.isnan(_lz), dsm, np.maximum(_lz, dtm)), size=3)   # no data: no foliage test
+    VEG = ndimage.uniform_filter(((dsm - _lz) > 1.0).astype(np.float32), 3) > 0.5
+    DSM_B = np.where(VEG, _lz, dsm_s)
+    del _lz
+
+
+def roof_under_trees(poly, pm, base, bid):
+    """Share of a building's roof hidden by foliage (roof heights there already come from the last return).
+    A small building whose roof still reads over 12 m (dense evergreen canopy that even the last return
+    did not get through) gets a 40 degree gable along its long axis at a cottage eave height instead.
+    Returns minus the share when the gable was used."""
+    rows, cols = pm[0], pm[1]
+    frac = float(VEG[rows, cols].mean()) if len(rows) else 0.0
+    h = DSM_B[rows, cols] - base
+    if not (len(h) and np.percentile(h, 90) > 12 and poly.area < 400):
+        return frac
+    rect = poly.minimum_rotated_rectangle
+    co = np.array(rect.exterior.coords)[:4]
+    e1, e2 = co[1] - co[0], co[2] - co[1]
+    ax_, w_ = (e1, np.linalg.norm(e2)) if np.linalg.norm(e1) >= np.linalg.norm(e2) else (e2, np.linalg.norm(e1))
+    u = ax_ / np.linalg.norm(ax_)
+    perp = np.array([-u[1], u[0]])
+    c = np.array(rect.centroid.coords[0])
+    E, N = E_MIN + cols + 0.5, N_MAX - rows - 0.5
+    d = np.abs((E - c[0]) * perp[0] + (N - c[1]) * perp[1])
+    small = poly.area < 40
+    pitch = math.tan(math.radians(25 if small else 40))
+    DSM_B[rows, cols] = base + (2.4 if small else 4.8) + np.clip(w_ / 2 - d, 0, None) * pitch
+    return -max(frac, 0.01)
+
+
+ctx = {"E_MIN": E_MIN, "N_MAX": N_MAX, "E0": E0, "N0": N0, "dsm_s": DSM_B, "dtm": dtm, "sample": sample,
        "ALL_B": ALL_B, "road_near": road_near, "B_LIST": _all, "B_TREE": shapely.STRtree(_all)}
 sink = buildgeo.Sink(NSTYLES)
 
@@ -617,16 +750,13 @@ def shop_units(pieces, shops_here, bid, old_building, hs):
 
 n_b = 0
 stats = {"lidar": 0, "fallback": 0, "listed": 0}
-for e in osm:
-    t = e.get("tags", {})
-    if "building" not in t or t.get("building") in ("no",):
-        continue
-    if t.get("building") in ("roof", "canopy", "carport"):
-        continue
-    g = element_polygon(e)
-    if g is None:
-        continue
-    g = g.intersection(TILE)
+for bid0, t, g in BLDG:
+    if REGION:   # a building belongs to the cell its middle is in, and is never cut at a cell edge
+        if not TILE.contains(g.representative_point()) or g.intersects(TOWN_BOX):
+            continue   # (anything touching the town tile was already built, clipped, by the town run)
+        g = g.intersection(RAST)
+    else:
+        g = g.intersection(TILE)
     trimmed_parts = []
     for poly0 in polys_of(g):
         if poly0.area < 6:
@@ -636,7 +766,7 @@ for e in osm:
             stats["courtyards_m2"] = stats.get("courtyards_m2", 0) + round(cut_)
         trimmed_parts += [p_ for p_ in polys_of(t_) if p_.area >= 6]
     for poly in trimmed_parts:
-        bid = f"{e['type']}{e['id']}"
+        bid = bid0
         btype = t.get("building", "yes")
         name = t.get("name")
         # listed?
@@ -660,11 +790,17 @@ for e in osm:
             base = min(base, float(np.percentile(dtm[pm[0], pm[1]], 10)))
         # roof heights from DSM inside inner footprint
         ipm = pix_mask(inner) if (not inner.is_empty and inner.area > 1) else None
+        if VEG is not None and pm is not None and len(pm[0]) >= 6 and btype not in ("church", "chapel"):
+            fr_ = roof_under_trees(poly, pm, base, bid)
+            if fr_ < 0:
+                stats["roof_gable_guessed"] = stats.get("roof_gable_guessed", 0) + 1
+            elif fr_ >= 0.1:
+                stats["roof_under_foliage"] = stats.get("roof_under_foliage", 0) + 1
         hts = None
         if ipm is not None and len(ipm[0]) >= 3:
-            hts = dsm_s[ipm[0], ipm[1]] - base
+            hts = DSM_B[ipm[0], ipm[1]] - base
         elif pm is not None and len(pm[0]) >= 1:
-            hts = dsm_s[pm[0], pm[1]] - base
+            hts = DSM_B[pm[0], pm[1]] - base
         lv = t.get("building:levels")
         tag_h = None
         try:
@@ -839,13 +975,16 @@ WIDTH = {"motorway": 11, "trunk": 9, "primary": 7.5, "secondary": 7, "tertiary":
          "primary_link": 5.5, "secondary_link": 5, "tertiary_link": 5, "trunk_link": 6, "motorway_link": 6, "road": 5}
 PATHS = {"footway", "cycleway", "path", "steps", "bridleway"}
 roads_out, paths_lines = [], []
+# region roads run 1.5 m past their cells, closing the 1 m gap the town tile leaves at its edge
+ROAD_CLIP = TILE.buffer(1.5, join_style="mitre") if REGION else TILE.buffer(-1)
+_clip_edge = ROAD_CLIP.boundary
 for e in osm:
     t = e.get("tags", {})
     hw = t.get("highway")
     if not hw or e["type"] != "way" or not e.get("geometry"):
         continue
     pts = proj(e["geometry"])
-    line = LineString(pts).intersection(TILE.buffer(-1))
+    line = LineString(pts).intersection(ROAD_CLIP)
     if line.is_empty:
         continue
     lines = [line] if line.geom_type == "LineString" else [l for l in getattr(line, "geoms", []) if l.geom_type == "LineString"]
@@ -883,6 +1022,10 @@ for e in osm:
             rec["b"] = 1
         if t.get("oneway") == "yes":
             rec["o"] = 1
+        # ends cut at the map edge continue in the neighbouring region: no round cap there
+        cut = [int(_clip_edge.distance(Point(*c[0])) < 0.05), int(_clip_edge.distance(Point(*c[-1])) < 0.05)]
+        if any(cut):
+            rec["x"] = cut
         roads_out.append(rec)
 json.dump(roads_out, open(os.path.join(OUT, "roads.json"), "w"), separators=(",", ":"))
 print("roads", len(roads_out), "paths", len(paths_lines))
@@ -920,7 +1063,7 @@ for e in street_osm:
         continue
     t = e.get("tags", {})
     E, N = TF.transform(e["lon"], e["lat"])
-    if not (E_MIN < E < E_MIN + SIZE and N_MAX - SIZE < N < N_MAX):
+    if not in_tile(E, N):
         continue
     lx, lz = to_local(E, N)
     kind = next((v for (k, val), v in NODE_KIND.items() if t.get(k) == val), None)
@@ -944,7 +1087,7 @@ for e in street_osm:
             furn.append({"t": kind, "x": round(lx, 2), "z": round(lz, 2), "r": yaw_local(tx, ty), "w": w})
 
 # ---- Mapillary: objects detected in street-level photos (CC BY-SA), if fetched (tools/mapillary.py)
-MLY_DIR = os.path.join(DATA, "mapillary")
+MLY_DIR = os.path.join(RDATA, "mapillary")
 mly_feats, mly_signs, mly_cover = [], [], None
 if os.path.exists(os.path.join(MLY_DIR, "map_features.json")):
     mly_feats = json.load(open(os.path.join(MLY_DIR, "map_features.json")))
@@ -976,7 +1119,7 @@ for f_ in mly_feats:
         continue
     lon, lat = f_["geometry"]["coordinates"]
     E, N = TF.transform(lon, lat)
-    if not (E_MIN < E < E_MIN + SIZE and N_MAX - SIZE < N < N_MAX) or shapely.contains_xy(ALL_B, E, N):
+    if not in_tile(E, N) or shapely.contains_xy(ALL_B, E, N):
         continue
     d, w, (tx, ty), (qx, qy) = road_dir(E, N)
     # detections are triangulated from photos (a few metres' error): pull roadside objects out of the
@@ -1004,7 +1147,7 @@ for f_ in mly_signs:
         continue
     lon, lat = f_["geometry"]["coordinates"]
     E, N = TF.transform(lon, lat)
-    if not (E_MIN < E < E_MIN + SIZE and N_MAX - SIZE < N < N_MAX) or shapely.contains_xy(ALL_B, E, N):
+    if not in_tile(E, N) or shapely.contains_xy(ALL_B, E, N):
         continue
     d, w, (tx, ty), (qx, qy) = road_dir(E, N)
     if d > 25:
@@ -1034,6 +1177,8 @@ print("mapillary added", mly_counts, "coverage", "yes" if mly_cover is not None 
 # lamp posts: OSM has none mapped; on streets Mapillary has photographed, its detected street lights are
 # used instead. Elsewhere, generate one every ~30 m along built-up streets (alternating sides).
 LAMP_ROADS = {"primary", "secondary", "tertiary", "residential", "unclassified", "living_street", "primary_link"}
+if RURAL:
+    LAMP_ROADS = set()   # country lanes and the village are unlit
 lamps = 0
 lamp_pts = []
 for rd in roads_out:
@@ -1075,8 +1220,13 @@ for e in street_osm:
     except (ValueError, IndexError):
         h = {"wall": 1.6, "fence": 1.2, "hedge": 1.7, "retaining_wall": 1.0, "city_wall": 2.5}[bt]
     mat = t.get("material", "")
-    barriers.append({"t": bt, "h": round(min(h, 4), 2), "m": mat,
-                     "p": [[round(v, 2) for v in to_local(x, y)] for x, y in co]})
+    parts_ = [co]
+    if REGION:
+        cl = LineString(co).intersection(TILE)
+        parts_ = [list(l.coords) for l in getattr(cl, "geoms", [cl]) if l.geom_type == "LineString" and l.length > 0.5]
+    for co in parts_:
+        barriers.append({"t": bt, "h": round(min(h, 4), 2), "m": mat,
+                         "p": [[round(v, 2) for v in to_local(x, y)] for x, y in co]})
 # ---------------------------------------------------------------- pavements (OSM sidewalk tags + building frontages)
 print("pavements")
 PAVE_ROADS = {"primary", "secondary", "tertiary", "residential", "unclassified", "living_street",
@@ -1111,7 +1261,7 @@ for e in osm:
                 left = v == "yes"
             else:
                 right = v == "yes"
-    built_up = ALL_B.distance(line) < 25
+    built_up = not RURAL and ALL_B.distance(line) < 25
     if built_up:
         corridor.append(line.buffer(w / 2 + 7, cap_style="flat"))
     if left is None:
@@ -1247,9 +1397,280 @@ for f in furn:
     kept.append(f)
 furn = kept
 print("objects moved off carriageways / onto pavements:", moved_n, "dropped:", dict(dropped))
+
+
+def raster_mask(geoms, buf=0.0):
+    """1 m boolean raster (region grid) of polygons"""
+    im = Image.new("L", (SIZE, SIZE), 0)
+    dr = ImageDraw.Draw(im)
+    for p_ in geoms:
+        p_ = p_.buffer(buf) if buf else p_
+        for q_ in polys_of(p_):
+            dr.polygon([(x - E_MIN, N_MAX - y) for x, y in q_.exterior.coords], fill=255)
+            for r_ in q_.interiors:
+                dr.polygon([(x - E_MIN, N_MAX - y) for x, y in r_.coords], fill=0)
+    return np.array(im) > 0
+
+
+def trace_skeleton(sk):
+    """Split a 1-pixel skeleton into pixel paths between end / junction pixels."""
+    pts = set(zip(*np.nonzero(sk)))
+    nb = lambda p: [(p[0] + a, p[1] + b) for a in (-1, 0, 1) for b in (-1, 0, 1) if (a or b) and (p[0] + a, p[1] + b) in pts]
+    deg = {p: len(nb(p)) for p in pts}
+    seen, paths = set(), []
+    for start in [p for p in pts if deg[p] != 2] + list(pts):
+        for q in nb(start):
+            if (start, q) in seen:
+                continue
+            path, prev, cur = [start], start, q
+            seen.add((start, q)); seen.add((q, start))
+            while True:
+                path.append(cur)
+                if deg[cur] != 2 or cur == start:
+                    break
+                nxt = [r for r in nb(cur) if r != prev and (cur, r) not in seen]
+                if not nxt:
+                    break
+                seen.add((cur, nxt[0])); seen.add((nxt[0], cur))
+                prev, cur = cur, nxt[0]
+            paths.append(path)
+    return paths
+
+
+if RURAL:
+    # ---- hedgerows from LIDAR: long, narrow strips of 0.8-7 m canopy that are not buildings, water or road.
+    # Each strip is thinned to its centre line and becomes a hedge (height = median canopy along it).
+    from skimage.morphology import skeletonize
+    print("hedgerows")
+    canopy_ = dsm_s - dtm
+    WATER_M = raster_mask(water_polys) if water_polys else np.zeros((SIZE, SIZE), bool)
+    ROAD_M = raster_mask([ROADS_U], 0.8)
+    TILE_M = raster_mask([TILE])
+    hm = (canopy_ > 0.8) & (canopy_ < 7) & ~(np.array(bmask) > 0) & ~WATER_M & ~ROAD_M & TILE_M
+    hm = ndimage.binary_opening(hm, np.ones((2, 2), bool))
+    lab, nlab = ndimage.label(hm, np.ones((3, 3), bool))
+    area = np.bincount(lab.ravel())
+    sk = skeletonize(hm & (area[lab] >= 12))
+    sk_len = np.bincount(lab[sk], minlength=nlab + 1)
+    # hedge-like: at least 8 m of centre line, under 5 m wide on average (rules out crops, gardens, copses)
+    keep = (sk_len >= 8) & (area < 5.0 * np.maximum(sk_len, 1))
+    keep[0] = False
+    sk &= keep[lab]
+    n_h, len_h = 0, 0.0
+    ROAD_CLEAR = ROADS_U.buffer(1.2)   # hedge centre line (1.6 m wide) stays clear of the carriageway
+    shapely.prepare(ROAD_CLEAR)
+    for path in trace_skeleton(sk):
+        if len(path) < 6:
+            continue
+        rr_ = np.array([p_[0] for p_ in path]); cc_ = np.array([p_[1] for p_ in path])
+        line = LineString(np.column_stack([E_MIN + cc_ + 0.5, N_MAX - rr_ - 0.5])).simplify(0.7)
+        if line.length < 6:
+            continue
+        h = float(np.clip(np.median(canopy_[rr_, cc_]), 1.2, 3.0))   # taller growth along it is trees (modelled separately)
+        line = line.difference(ROAD_CLEAR)
+        for part in getattr(line, "geoms", [line]):
+            if part.geom_type != "LineString" or part.length < 3:
+                continue
+            barriers.append({"t": "hedge", "h": round(h, 2), "m": "lidar",
+                             "p": [[round(v, 2) for v in to_local(x, y)] for x, y in part.coords]})
+            n_h += 1
+            len_h += part.length
+    print("hedges from LIDAR:", n_h, "length km", round(len_h / 1000, 1))
+
 json.dump({"furniture": furn, "barriers": barriers}, open(os.path.join(OUT, "street.json"), "w"), separators=(",", ":"))
 from collections import Counter as _C
 print("furniture", _C(f["t"] for f in furn), "barriers", len(barriers))
+
+if REGION:
+    # ------------------------------------------------------------ region terrain: one node grid per cell
+    # Nodes sit on the cell edges (201 x 201 at 2.5 m), so neighbouring cells share their edge heights.
+    print("terrain (cells)")
+    GS = 2.5
+    GN = int(CS / GS) + 1
+    dtm_f = ndimage.uniform_filter(dtm, 2)
+    T_, D_, K_ = [], [], []
+    for e_, n_ in CELLS:
+        ys_ = (n_ + CS) - np.arange(GN) * GS
+        xs_ = e_ + np.arange(GN) * GS
+        rr, cc = np.meshgrid(N_MAX - ys_ - 0.5, xs_ - E_MIN - 0.5, indexing="ij")
+        terr = ndimage.map_coordinates(dtm_f, [rr, cc], order=1, mode="nearest")
+        gx = lambda E: (E - e_) / GS + 0.5
+        gy = lambda N: (n_ + CS - N) / GS + 0.5
+        kimg = Image.new("L", (GN, GN), 0)
+        kd = ImageDraw.Draw(kimg)
+        for p in polys_of(water_u):
+            kd.polygon([(gx(x), gy(y)) for x, y in p.exterior.coords], fill=1)
+            for r in p.interiors:
+                kd.polygon([(gx(x), gy(y)) for x, y in r.coords], fill=0)
+        bimg = Image.new("F", (GN, GN), 0)
+        bd = ImageDraw.Draw(bimg)
+        for rd in roads_out:
+            if rd.get("b"):
+                for a, b in zip(rd["pts"][:-1], rd["pts"][1:]):
+                    bd.line([(gx(a[0] + E0), gy(N0 - a[1])), (gx(b[0] + E0), gy(N0 - b[1]))],
+                            fill=float((a[2] + b[2]) / 2), width=max(2, int(rd["w"] / GS + 1)))
+        kind = np.array(kimg, np.uint8)
+        bh = np.array(bimg, np.float32)
+        kind[bh > 0] = 2
+        T_.append(terr); D_.append(np.where(bh > 0, np.maximum(bh, terr), terr)); K_.append(kind)
+    hmin = float(min(t_.min() for t_ in T_)) - 1
+    json.dump({"cells": [[e_ - E0, N0 - n_ - CS] for e_, n_ in CELLS], "n": GN, "s": GS, "cell": CS, "min": hmin},
+              open(os.path.join(OUT, "terrain.json"), "w"))
+    np.round((np.array(T_) - hmin) * 100).astype(np.uint16).tofile(os.path.join(OUT, "terrain.bin"))
+    np.round((np.array(D_) - hmin) * 100).astype(np.uint16).tofile(os.path.join(OUT, "drive.bin"))
+    np.array(K_, np.uint8).tofile(os.path.join(OUT, "kind.bin"))
+
+    # ------------------------------------------------------------ trees from LIDAR canopy (inside the cells)
+    print("trees")
+    canopy = dsm_s - dtm
+    bm = np.array(bmask) > 0
+    cand = (canopy > 4) & ~bm & ~WATER_M & TILE_M & ~raster_mask([ROADS_U], 0.6)   # canopy over a road is not a trunk
+    mx = ndimage.maximum_filter(np.where(cand, canopy, 0), size=7)
+    rows, cols = np.nonzero(cand & (canopy == mx))
+    trees = []
+    for r, c in zip(rows, cols):
+        h = float(canopy[r, c])
+        if h > 30:
+            continue
+        x, z = to_local(E_MIN + c + 0.5, N_MAX - r - 0.5)
+        trees.append([round(x, 1), round(float(dtm[r, c]), 1), round(z, 1), round(h, 1)])
+    json.dump(trees, open(os.path.join(OUT, "trees.json"), "w"), separators=(",", ":"))
+    print("trees", len(trees))
+
+    # ------------------------------------------------------------ ground textures: 1024 px per cell, 16 cells per atlas
+    print("ground textures")
+    LAND = {
+        "residential": (112, 130, 84), "retail": (150, 146, 138), "commercial": (148, 144, 136), "industrial": (138, 136, 130),
+        "farmland": (128, 140, 74), "meadow": (118, 146, 72), "grass": (104, 144, 66), "recreation_ground": (98, 150, 66),
+        "cemetery": (96, 128, 70), "allotments": (120, 120, 76), "forest": (70, 100, 54), "religious": (108, 142, 74),
+        "construction": (150, 136, 112), "railway": (130, 122, 110), "brownfield": (140, 130, 108), "farmyard": (140, 128, 104),
+        "village_green": (100, 150, 66), "orchard": (100, 130, 64),
+    }
+    LEIS = {"park": (98, 148, 66), "pitch": (92, 154, 70), "golf_course": (100, 152, 70), "garden": (102, 140, 70),
+            "playground": (150, 140, 110), "sports_centre": (140, 138, 130), "nature_reserve": (110, 138, 70), "marina": (90, 120, 140)}
+    layers = []
+    for e in osm:
+        t = e.get("tags", {})
+        col = None
+        if t.get("landuse") in LAND:
+            col, pri = LAND[t["landuse"]], 0
+        elif t.get("leisure") in LEIS:
+            col, pri = LEIS[t["leisure"]], 1
+        elif t.get("amenity") == "parking":
+            col, pri = (92, 92, 94), 2
+        elif t.get("natural") in ("wood", "scrub", "grassland", "wetland"):
+            col, pri = {"wood": (70, 100, 54), "scrub": (96, 116, 62), "grassland": (112, 146, 70), "wetland": (96, 126, 90)}[t["natural"]], 0
+        if col is None:
+            continue
+        g = element_polygon(e)
+        if g is None:
+            continue
+        for p in polys_of(g.intersection(TILE)):
+            layers.append((pri, -p.area, p, col))
+    layers.sort(key=lambda a: (a[0], a[1]))
+    road_gaps = ROADS_U.buffer(3.0, join_style="mitre").buffer(-3.0, join_style="mitre").difference(ROADS_U).difference(ALL_B)
+    tarmac = road_islands + [g_ for g_ in polys_of(road_gaps) if g_.area > 0.5] + polys_of(ROADS_U)
+    gy_all, gx_all = np.gradient(ndimage.uniform_filter(dtm, 3))
+    TS, PER = 1024, 4
+    atlases = []
+    for ci, (e_, n_) in enumerate(CELLS):
+        sc = TS / CS
+        cellb = box(e_ - 2, n_ - 2, e_ + CS + 2, n_ + CS + 2)
+        img = Image.new("RGB", (TS, TS), (104, 132, 70))
+        d = ImageDraw.Draw(img)
+        P = lambda E, N: ((E - e_) * sc, (n_ + CS - N) * sc)
+
+        def fill(p, col):
+            if not p.intersects(cellb):
+                return
+            if not p.interiors:
+                d.polygon([P(x, y) for x, y in p.exterior.coords], fill=col)
+                return
+            m = Image.new("L", (TS, TS), 0)
+            md = ImageDraw.Draw(m)
+            md.polygon([P(x, y) for x, y in p.exterior.coords], fill=255)
+            for r in p.interiors:
+                md.polygon([P(x, y) for x, y in r.coords], fill=0)
+            img.paste(col, (0, 0, TS, TS), m)
+        for _, _, p, col in layers:
+            fill(p, col)
+        r0, c0 = N_MAX - (n_ + CS), e_ - E_MIN
+        sl = (slice(r0, r0 + CS), slice(c0, c0 + CS))
+        cimg = Image.fromarray((np.clip(canopy[sl], 0, 12) / 12 * 255 * (~bm[sl])).astype(np.uint8)).resize((TS, TS), Image.BILINEAR)
+        shade = np.clip(1 + (gx_all[sl] * -0.6 + gy_all[sl] * 0.6) * 0.8, 0.75, 1.2)
+        simg = Image.fromarray((shade * 200).astype(np.uint8)).resize((TS, TS), Image.BILINEAR)
+        a = np.asarray(img).astype(np.float32)
+        a *= (np.asarray(simg, np.float32) / 200)[..., None]
+        cn = np.asarray(cimg, np.float32)[..., None] / 255
+        a = a * (1 - 0.35 * cn) + np.array([40, 64, 30]) * 0.35 * cn
+        img = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+        d = ImageDraw.Draw(img)
+        for p in polys_of(water_u):
+            fill(p, (52, 78, 82))
+        for p_ in pave_polys:
+            fill(p_, (168, 165, 158))
+        for p_ in tarmac:
+            fill(p_, (86, 88, 90))
+        for coords, hw in paths_lines:
+            col = (176, 170, 158) if hw != "cycleway" else (160, 120, 110)
+            d.line([P(x, y) for x, y in coords], fill=col, width=max(2, int(2.2 * sc)))
+        img = img.filter(ImageFilter.GaussianBlur(0.6))
+        ai, k = divmod(ci, PER * PER)
+        if k == 0:
+            atlases.append(Image.new("RGB", (TS * PER, TS * PER), (104, 132, 70)))
+        atlases[ai].paste(img, ((k % PER) * TS, (k // PER) * TS))
+    for ai, A in enumerate(atlases):
+        A.save(os.path.join(OUT, f"ground{ai}.jpg"), quality=86)
+    tj = json.load(open(os.path.join(OUT, "terrain.json")))
+    tj["atlas"] = {"per": PER, "n": len(atlases)}
+
+    # ------------------------------------------------------------ far landscape: 10 m EA LIDAR, 20 m mesh
+    # Seen beyond the detailed cells (through the haze). Woods, hedgerows and trees show as darker green
+    # wherever the 10 m surface model stands over 2.5 m above the ground.
+    if os.path.exists(os.path.join(RDATA, "horizon_dtm.npy")):
+        print("horizon")
+        HE0, HN0, HE1, HN1 = 380500, 229000, 392500, 240000          # tools/region.py HORIZON
+        hz_t = np.load(os.path.join(RDATA, "horizon_dtm.npy"))
+        hz_t = np.where(np.isnan(hz_t), np.nanmedian(hz_t), hz_t)
+        if os.path.exists(os.path.join(RDATA, "horizon_dsm.npy")):
+            hz_s = np.load(os.path.join(RDATA, "horizon_dsm.npy"))
+            hz_s = np.where(np.isnan(hz_s), hz_t, np.maximum(hz_s, hz_t))
+        else:
+            # no 10 m surface model: mark woods mapped in OSM (town + region extracts) as 8 m canopy
+            wim = Image.new("L", (hz_t.shape[1], hz_t.shape[0]), 0)
+            wd_ = ImageDraw.Draw(wim)
+            for src in (osm, json.load(open(os.path.join(DATA, "osm.json")))["elements"]):
+                for e in src:
+                    t = e.get("tags", {})
+                    if t.get("natural") == "wood" or t.get("landuse") in ("forest", "orchard"):
+                        for p in polys_of(element_polygon(e)):
+                            wd_.polygon([((x - HE0) / 10, (HN1 - y) / 10) for x, y in p.exterior.coords], fill=8)
+            hz_s = hz_t + np.array(wim, np.float32)
+        sub = hz_t[::2, ::2]
+        nz_, nx_ = sub.shape
+        hmin_h = float(sub.min()) - 1
+        np.round((sub - hmin_h) * 100).astype(np.uint16).tofile(os.path.join(OUT, "horizon.bin"))
+        tj["horizon"] = {"x0": HE0 + 5 - E0, "z0": N0 - (HN1 - 5), "nx": nx_, "nz": nz_, "s": 20, "min": hmin_h}
+        span = hz_t[:2 * (nz_ - 1) + 1, :2 * (nx_ - 1) + 1]
+        can = np.clip((hz_s - hz_t)[:span.shape[0], :span.shape[1]], 0, 12)
+        gy_h, gx_h = np.gradient(ndimage.uniform_filter(span, 3), 10)
+        shade = np.clip(1 + (gx_h * -0.6 + gy_h * 0.6) * 8, 0.75, 1.2)[..., None]
+        field = np.array([116, 138, 74], np.float32)
+        var_ = (ndimage.uniform_filter(np.random.default_rng(7).random(span.shape), 9) - 0.5)[..., None] * 60
+        wood = np.clip((can - 2.5) / 4, 0, 1)[..., None]
+        rgb = (field + var_ * np.array([0.5, 0.6, 0.3])) * (1 - wood * 0.55) + np.array([44, 70, 36]) * wood * 0.55
+        Image.fromarray(np.clip(rgb * shade, 0, 255).astype(np.uint8)).save(os.path.join(OUT, "horizon.jpg"), quality=85)
+    json.dump(tj, open(os.path.join(OUT, "terrain.json"), "w"))
+
+    # the world's build stamp lives in the town's meta.json: bump it so browsers fetch the new region files
+    import time as _time
+    mp = os.path.join(ROOT, "game", "data", "meta.json")
+    meta = json.load(open(mp))
+    meta["build"] = _time.strftime("%Y%m%d%H%M%S")
+    meta["regions"] = sorted(set(meta.get("regions", [])) | {REGION})
+    json.dump(meta, open(mp, "w"))
+    print("done")
+    sys.exit(0)
 
 # ---------------------------------------------------------------- terrain grid (2.5 m)
 print("terrain")
@@ -1291,7 +1712,7 @@ print("trees")
 canopy = dsm_s - dtm
 bm = np.array(bmask) > 0
 wm = np.array(Image.fromarray(kind * 120).resize((SIZE, SIZE), Image.NEAREST)) > 0
-cand = (canopy > 4) & ~bm & ~wm
+cand = (canopy > 4) & ~bm & ~wm & ~raster_mask([ROADS_U], 0.6)   # canopy over a road is not a trunk
 mx = ndimage.maximum_filter(np.where(cand, canopy, 0), size=7)
 peaks = cand & (canopy == mx)
 rows, cols = np.nonzero(peaks)
@@ -1404,5 +1825,6 @@ dd = np.hypot(H[:, None, 0] - C[None, :, 0], H[:, None, 1] - C[None, :, 1])
 i, j = np.unravel_index(np.argmin(dd), dd.shape)
 spawn = ((H[i] + C[j]) / 2).tolist()
 import time as _time
-json.dump({"spawn": spawn, "build": _time.strftime("%Y%m%d%H%M%S")}, open(os.path.join(OUT, "meta.json"), "w"))
+_regions = json.load(open(os.path.join(OUT, "meta.json"))).get("regions", []) if os.path.exists(os.path.join(OUT, "meta.json")) else []
+json.dump({"spawn": spawn, "build": _time.strftime("%Y%m%d%H%M%S"), "regions": _regions}, open(os.path.join(OUT, "meta.json"), "w"))
 print("done")

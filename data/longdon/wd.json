@@ -1,0 +1,1368 @@
+{
+  "head" : {
+    "vars" : [ "le", "item", "itemLabel", "img" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082217"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17547642"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Pull%20Court%2C%20Bushley%20-%20geograph.org.uk%20-%206699.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Pull Court, screen, archway and gates"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082219"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17547646"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Paynes%20Place%2C%20Bushley%20%28geograph%205402574%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Paynes Place"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238531"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17547886"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Longdon Hall"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238754"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17547889"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Moat House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238836"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17547895"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Longdon%20Church%20-%20geograph.org.uk%20-%20715645.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Church of Saint Mary"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1239009"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17547901"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Queenhill%20Church%20-%20geograph.org.uk%20-%20715246.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Church of Saint Nicholas"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1239081"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17677981"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Churchyard cross in St Nicholas's churchyard"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082210"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26359730"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Dunrovin"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082211"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26359736"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Nook And Smithy Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082212"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26359742"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Pool Cottages"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082213"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26359746"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Church%20End%20and%20Church%20End%20Cottage%20%28geograph%205833587%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Church End"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082214"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26359752"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Church Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082215"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26359757"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Old%20School%20House%20-%20geograph.org.uk%20-%204893242.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Old School"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082216"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26359762"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Wellingtonia House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082218"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26359767"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Stalls"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1082220"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26359773"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Rose Hill Farmhouse And Attached Outbuildings"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178779"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473480"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Yeandley And Attached Barn And Granary"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178789"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473490"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Gables"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178804"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473505"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn To East Of Green Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178814"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473515"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Yew Tree Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178841"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473536"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Churchyard Wall To Church Of Saint Peter"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178843"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473538"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Church End Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178846"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473541"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Double%20Gate%20Farmhouse%20-%20geograph.org.uk%20-%204894367.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Double Gate Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178848"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473543"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Red-brick%20cottage%20in%20Bushley%20-%20geograph.org.uk%20-%204894283.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Shepherds Peace"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178852"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473547"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Ornate%20house%20on%20the%20A348%20near%20to%20Forthampton%20-%20geograph.org.uk%20-%208105255.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Greenstreet Lodge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178860"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473554"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Stable Block To East Of Pull Court (Bredon School)"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178871"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473564"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn To West Of Payne's Place"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1178880"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26473573"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Timber-framed%20cottage%20in%20Bushley%20-%20geograph.org.uk%20-%204894293.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Churchend Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238443"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531504"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tudor%20Cottage%20-%20geograph.org.uk%20-%204894277.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Kadmorr Cottage  Tudor Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238444"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531505"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Corner Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238468"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531527"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn To East Of Massey Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238475"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531533"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238510"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531568"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Wood Street Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238526"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531582"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Brook Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238527"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531583"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Parsonage Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238528"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531584"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Lower%20Swell%20Farm%20%28geograph%206606129%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Lower Swell Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238532"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531586"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Hillworth Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238533"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531587"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Chambers Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238727"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531768"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn Range To South Of Longdon Hall"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238743"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531784"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Wytchfields"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238747"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531788"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Eversleigh"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238749"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531790"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Lavender Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238751"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531792"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Wheypools"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238752"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531793"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Copyhold"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238798"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531837"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn And Stable To North Of Wheypools"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238833"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531870"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Manor Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238862"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531899"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Lye%20tomb%2C%20Longdon%20%28geograph%206019252%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Lye Tomb 15 Metres West Of Saint Mary's Church"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238864"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531901"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Saint Mary's Primary School"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238865"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531902"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Corner Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238867"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531904"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/The%20Old%20Forge%20%28geograph%206712962%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Old Forge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238900"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531933"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Conifer Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238928"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531958"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Pipers End Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238950"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531978"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn To West Of Pipers End Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238951"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531979"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Squirrel Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238952"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531980"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Briarways"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238953"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531981"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Pigeoncote To East Of Robertsend Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238954"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531982"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Ciderhouse Attached To Rear Of Hill Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1238955"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26531983"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Orchard Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1239006"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26532028"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Slades Green Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1239008"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26532030"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Heath Hill House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1239063"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26532085"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Ivy Cottage  Sunnyside"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1239101"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26532115"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Churchend Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1239104"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26532118"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Green%20Farm%2C%20Holdfast%20-%20geograph.org.uk%20-%20714663.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Green Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1239105"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26532119"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Old House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1273872"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563579"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Queenhill%20Manor%20%28geograph%206664810%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Manor House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1273873"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563580"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Timber-framed%20cottage%20%28geograph%206950635%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Old School House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1273909"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563613"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn To South Of The Woodlands"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1273924"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563626"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Marsh Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1273961"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563658"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn Tonorth West Of Pipers End Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1273962"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563659"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Robertsend Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1273963"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563660"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn To North Of Robertsend Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1273978"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563674"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Old Cider House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1273984"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563680"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gunnice Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274000"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563695"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Churchend Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274001"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563696"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Long Green Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274002"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563697"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Pipers End Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274017"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563712"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gullers End Cottages"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274024"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563718"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Buckbury House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274025"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563719"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "New House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274026"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563720"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gullers End Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274027"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563721"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn And Stables To South Of Gunnice Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274037"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563731"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Buckbury Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274054"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563748"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Old Smithy"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274161"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563847"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barn To North Of Hillworth Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274162"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563848"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Sportsman's Lodge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274174"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563859"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Wethersfield"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274199"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563883"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Massey Farmhouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1274200"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26563884"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Applewick"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1302508"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26589660"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Puck Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1349705"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26632982"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Green Farmhouse And Attached Barn To North West"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1349706"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26632983"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Bushley%20Church%20-%20geograph.org.uk%20-%204772.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Church of St Peter, Bushley"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1349707"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26632984"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Cottage To West Of Tudor Cottage"
+      }
+    } ]
+  }
+}

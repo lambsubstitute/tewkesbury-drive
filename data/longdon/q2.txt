@@ -1,0 +1,15 @@
+[out:json][timeout:180];
+(
+  node["shop"](51.990,-2.262,52.038,-2.176);
+  node["amenity"](51.990,-2.262,52.038,-2.176);
+  node["tourism"](51.990,-2.262,52.038,-2.176);
+  node["office"](51.990,-2.262,52.038,-2.176);
+  node["craft"](51.990,-2.262,52.038,-2.176);
+  node["highway"~"street_lamp|crossing|traffic_signals|bus_stop|give_way|stop"](51.990,-2.262,52.038,-2.176);
+  node["barrier"~"bollard|gate"](51.990,-2.262,52.038,-2.176);
+  node["man_made"](51.990,-2.262,52.038,-2.176);
+  node["historic"](51.990,-2.262,52.038,-2.176);
+  way["barrier"~"wall|fence|hedge|retaining_wall|city_wall"](51.990,-2.262,52.038,-2.176);
+  way["shop"](51.990,-2.262,52.038,-2.176);
+);
+out geom;

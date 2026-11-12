@@ -1,13 +1,18 @@
-"""Fetch Mapillary map features (detected street objects) and image metadata for the Tewkesbury tile.
+"""Fetch Mapillary map features (detected street objects) and image metadata for the Tewkesbury tile
+(or a countryside region with --region <name>).
 Token is read from ~/.mapillary_token and sent only in the Authorization header; it is never printed or stored."""
 import json, os, sys, time, urllib.parse, urllib.request
 
 TOKEN = open(os.path.expanduser("~/.mapillary_token")).read().strip()
 while TOKEN.startswith("MLY|MLY|"):          # tolerate a doubled prefix from pasting a full token after "MLY|"
     TOKEN = TOKEN[4:]
-OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "mapillary")
-os.makedirs(OUT, exist_ok=True)
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+OUT = os.path.join(DATA, "mapillary")
 LON0, LAT0, LON1, LAT1 = -2.178, 51.982, -2.143, 52.004
+if "--region" in sys.argv:   # countryside region (tools/region.py): same bbox as its OSM extract
+    OUT = os.path.join(DATA, sys.argv[sys.argv.index("--region") + 1], "mapillary")
+    LON0, LAT0, LON1, LAT1 = -2.262, 51.990, -2.176, 52.038
+os.makedirs(OUT, exist_ok=True)
 
 
 def get(path, params):

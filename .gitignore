@@ -8,3 +8,6 @@ data/commons/
 data/le.html
 data/mly_thumbs/
 data/roof_model_raster.npy
+data/os/
+data/longdon/lidar/
+data/longdon/horizon_*.npy

@@ -1,0 +1,22 @@
+# Wall material per listed building around Longdon, classified by eye from its Wikimedia Commons photo
+# (via Wikidata P18). Format: <NHLE list entry> <code>, codes as in data/materials_by_photo.txt:
+#   B = red brick, W = white painted render/brick, C:<hex> = coloured render, T = black-and-white timber frame,
+#   T:<hex> = timber frame with coloured (brick) infill, S:<hex> = stone, X = not a building / unclear
+1082213 B
+1082215 T
+1082217 S:b8ae96
+1082219 T:a0604a
+1178846 B
+1178848 B
+1178852 S:a8a49a
+1178880 T:b07a48
+1238443 T:b06a44
+1238528 S:b4aa96
+1238836 S:c9b88e
+1238862 X
+1238867 W
+1239009 S:b0a898
+1239104 B
+1273872 T
+1273873 T
+1349706 S:a8a8a0

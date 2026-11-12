@@ -3,6 +3,25 @@
 import * as THREE from 'three';
 
 const M = (o) => new THREE.MeshStandardMaterial(o);
+// hedges: break up the flat box colour with world-space leaf clumps (instanced boxes have stretched UVs)
+function leafy(m) {
+  m.onBeforeCompile = (sh) => {
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWP;')
+      .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvWP = (modelMatrix * instanceMatrix * vec4(transformed, 1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
+varying vec3 vWP;
+float h3(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
+float vn(vec3 p) { vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(h3(i), h3(i + vec3(1,0,0)), f.x), mix(h3(i + vec3(0,1,0)), h3(i + vec3(1,1,0)), f.x), f.y),
+             mix(mix(h3(i + vec3(0,0,1)), h3(i + vec3(1,0,1)), f.x), mix(h3(i + vec3(0,1,1)), h3(i + vec3(1,1,1)), f.x), f.y), f.z); }`)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+float lv = vn(vWP * 2.3) * 0.6 + vn(vWP * 7.0) * 0.4;
+float big = vn(vWP * 0.18);
+diffuseColor.rgb *= mix(0.62, 1.22, lv) * mix(0.85, 1.12, big);
+diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.36, 0.42, 0.16), smoothstep(0.62, 0.9, big) * 0.35);`);
+  };
+  return m;
+}
 const MAT = {
   black: M({ color: 0x1c1c1e, roughness: 0.6, metalness: 0.3 }),
   grey: M({ color: 0x6d7175, roughness: 0.6, metalness: 0.4 }),
@@ -21,7 +40,7 @@ const MAT = {
   signRed: M({ color: 0xc8102e, roughness: 0.5 }),
   signBlue: M({ color: 0x1d5aa8, roughness: 0.5 }),
   signBack: M({ color: 0x9a9ea2, roughness: 0.6, metalness: 0.5 }),
-  hedge: M({ color: 0x3f5f2e, roughness: 1 }),
+  hedge: leafy(M({ color: 0x4f7236, roughness: 1 })),
   brickWall: M({ color: 0x96523c, roughness: 0.95 }),
   fence: M({ color: 0x6b4f35, roughness: 0.95 }),
 };
@@ -139,7 +158,7 @@ export function buildStreet(scene, data, terrainY) {
   // boundaries: one stretched box per segment
   const byType = {};
   for (const b of data.barriers) {
-    const thick = b.t === 'hedge' ? 0.9 : b.t === 'fence' ? 0.06 : 0.3;
+    const thick = b.t === 'hedge' ? (b.m === 'lidar' ? 1.6 : 0.9) : b.t === 'fence' ? 0.06 : 0.3;   // field hedgerows are wider than garden hedges
     const mat = b.t === 'hedge' ? MAT.hedge : b.t === 'fence' ? MAT.fence : /stone|limestone/.test(b.m) ? MAT.stone : MAT.brickWall;
     const key = mat.uuid;
     for (let i = 1; i < b.p.length; i++) {
@@ -226,13 +245,20 @@ export function buildPavements(scene, tris, kerbs, terrainY) {
   const km = new THREE.Mesh(kg, new THREE.MeshStandardMaterial({ color: 0xb9b6ae, roughness: 0.8, side: THREE.DoubleSide }));
   km.receiveShadow = true; scene.add(km);
 
-  // 1 m raster of where the pavement is, so the car rides up onto it
-  const S = 2500, cv = document.createElement('canvas'); cv.width = cv.height = S;
+  // 1 m raster of where the pavement is (over the pavements' own bounding box), so the car rides up onto it
+  if (!tris.length) return () => false;
+  let x0 = Infinity, z0 = Infinity, x1 = -Infinity, z1 = -Infinity;
+  for (let i = 0; i < tris.length; i += 2) {
+    x0 = Math.min(x0, tris[i]); x1 = Math.max(x1, tris[i]); z0 = Math.min(z0, tris[i + 1]); z1 = Math.max(z1, tris[i + 1]);
+  }
+  x0 = Math.floor(x0) - 1; z0 = Math.floor(z0) - 1;
+  const W = Math.min(8192, Math.ceil(x1 - x0) + 2), H = Math.min(8192, Math.ceil(z1 - z0) + 2);
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
   const cx = cv.getContext('2d'); cx.fillStyle = '#fff';
   for (let i = 0; i < tris.length; i += 6) {
-    cx.beginPath(); cx.moveTo(tris[i] + S / 2, tris[i + 1] + S / 2); cx.lineTo(tris[i + 2] + S / 2, tris[i + 3] + S / 2); cx.lineTo(tris[i + 4] + S / 2, tris[i + 5] + S / 2); cx.fill();
+    cx.beginPath(); cx.moveTo(tris[i] - x0, tris[i + 1] - z0); cx.lineTo(tris[i + 2] - x0, tris[i + 3] - z0); cx.lineTo(tris[i + 4] - x0, tris[i + 5] - z0); cx.fill();
   }
-  const img = cx.getImageData(0, 0, S, S).data, mask = new Uint8Array(S * S);
-  for (let i = 0; i < S * S; i++) mask[i] = img[i * 4 + 3] > 127 ? 1 : 0;
-  return (x, z) => { const i = Math.floor(x + S / 2), j = Math.floor(z + S / 2); return i >= 0 && j >= 0 && i < S && j < S && mask[j * S + i] === 1; };
+  const img = cx.getImageData(0, 0, W, H).data, mask = new Uint8Array(W * H);
+  for (let i = 0; i < W * H; i++) mask[i] = img[i * 4 + 3] > 127 ? 1 : 0;
+  return (x, z) => { const i = Math.floor(x - x0), j = Math.floor(z - z0); return i >= 0 && j >= 0 && i < W && j < H && mask[j * W + i] === 1; };
 }
