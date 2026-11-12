@@ -1,0 +1,18 @@
+{
+ "name": "Tewkesbury",
+ "title": "Tewkesbury Drive",
+ "tile": [387800, 231500, 390300, 234000],
+ "origin": [389050.0, 232750.0],
+ "centre": [389180, 232670],
+ "bbox_ll": "51.982,-2.178,52.004,-2.143",
+ "os_square": ["SO"],
+ "spawn": {"roads": ["High Street", "Church Street"], "label": "The Cross"},
+ "teleports": [
+  ["Tewkesbury Abbey", "Tewkesbury Abbey", "Church Street"],
+  ["Town Hall", "Tewkesbury Town Hall", "High Street"],
+  ["Morrisons", "Morrisons", null],
+  ["Leisure Centre", "Tewkesbury Leisure Centre", null],
+  ["King John's Bridge", "bridge:Mythe Road", "Mythe Road"],
+  ["Mythe Bridge (Severn)", "bridge:Mythe Bridge", "Mythe Bridge"]
+ ]
+}

@@ -1,0 +1,9 @@
+pyproj
+numpy
+scipy
+shapely>=2.0
+tifffile
+imagecodecs
+pillow
+pyshp
+scikit-image

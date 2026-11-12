@@ -88,18 +88,16 @@ Historic England's list-entry text isn't used: its robots.txt disallows Claude/A
 
 Rebuild:
 
-The LIDAR rasters aren't in the repo (26 MB each), so download them first:
+The tile, origin, spawn point and teleports are in `data/place.json` (written by `tools/place.py init`, then hand-tuned). The LIDAR rasters aren't in the repo, so fetch them first; `place.py fetch` gets them from the EA WCS in small pieces, since the server throttles.
 
 ```bash
-curl -o data/dtm.tif "https://environment.data.gov.uk/spatialdata/lidar-composite-digital-terrain-model-dtm-1m/wcs?service=WCS&version=2.0.1&request=GetCoverage&CoverageId=13787b9a-26a4-4775-8523-806d13af58fc__Lidar_Composite_Elevation_DTM_1m&format=image/tiff&subset=E(387800,390300)&subset=N(231500,234000)"
-curl -o data/dsm.tif "https://environment.data.gov.uk/spatialdata/lidar-composite-digital-surface-model-first-return-dsm-1m/wcs?service=WCS&version=2.0.1&request=GetCoverage&CoverageId=df4e3ec3-315e-48aa-aaaf-b5ae74d7b2bb__Lidar_Composite_Elevation_FZ_DSM_1m&format=image/tiff&subset=E(387800,390300)&subset=N(231500,234000)"
-python3 -m venv .venv && .venv/bin/pip install pyproj numpy scipy shapely tifffile imagecodecs pillow
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/python tools/place.py fetch lidar     # or: fetch (all: OSM, LIDAR, NHLE, Wikidata photos)
 .venv/bin/python tools/process.py
+.venv/bin/python tools/check.py                  # obstacles on roads, buildings over roads, data sizes
 ```
 
-The OSM extracts (`data/osm.json`, `data/osm_street.json`) can be refreshed by POSTing `data/q.txt` and `data/q2.txt` to an Overpass API server.
-
-The Commons photo thumbnails used to classify materials aren't in the repo either. `data/wd_images.json` lists each photo's Commons URL.
+The same tools build any English town: `tools/place.py init "<place>"`, then `fetch` and `process.py`. A Claude Code skill (`real-place-drive`) wraps the whole method, including the by-eye passes.
 
 ## The road to Longdon (`tools/region.py`, `process.py --region longdon`)
 
@@ -120,17 +118,14 @@ For each cell, the 1 m EA DTM, first-return DSM and last-return DSM are fetched 
 To rebuild (the LIDAR cells and the OS download aren't in the repo):
 
 ```bash
-curl -L -o data/os/opmplc_essh_so.zip "https://api.os.uk/downloads/v1/products/OpenMapLocal/downloads?area=SO&format=ESRI%C2%AE+Shapefile&redirect"
-.venv/bin/pip install pyshp scikit-image
-.venv/bin/python tools/region.py os
-.venv/bin/python tools/region.py cells
-.venv/bin/python tools/region.py lidar
-.venv/bin/python tools/region.py horizon
-.venv/bin/python tools/region.py nhle
+.venv/bin/python tools/place.py os                       # OS OpenMap Local zip for the SO square (~105 MB)
+.venv/bin/python tools/region.py longdon os
+.venv/bin/python tools/region.py longdon lidar           # slow: 3 rasters per cell, fetched in pieces
+.venv/bin/python tools/region.py longdon horizon
 .venv/bin/python tools/process.py --region longdon
 ```
 
-The OSM extracts for the region (`data/longdon/osm.json`, `osm_street.json`) come from `data/longdon/q.txt` and `q2.txt`.
+`data/longdon/region.json` holds the route, cells, horizon box and teleports. A new region starts with `tools/region.py <name> init --to "<village>"`, then `os`, `cells`, `lidar`, `horizon`, `nhle`, `photos`.
 
 ## Publishing
 

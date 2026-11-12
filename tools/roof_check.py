@@ -7,7 +7,9 @@ from shapely.geometry import Polygon
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-E_MIN, N_MAX, SIZE, E0, N0 = 387800, 234000, 2500, 389050, 232750
+_P = json.load(open(os.path.join(ROOT, "data", "place.json")))
+E_MIN, N_MAX, SIZE = _P["tile"][0], _P["tile"][3], _P["tile"][2] - _P["tile"][0]
+E0, N0 = _P["origin"]
 dsm = ndimage.median_filter(tifffile.imread(os.path.join(ROOT, "data", "dsm.tif")).astype(np.float32), 3)
 P = np.fromfile(os.path.join(ROOT, "game", "data", "roof_pos.bin"), np.float32).reshape(-1, 3, 3)
 model = np.full((SIZE, SIZE), np.nan, np.float32)

@@ -2,7 +2,8 @@
 as labelled contact sheets so the real fascia colours can be read off by eye.
 
 Usage: shopfront_photos.py <sheet output dir>
-Writes data/shopfront_index.json (sheet number -> shop name, image id, capture year).
+Writes data/shopfront_index.json (sheet number -> shop name, image id, capture year). Run after
+tools/process.py, which writes the named shop units to game/data/shopfronts.json.
 Photo crops go to data/mly_thumbs/ (CC BY-SA imagery, kept out of the repo).
 """
 import json, math, os, sys, time, urllib.request, urllib.parse
@@ -19,11 +20,14 @@ OUT_SHEETS = sys.argv[1]
 THUMBS = os.path.join(D, "mly_thumbs")
 os.makedirs(THUMBS, exist_ok=True)
 os.makedirs(OUT_SHEETS, exist_ok=True)
-E0, N0 = 389050.0, 232750.0
+E0, N0 = json.load(open(os.path.join(D, "place.json")))["origin"]
 pyproj.network.set_network_enabled(True)
 TF = Transformer.from_crs(4326, 27700, always_xy=True)
 
-signs = json.load(open(os.path.join(ROOT, "game", "data", "signs.json")))
+# one "sign" per named shop unit: middle of its frontage, outward wall normal (local x, z)
+units = [u for u in json.load(open(os.path.join(ROOT, "game", "data", "shopfronts.json"))) if u.get("name")]
+signs = [{"n": u["name"], "x": (u["a"][0] + u["b"][0]) / 2, "z": (u["a"][1] + u["b"][1]) / 2,
+          "r": math.atan2(u["n"][0], u["n"][1])} for u in units]
 imgs = json.load(open(os.path.join(D, "mapillary", "images.json")))
 cams = []
 for im in imgs:
@@ -79,7 +83,7 @@ for si, (score, iid, diff, year, dist) in picks:
         if not u:
             continue
         try:
-            data = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "tewkesbury-drive/0.1"}), timeout=60).read()
+            data = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "real-place-drive/0.1"}), timeout=60).read()
             open(path, "wb").write(data)
         except Exception:
             continue

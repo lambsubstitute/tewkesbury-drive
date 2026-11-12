@@ -1,10 +1,10 @@
-"""Turn OSM + EA LIDAR + Historic England data into game-ready Tewkesbury map files.
+"""Turn OSM + EA LIDAR + Historic England (+ OS OpenMap Local) data into game-ready map files.
 
-Local coords: x = Easting - E0 (east +), z = N0 - Northing (south +), y = metres above OD.
-Town tile covers E 387800..390300, N 231500..234000 => x,z in [-1250, 1250].
+The place is configured in data/place.json (tools/place.py init). Local coords: x = Easting - E0 (east +),
+z = N0 - Northing (south +), y = metres above OD, where (E0, N0) is the town tile's centre.
 
   process.py                   the town tile -> game/data/
-  process.py --region longdon  the countryside cells set up by tools/region.py -> game/data/longdon/
+  process.py --region <name>   the countryside cells set up by tools/region.py -> game/data/<name>/
                                (same local origin, so both load into one world)
 """
 import json, math, os, sys, hashlib
@@ -27,7 +27,8 @@ import buildgeo
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
 REGION = sys.argv[sys.argv.index("--region") + 1] if "--region" in sys.argv else None
-E0, N0 = 389050.0, 232750.0          # local origin: centre of the town tile, shared by every region
+PLACE = json.load(open(os.path.join(DATA, "place.json")))
+E0, N0 = PLACE["origin"]             # local origin: centre of the town tile, shared by every region
 if REGION:
     # a set of 500 m cells (tools/region.py). TILE = the ground this run owns; the LIDAR raster is one
     # square mosaic covering every cell plus a margin, so buildings and roads on cell edges come out whole.
@@ -44,7 +45,7 @@ if REGION:
 else:
     RDATA = DATA
     OUT = os.path.join(ROOT, "game", "data")
-    E_MIN, N_MAX, SIZE = 387800, 234000, 2500
+    E_MIN, N_MAX, SIZE = PLACE["tile"][0], PLACE["tile"][3], PLACE["tile"][2] - PLACE["tile"][0]
     TILE = box(E_MIN, N_MAX - SIZE, E_MIN + SIZE, N_MAX)
     RURAL = False
 RAST = box(E_MIN, N_MAX - SIZE, E_MIN + SIZE, N_MAX)
@@ -92,7 +93,7 @@ def mosaic(kind, optional=False):
     hz = np.where(np.isnan(hz), np.nanmedian(hz), hz)
     miss = np.isnan(A)
     rr, cc = np.nonzero(miss)
-    HE0, HN1 = 380500, 240000                       # horizon box west / north edge (tools/region.py)
+    HE0, HN1 = REG["horizon"][0], REG["horizon"][3]   # horizon box west / north edge (tools/region.py)
     A[rr, cc] = ndimage.map_coordinates(hz, [(HN1 - (N_MAX - rr - 0.5)) / 10 - 0.5, ((E_MIN + cc + 0.5) - HE0) / 10 - 0.5],
                                         order=1, mode="nearest")
     print(" ", kind, "mosaic", A.shape, "filled from horizon", int(miss.sum()))
@@ -208,7 +209,7 @@ for e in osm:
         g = element_polygon(e)
         if g is not None:
             BLDG.append((f"{e['type']}{e['id']}", t, g))
-if REGION and os.path.exists(os.path.join(RDATA, "os_buildings.json")):
+if os.path.exists(os.path.join(RDATA, "os_buildings.json")):
     # OSM maps only a handful of rural buildings; Ordnance Survey OpenMap Local (OGL) has every one.
     # OS outlines fill in wherever OSM has nothing overlapping.
     _osm_tree = shapely.STRtree([g for _, _, g in BLDG]) if BLDG else None
@@ -252,24 +253,23 @@ NSTYLES = 6
 walls = {s: {"pos": [], "uv": [], "col": []} for s in range(NSTYLES)}
 
 # Wall materials observed in Commons photos of listed buildings (see data/materials_by_photo.txt)
+# Lines are "<NHLE list entry> <code>" (7-digit list entries), or, in the original Tewkesbury file,
+# "<contact-sheet index> <code>" resolved through photo_index.json.
 PHOTO_MAT = {}
-_idx = {str(r["n"]): r["le"] for r in json.load(open(os.path.join(DATA, "photo_index.json")))}
-for line in open(os.path.join(DATA, "materials_by_photo.txt")):
-    line = line.strip()
-    if not line or line.startswith("#"):
+for _dir in sorted({DATA, RDATA}):
+    _fn = os.path.join(_dir, "materials_by_photo.txt")
+    if not os.path.exists(_fn):
         continue
-    n, code = line.split()
-    kind, _, hexc = code.partition(":")
-    col = tuple(int(hexc[i:i + 2], 16) for i in (0, 2, 4)) if hexc else None
-    PHOTO_MAT[str(_idx[n])] = (kind, col)
-if REGION and os.path.exists(os.path.join(RDATA, "materials_by_photo.txt")):
-    for line in open(os.path.join(RDATA, "materials_by_photo.txt")):   # "<list entry> <code>"
+    _ip = os.path.join(_dir, "photo_index.json")
+    _idx = {str(r["n"]): r["le"] for r in json.load(open(_ip))} if os.path.exists(_ip) else {}
+    for line in open(_fn):
         line = line.strip()
         if not line or line.startswith("#"):
             continue
-        le_, code = line.split()
+        n, code = line.split()[:2]
         kind, _, hexc = code.partition(":")
-        PHOTO_MAT[le_] = (kind, tuple(int(hexc[i:i + 2], 16) for i in (0, 2, 4)) if hexc else None)
+        col = tuple(int(hexc[i:i + 2], 16) for i in (0, 2, 4)) if hexc else None
+        PHOTO_MAT[str(_idx.get(n, n)) if len(n) < 7 else n] = (kind, col)
 BRICK_TINTS = [(255, 255, 255), (255, 238, 225), (238, 224, 218), (255, 246, 236), (226, 214, 210)]
 
 
@@ -625,8 +625,10 @@ shopfront_out = []
 # beneath, so where first - last > 1 m the roof height comes from the last return instead.
 DSM_B = dsm_s
 VEG = None
-if RURAL and any(os.path.exists(os.path.join(RDATA, "lidar", f"{e_}_{n_}_lz.tif")) for e_, n_ in CELLS):
-    _lz = mosaic("lz", optional=True)
+_LZ_TOWN = os.path.join(DATA, "lz.tif")
+if (REGION and any(os.path.exists(os.path.join(RDATA, "lidar", f"{e_}_{n_}_lz.tif")) for e_, n_ in CELLS)) or (
+        not REGION and os.path.exists(_LZ_TOWN)):
+    _lz = mosaic("lz", optional=True) if REGION else tifffile.imread(_LZ_TOWN).astype(np.float32)
     _lz = ndimage.median_filter(np.where(np.isnan(_lz), dsm, np.maximum(_lz, dtm)), size=3)   # no data: no foliage test
     VEG = ndimage.uniform_filter(((dsm - _lz) > 1.0).astype(np.float32), 3) > 0.5
     DSM_B = np.where(VEG, _lz, dsm_s)
@@ -1629,7 +1631,7 @@ if REGION:
     # wherever the 10 m surface model stands over 2.5 m above the ground.
     if os.path.exists(os.path.join(RDATA, "horizon_dtm.npy")):
         print("horizon")
-        HE0, HN0, HE1, HN1 = 380500, 229000, 392500, 240000          # tools/region.py HORIZON
+        HE0, HN0, HE1, HN1 = REG["horizon"]                          # tools/region.py horizon box
         hz_t = np.load(os.path.join(RDATA, "horizon_dtm.npy"))
         hz_t = np.where(np.isnan(hz_t), np.nanmedian(hz_t), hz_t)
         if os.path.exists(os.path.join(RDATA, "horizon_dsm.npy")):
@@ -1668,6 +1670,9 @@ if REGION:
     meta = json.load(open(mp))
     meta["build"] = _time.strftime("%Y%m%d%H%M%S")
     meta["regions"] = sorted(set(meta.get("regions", [])) | {REGION})
+    # region sights: [label, [E, N], road name] in region.json -> local coords in the town's meta.json
+    meta.setdefault("regionTeleports", {})[REGION] = [[lab, *[round(v, 2) for v in to_local(*en)], road]
+                                                       for lab, en, road in REG.get("teleports", [])]
     json.dump(meta, open(mp, "w"))
     print("done")
     sys.exit(0)
@@ -1816,15 +1821,99 @@ for coords, hw in paths_lines:
 img = img.filter(ImageFilter.GaussianBlur(0.6))
 img.save(os.path.join(OUT, "ground.jpg"), quality=88)
 
-# ---------------------------------------------------------------- spawn: The Cross
-# The Cross = where High Street, Church Street and Barton Street meet
-def named_pts(n):
-    return np.array([p[:2] for r in roads_out if r.get("n") == n for p in r["pts"]])
-H, C = named_pts("High Street"), named_pts("Church Street")
-dd = np.hypot(H[:, None, 0] - C[None, :, 0], H[:, None, 1] - C[None, :, 1])
-i, j = np.unravel_index(np.argmin(dd), dd.shape)
-spawn = ((H[i] + C[j]) / 2).tolist()
+# ---------------------------------------------------------------- spawn, teleports, title -> meta.json
 import time as _time
-_regions = json.load(open(os.path.join(OUT, "meta.json"))).get("regions", []) if os.path.exists(os.path.join(OUT, "meta.json")) else []
-json.dump({"spawn": spawn, "build": _time.strftime("%Y%m%d%H%M%S"), "regions": _regions}, open(os.path.join(OUT, "meta.json"), "w"))
+print("spawn + teleports")
+RANK = {"trunk": 0, "primary": 0, "secondary": 1, "tertiary": 2, "unclassified": 3, "residential": 3, "living_street": 4}
+
+
+def named_pts(n):
+    return np.array([p[:2] for r in roads_out if r.get("n") == n for p in r["pts"]]).reshape(-1, 2)
+
+
+sp = PLACE.get("spawn") or {}
+spawn, spawn_road = None, None
+if sp.get("roads"):                      # where two named streets meet, e.g. a market cross
+    H, C = named_pts(sp["roads"][0]), named_pts(sp["roads"][1])
+    if len(H) and len(C):
+        dd = np.hypot(H[:, None, 0] - C[None, :, 0], H[:, None, 1] - C[None, :, 1])
+        i, j = np.unravel_index(np.argmin(dd), dd.shape)
+        spawn, spawn_road = ((H[i] + C[j]) / 2).tolist(), sp["roads"][0]
+if spawn is None:
+    # the heart of town: the named-road point with the most shops, pubs and cafés within 120 m (geocoded
+    # centres are often a postcode point), then road importance, then closeness to the geocoded centre
+    cx, cz = to_local(*(sp.get("point") or PLACE.get("centre") or PLACE["origin"]))
+    shop_xz = np.array([to_local(p_.x, p_.y) for p_, _, _ in SHOPS if in_tile(p_.x, p_.y)]).reshape(-1, 2)
+    best = None
+    for r in roads_out:
+        if r["t"] not in RANK or not r.get("n") or r.get("b"):
+            continue
+        for x, z, _ in r["pts"][::2]:
+            busy = int((np.hypot(shop_xz[:, 0] - x, shop_xz[:, 1] - z) < 120).sum()) if len(shop_xz) else 0
+            sc = -25 * min(busy, 30) + 40 * RANK[r["t"]] + 0.3 * math.hypot(x - cx, z - cz)
+            if best is None or sc < best[0]:
+                best = (sc, [x, z], r["n"])
+    spawn, spawn_road = (best[1], best[2]) if best else ([0.0, 0.0], None)
+
+
+def ring_area(ring):
+    return abs(sum(a[0] * b[1] - b[0] * a[1] for a, b in zip(ring, ring[1:] + ring[:1]))) / 2
+
+
+def resolve(target):
+    """landmark name | 'bridge:<road name>' | [E, N]  ->  local [x, z] or None"""
+    if isinstance(target, list):
+        return list(to_local(*target))
+    if target.startswith("bridge:"):
+        br = sorted([r for r in roads_out if r.get("b") and r.get("n") == target[7:]], key=lambda r: -len(r["pts"]))
+        return br[0]["pts"][len(br[0]["pts"]) // 2][:2] if br else None
+    fs = [f for f in foot_out if f.get("n") == target]
+    if not fs:
+        return None
+    f = max(fs, key=lambda f: ring_area(f["p"]))
+    return [sum(q[0] for q in f["p"]) / len(f["p"]), sum(q[1] for q in f["p"]) / len(f["p"])]
+
+
+tps = PLACE.get("teleports")
+if tps is None:
+    # pick sights: the highest-graded churches / abbeys, named bridges (one per crossing), then the most
+    # important remaining named buildings (listed grade first, then size; skip plain house numbers)
+    GRADE = {"I": 0, "II*": 1, "II": 2}
+    named = [f for f in foot_out if f.get("n")]
+    key = lambda f: (GRADE.get(f.get("g"), 3), -ring_area(f["p"]))
+    sacred = [f for f in named if any(w in f["n"].lower() for w in ("church", "abbey", "cathedral", "priory", "minster"))]
+    picks = []
+    for f in sorted(sacred, key=key):
+        if f["n"] not in picks:
+            picks.append(f["n"])
+    picks = picks[:2]
+    picks_b, seen_b = [], []
+    for n in sorted({r["n"] for r in roads_out if r.get("b") and r.get("n") and r["t"] in RANK},
+                    key=lambda n: (any(r.get("r") == n for r in roads_out),     # a real name beats a road number
+                                   -sum(len(r["pts"]) for r in roads_out if r.get("n") == n and r.get("b")))):
+        xz = resolve(f"bridge:{n}")
+        ids = {n} | {r.get("r") for r in roads_out if r.get("b") and r.get("n") == n and r.get("r")}
+        if xz and not ids & {i for _, _, s_ in seen_b for i in s_} and \
+                all(math.hypot(xz[0] - a, xz[1] - b) > 120 for a, b, _ in seen_b) and len(picks_b) < 2:
+            picks_b.append(f"bridge:{n}")
+            seen_b.append((xz[0], xz[1], ids))   # a bridge is known by its name and its road number
+    for f in sorted(named, key=key):
+        if len(picks) + len(picks_b) >= 6:
+            break
+        if f["n"] not in picks and not f["n"][:1].isdigit():
+            picks.append(f["n"])
+    tps = [[t.split(":", 1)[-1], t, None] for t in picks + picks_b]
+teleports = [[sp.get("label") or spawn_road or PLACE["name"], round(spawn[0], 2), round(spawn[1], 2), spawn_road]]
+for label, target, road in tps:
+    xz = resolve(target)
+    if xz:
+        teleports.append([label, round(xz[0], 2), round(xz[1], 2), road])
+    else:
+        print("  teleport target not found:", target)
+_old = json.load(open(os.path.join(OUT, "meta.json"))) if os.path.exists(os.path.join(OUT, "meta.json")) else {}
+json.dump({"name": PLACE["name"], "title": PLACE.get("title", PLACE["name"] + " Drive"), "spawn": spawn,
+           "spawnRoad": spawn_road, "teleports": teleports, "build": _time.strftime("%Y%m%d%H%M%S"),
+           "regions": _old.get("regions", []), "regionTeleports": _old.get("regionTeleports", {})},
+          open(os.path.join(OUT, "meta.json"), "w"), indent=0)
+print("spawn", spawn_road, [t[0] for t in teleports])
 print("done")
