@@ -17,6 +17,10 @@ const MAT = {
   sigRed: M({ color: 0x400000, emissive: 0x000000 }),
   sigGreen: M({ color: 0x22ff66, emissive: 0x18c050, emissiveIntensity: 1.2 }),
   white: M({ color: 0xf2f2ee, roughness: 0.6 }),
+  pole: M({ color: 0x5a4632, roughness: 1 }),
+  signRed: M({ color: 0xc8102e, roughness: 0.5 }),
+  signBlue: M({ color: 0x1d5aa8, roughness: 0.5 }),
+  signBack: M({ color: 0x9a9ea2, roughness: 0.6, metalness: 0.5 }),
   hedge: M({ color: 0x3f5f2e, roughness: 1 }),
   brickWall: M({ color: 0x96523c, roughness: 0.95 }),
   fence: M({ color: 0x6b4f35, roughness: 0.95 }),
@@ -25,6 +29,12 @@ const MAT = {
 const box = (w, h, d, x = 0, y = 0, z = 0) => { const g = new THREE.BoxGeometry(w, h, d); g.translate(x, y, z); return g; };
 const cyl = (r, h, x = 0, y = 0, z = 0, seg = 10, r2 = r) => { const g = new THREE.CylinderGeometry(r, r2, h, seg); g.translate(x, y + h / 2, z); return g; };
 const sph = (r, x, y, z) => { const g = new THREE.SphereGeometry(r, 10, 8); g.translate(x, y, z); return g; };
+
+function disc(r, y, _m, dz = 0, seg = 24) { const g = new THREE.CircleGeometry(r, seg); g.translate(0, y, 0.03 + dz); return g; }
+function tri(sz, y, dz = 0) {
+  const sh = new THREE.Shape([new THREE.Vector2(-sz / 2, -sz * 0.29), new THREE.Vector2(sz / 2, -sz * 0.29), new THREE.Vector2(0, sz * 0.58)]);
+  const g = new THREE.ShapeGeometry(sh); g.translate(0, y, 0.03 + dz); return g;
+}
 
 // part lists per furniture kind: [geometry, material]; object space +z faces the road
 const KINDS = {
@@ -43,6 +53,18 @@ const KINDS = {
   bikes: () => [[box(0.05, 0.8, 0.7, -0.4, 0.4, 0), MAT.grey], [box(0.05, 0.8, 0.7, 0.4, 0.4, 0), MAT.grey]],
   memorial: () => [[box(1.4, 0.4, 1.4, 0, 0.2, 0), MAT.stone], [cyl(0.32, 3.2, 0, 0.4, 0, 4, 0.42), MAT.stone]],
   grit: () => [[box(0.9, 0.7, 0.6, 0, 0.35, 0), MAT.yellow]],
+  // Mapillary-detected extras
+  upole: () => [[cyl(0.13, 8.5, 0, 0, 0, 8, 0.15), MAT.pole], [box(1.4, 0.1, 0.1, 0, 8.0, 0), MAT.pole]],
+  meter: () => [[cyl(0.05, 1.1), MAT.grey], [box(0.25, 0.4, 0.2, 0, 1.25, 0), MAT.black]],
+  sighead: () => [[cyl(0.06, 3.0), MAT.grey], [box(0.32, 0.95, 0.26, 0, 2.55, 0), MAT.black],
+    [sph(0.09, 0, 2.86, 0.14), MAT.sigRed], [sph(0.09, 0, 2.55, 0.14), MAT.sigRed], [sph(0.09, 0, 2.24, 0.14), MAT.sigGreen]],
+  // traffic signs: grey post, plate faces +z (towards approaching traffic)
+  tsign_reg: () => [[cyl(0.04, 2.4), MAT.grey], [disc(0.3, 2.45, MAT.signRed), MAT.signRed], [disc(0.22, 2.45, null, 0.012), MAT.white]],
+  tsign_speed: () => [[cyl(0.04, 2.4), MAT.grey], [disc(0.3, 2.45), MAT.signRed], [disc(0.23, 2.45, null, 0.012), MAT.white]],
+  tsign_noentry: () => [[cyl(0.04, 2.4), MAT.grey], [disc(0.3, 2.45), MAT.signRed], [box(0.36, 0.08, 0.03, 0, 2.45, 0.02), MAT.white]],
+  tsign_stop: () => [[cyl(0.04, 2.3), MAT.grey], [disc(0.32, 2.4, null, 0, 8), MAT.signRed]],
+  tsign_warn: () => [[cyl(0.04, 2.3), MAT.grey], [tri(0.75, 2.45), MAT.signRed], [tri(0.55, 2.45, 0.012), MAT.white]],
+  tsign_info: () => [[cyl(0.04, 2.2), MAT.grey], [box(0.7, 0.5, 0.03, 0, 2.3, 0), MAT.signBlue], [box(0.72, 0.52, 0.02, 0, 2.3, -0.02), MAT.signBack]],
   // Belisha beacon (zebra) and signal pole (pelican / junction)
   beacon: () => [[cyl(0.05, 2.6), MAT.black], [box(0.1, 1.8, 0.1, 0, 0.9, 0), MAT.white], [sph(0.2, 0, 2.75, 0), MAT.beacon]],
   signal: () => [[cyl(0.06, 3.0), MAT.grey], [box(0.32, 0.95, 0.26, 0, 2.55, 0), MAT.black],
@@ -93,10 +115,15 @@ export function buildStreet(scene, data, terrainY) {
       for (const o of [-L / 2, L / 2]) quad(x + sx * o, z + sz * o, r, 0.15, W, y, markY);
       continue;
     }
+    if (t === 'tsign') {
+      const k = f.s && KINDS['tsign_' + f.s] ? 'tsign_' + f.s : 'tsign_' + f.c;
+      put(k, x, z, r); posts.push([x, z, 0.1]);
+      continue;
+    }
     if (!KINDS[t]) continue;
     put(t, x, z, r);
     if (t === 'busstop' && f.s) put('shelter', x, z, r);
-    if (['lamp', 'postbox', 'phone', 'busstop', 'memorial', 'bollard'].includes(t)) posts.push([x, z, t === 'phone' ? 0.6 : t === 'memorial' ? 0.8 : 0.25]);
+    if (['lamp', 'postbox', 'phone', 'busstop', 'memorial', 'bollard', 'upole', 'sighead', 'meter'].includes(t)) posts.push([x, z, t === 'phone' ? 0.6 : t === 'memorial' ? 0.8 : 0.25]);
   }
 
   for (const [kind, mats] of Object.entries(placed)) {
