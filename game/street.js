@@ -54,17 +54,18 @@ export function buildStreet(scene, data, terrainY) {
   const posts = [];      // collision circles [x, z, r]
   const segs = [];       // collision segments [ax, az, bx, bz]
   const mark = [];       // road marking quads (positions)
+  const markY = [];      // yellow markings (bus stop bays)
   const put = (kind, x, z, r, y = terrainY(x, z)) => {
     const m = new THREE.Matrix4().makeRotationY(r);
     m.setPosition(x, y, z);
     (placed[kind] ||= []).push(m);
   };
-  const quad = (cx, cz, r, along, across, y) => {     // flat road marking quad, `along` aligned with local +z
+  const quad = (cx, cz, r, along, across, y, out = mark) => {     // flat road marking quad, `along` aligned with local +z
     const ca = Math.cos(r), sa = Math.sin(r);
     const ax = sa * along / 2, az = ca * along / 2, bx = ca * across / 2, bz = -sa * across / 2;
     const P = [[cx - ax - bx, cz - az - bz], [cx - ax + bx, cz - az + bz], [cx + ax + bx, cz + az + bz], [cx + ax - bx, cz + az - bz]];
     const yy = P.map(([x, z]) => Math.max(y, terrainY(x, z) + 0.19));
-    for (const i of [0, 1, 2, 0, 2, 3]) mark.push(P[i][0], yy[i], P[i][1]);
+    for (const i of [0, 1, 2, 0, 2, 3]) out.push(P[i][0], yy[i], P[i][1]);
   };
 
   for (const f of data.furniture) {
@@ -83,6 +84,13 @@ export function buildStreet(scene, data, terrainY) {
         }
         for (const s of [-1, 1]) { const o = s * (w / 2 + 0.7); put('signal', x + cx * o, z + cz * o, s > 0 ? r + Math.PI : r); posts.push([x + cx * o, z + cz * o, 0.2]); }
       }
+      continue;
+    }
+    if (t === 'busbay') {
+      // yellow bus stop box: 13 m along the kerb, 2.4 m wide
+      const sx = Math.sin(r), sz = Math.cos(r), cx = Math.cos(r), cz = -Math.sin(r), y = terrainY(x, z) + 0.2, L = 13, W = f.w;
+      for (const o of [-W / 2, W / 2]) quad(x + cx * o, z + cz * o, r, L, 0.15, y, markY);
+      for (const o of [-L / 2, L / 2]) quad(x + sx * o, z + sz * o, r, 0.15, W, y, markY);
       continue;
     }
     if (!KINDS[t]) continue;
@@ -126,6 +134,11 @@ export function buildStreet(scene, data, terrainY) {
     scene.add(im);
   }
 
+  if (markY.length) {
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(markY, 3)); g.computeVertexNormals();
+    const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0xe8c23a, roughness: 0.7, side: THREE.DoubleSide, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -6, polygonOffsetUnits: -6 }));
+    m.renderOrder = 2; scene.add(m);
+  }
   if (mark.length) {
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(mark, 3)); g.computeVertexNormals();
     const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0xf0eee6, roughness: 0.7, side: THREE.DoubleSide, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -6, polygonOffsetUnits: -6 }));
@@ -133,4 +146,66 @@ export function buildStreet(scene, data, terrainY) {
     scene.add(m);
   }
   return { posts, segs };
+}
+
+// ---------------------------------------------------------------- pavements + kerbs
+const PAVE_LIFT = 0.31, ROAD_LIFT = 0.15;
+function slabTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const x = c.getContext('2d');
+  x.fillStyle = '#8f8c86'; x.fillRect(0, 0, 256, 256);                      // joints
+  for (let r = 0; r < 4; r++) for (let q = 0; q < 4; q++) {
+    const v = 176 + (Math.random() * 26 | 0), tint = Math.random() * 6 | 0;
+    x.fillStyle = `rgb(${v + tint},${v + tint - 2},${v - 4})`;
+    x.fillRect(q * 64 + 1.5, r * 64 + 1.5, 61, 61);
+  }
+  for (let i = 0; i < 2600; i++) { const v = Math.random() * 255 | 0; x.fillStyle = `rgba(${v},${v},${v},.07)`; x.fillRect(Math.random() * 256, Math.random() * 256, 2, 2); }
+  for (let i = 0; i < 6; i++) { x.fillStyle = 'rgba(60,55,50,.10)'; x.beginPath(); x.arc(Math.random() * 256, Math.random() * 256, 4 + Math.random() * 10, 0, 7); x.fill(); }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
+  return t;
+}
+
+export function buildPavements(scene, tris, kerbs, terrainY) {
+  // walking surface (2.4 m slab texture repeat, i.e. 600 mm flags)
+  const n = tris.length / 2, pos = new Float32Array(n * 3), uv = new Float32Array(n * 2);
+  for (let i = 0; i < n; i++) {
+    const x = tris[i * 2], z = tris[i * 2 + 1];
+    pos[i * 3] = x; pos[i * 3 + 1] = terrainY(x, z) + PAVE_LIFT; pos[i * 3 + 2] = z;
+    uv[i * 2] = x / 2.4; uv[i * 2 + 1] = z / 2.4;
+  }
+  for (let t = 0; t < n * 3; t += 9) {        // all triangles face up
+    const ux = pos[t + 3] - pos[t], uz = pos[t + 5] - pos[t + 2], vx = pos[t + 6] - pos[t], vz = pos[t + 8] - pos[t + 2];
+    if (uz * vx - ux * vz < 0) for (let k = 0; k < 3; k++) {
+      const a = pos[t + 3 + k]; pos[t + 3 + k] = pos[t + 6 + k]; pos[t + 6 + k] = a;
+      if (k < 2) { const tu = t / 3 * 2; const b = uv[tu + 2 + k]; uv[tu + 2 + k] = uv[tu + 4 + k]; uv[tu + 4 + k] = b; }
+    }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  g.computeVertexNormals();
+  const pm = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map: slabTexture(), roughness: 0.92, side: THREE.DoubleSide }));
+  pm.receiveShadow = true; scene.add(pm);
+
+  // kerb stones: vertical face from carriageway to pavement + a 150 mm granite top strip
+  const kp = [];
+  for (let i = 0; i < kerbs.length; i += 4) {
+    const ax = kerbs[i], az = kerbs[i + 1], bx = kerbs[i + 2], bz = kerbs[i + 3];
+    const ya = terrainY(ax, az), yb = terrainY(bx, bz);
+    kp.push(ax, ya + ROAD_LIFT, az, bx, yb + ROAD_LIFT, bz, bx, yb + PAVE_LIFT + 0.005, bz,
+            ax, ya + ROAD_LIFT, az, bx, yb + PAVE_LIFT + 0.005, bz, ax, ya + PAVE_LIFT + 0.005, az);
+  }
+  const kg = new THREE.BufferGeometry(); kg.setAttribute('position', new THREE.Float32BufferAttribute(kp, 3)); kg.computeVertexNormals();
+  const km = new THREE.Mesh(kg, new THREE.MeshStandardMaterial({ color: 0xb9b6ae, roughness: 0.8, side: THREE.DoubleSide }));
+  km.receiveShadow = true; scene.add(km);
+
+  // 1 m raster of where the pavement is, so the car rides up onto it
+  const S = 2500, cv = document.createElement('canvas'); cv.width = cv.height = S;
+  const cx = cv.getContext('2d'); cx.fillStyle = '#fff';
+  for (let i = 0; i < tris.length; i += 6) {
+    cx.beginPath(); cx.moveTo(tris[i] + S / 2, tris[i + 1] + S / 2); cx.lineTo(tris[i + 2] + S / 2, tris[i + 3] + S / 2); cx.lineTo(tris[i + 4] + S / 2, tris[i + 5] + S / 2); cx.fill();
+  }
+  const img = cx.getImageData(0, 0, S, S).data, mask = new Uint8Array(S * S);
+  for (let i = 0; i < S * S; i++) mask[i] = img[i * 4 + 3] > 127 ? 1 : 0;
+  return (x, z) => { const i = Math.floor(x + S / 2), j = Math.floor(z + S / 2); return i >= 0 && j >= 0 && i < S && j < S && mask[j * S + i] === 1; };
 }

@@ -33,6 +33,10 @@ Benches, bins, post boxes, bus stops and shelters, phone boxes, street cabinets,
 
 OSM has no street lamps mapped in Tewkesbury, so lamp posts are generated every ~30 m along built-up streets. They are not real positions.
 
+Pavements are raised 150 mm with kerb stones and 600 mm slab paving, and the car rides up onto them. Which sides of a street have one comes from the OSM `sidewalk=*` tags, plus separately mapped `footway=sidewalk` ways. Untagged streets get pavements on both sides when they are within 25 m of buildings. Where a frontage stands within 5.5 m of the kerb, the pavement runs right up to the building. Narrow leftover strips between kerb, footway and frontage are filled, as are junction corners in the town centre. Bus stops get a yellow bus-stop box on the carriageway.
+
+Google Street View isn't used: its terms don't allow deriving map data from its imagery. Mapillary (openly licensed street-level photos) is the usable alternative if more detail is needed.
+
 ### Wall materials
 
 Listed buildings use materials observed in photos. Wikidata (CC0) links 366 Tewkesbury listings to their NHLE numbers, and 280 have a Wikimedia Commons photo (property P18). `tools/sheets.py` lays the photos out as labelled contact sheets. Each facade was then classified by eye into `data/materials_by_photo.txt`: red brick, white render, coloured render (with hex colour), timber frame (with infill colour) or stone.

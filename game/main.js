@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 import { makeFacadeAtlases, facadeMaterial, roofTexture, buildSigns } from './facades.js';
-import { buildStreet } from './street.js';
+import { buildStreet, buildPavements } from './street.js';
 
 // ------------------------------------------------------------------ loading
 const D = 'data/';
 const bar = document.querySelector('#bar i');
 let loaded = 0;
-const FILES = 35;
+const FILES = 37;
 const tick = () => { loaded++; bar.style.width = `${Math.min(100, loaded / FILES * 100)}%`; };
 const bin = async (f, T) => { const b = await (await fetch(D + f)).arrayBuffer(); tick(); return new T(b); };
 const json = async (f) => { const j = await (await fetch(D + f)).json(); tick(); return j; };
@@ -20,6 +20,7 @@ const wallData = await Promise.all([0, 1, 2, 3, 4, 5].map(async s => ({
   col: await bin(`walls${s}_col.bin`, Uint8Array), kind: await bin(`walls${s}_kind.bin`, Uint8Array),
 })));
 const roof = { pos: await bin('roof_pos.bin', Float32Array), uv: await bin('roof_uv.bin', Float32Array), col: await bin('roof_col.bin', Uint8Array) };
+const paveTris = await bin('pave_tris.bin', Float32Array), kerbSegs = await bin('kerbs.bin', Float32Array);
 
 // ------------------------------------------------------------------ grids
 const GN = terrMeta.n, GS = terrMeta.s, GO = terrMeta.origin, HMIN = terrMeta.min;
@@ -301,8 +302,10 @@ for (const [x, , z, h] of trees) {
   const k = hkey(Math.floor(x / CELL), Math.floor(z / CELL)); if (!treeHash.has(k)) treeHash.set(k, []); treeHash.get(k).push([x, z, 0.35 + h * 0.012]);
 }
 // street furniture + garden walls/fences/hedges (OSM); poles and walls block the car
+let onPavement = () => false;
 {
-  const { posts, segs } = buildStreet(scene, street, terrainY);
+  onPavement = buildPavements(scene, paveTris, kerbSegs, terrainY);
+  const { posts, segs } = buildStreet(scene, street, (x, z) => terrainY(x, z) + (onPavement(x, z) ? 0.31 : 0));
   for (const [x, z, r] of posts) {
     const k = hkey(Math.floor(x / CELL), Math.floor(z / CELL)); if (!treeHash.has(k)) treeHash.set(k, []); treeHash.get(k).push([x, z, r]);
   }
@@ -524,7 +527,7 @@ function physics(dt) {
   const hit = collide();
   if (hit > 6) { flash('Crunch!', 700); shake = Math.min(1, hit / 20); }
   // ground follow
-  const g = driveY(S.x, S.z) + (onRoad || kind === 2 ? 0.16 : 0);
+  const g = driveY(S.x, S.z) + (kind === 2 ? 0.16 : onPavement(S.x, S.z) ? 0.31 : onRoad ? 0.16 : 0);
   if (S.y > g + 0.05) { S.yv -= 9.8 * dt; S.y += S.yv * dt; if (S.y < g) { S.y = g; S.yv = 0; } }
   else { S.y = g; S.yv = 0; }
   const hf = driveY(S.x + fx * 1.4, S.z + fz * 1.4), hr = driveY(S.x - fx * 1.4, S.z - fz * 1.4);

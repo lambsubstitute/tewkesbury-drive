@@ -427,13 +427,31 @@ shapely.prepare(ALL_B)
 _DRIVE_W = {"motorway": 11, "trunk": 9, "primary": 7.5, "secondary": 7, "tertiary": 6.5, "unclassified": 5.5,
             "residential": 5.5, "living_street": 5, "pedestrian": 6, "primary_link": 5.5, "secondary_link": 5,
             "tertiary_link": 5, "trunk_link": 6, "road": 5, "service": 3.6}
+def road_width(t):
+    """carriageway width (m) used for rendering, pavements, kerbs and collisions alike"""
+    hw = t.get("highway")
+    w = _DRIVE_W.get(hw, 5.0) if hw != "service" else 3.6
+    try:
+        if "width" in t:
+            return max(2.5, min(14, float(str(t["width"]).split()[0])))
+        if "lanes" in t and hw != "service":
+            w = max(w, float(t["lanes"]) * 3.2)
+    except ValueError:
+        pass
+    if t.get("oneway") == "yes" and hw in ("primary", "secondary", "tertiary") and "lanes" not in t:
+        w *= 0.75
+    return w
+
+
 _rl, _rw = [], []
 for e in osm:
     t = e.get("tags", {})
     if e["type"] == "way" and t.get("highway") in _DRIVE_W and e.get("geometry"):
         _rl.append(LineString(proj(e["geometry"])))
-        _rw.append(_DRIVE_W[t["highway"]] if t["highway"] != "service" else 3.0)
+        _rw.append(road_width(t))
 ROAD_TREE = shapely.STRtree(_rl)
+
+
 
 
 def road_near(x, y):
@@ -693,16 +711,7 @@ for e in osm:
         continue
     if hw not in WIDTH:
         continue
-    w = WIDTH[hw]
-    try:
-        if "width" in t:
-            w = max(2.5, min(14, float(str(t["width"]).split()[0])))
-        elif "lanes" in t and hw not in ("service",):
-            w = max(w, float(t["lanes"]) * 3.2)
-    except ValueError:
-        pass
-    if t.get("oneway") == "yes" and hw in ("primary", "secondary", "tertiary") and "lanes" not in t:
-        w *= 0.75
+    w = road_width(t) if hw in _DRIVE_W else WIDTH[hw]
     bridge = t.get("bridge") not in (None, "no")
     tunnel = t.get("tunnel") not in (None, "no")
     if tunnel:
@@ -833,6 +842,113 @@ for e in street_osm:
     mat = t.get("material", "")
     barriers.append({"t": bt, "h": round(min(h, 4), 2), "m": mat,
                      "p": [[round(v, 2) for v in to_local(x, y)] for x, y in co]})
+# ---------------------------------------------------------------- pavements (OSM sidewalk tags + building frontages)
+print("pavements")
+PAVE_ROADS = {"primary", "secondary", "tertiary", "residential", "unclassified", "living_street",
+              "primary_link", "secondary_link", "tertiary_link", "trunk", "trunk_link"}
+road_surf, bands, frontage_fill, corridor = [], [], [], []
+for e in osm:
+    t = e.get("tags", {})
+    hwy = t.get("highway")
+    if e["type"] != "way" or not e.get("geometry") or hwy not in _DRIVE_W:
+        continue
+    if t.get("tunnel") not in (None, "no"):
+        continue
+    line = LineString(proj(e["geometry"]))
+    w = road_width(t)
+    road_surf.append(line.buffer(w / 2, cap_style="flat" if hwy != "service" else "round"))
+    if hwy not in PAVE_ROADS or t.get("bridge") not in (None, "no"):
+        continue
+    sw = t.get("sidewalk")
+    left = right = None
+    if sw in ("both", "yes"):
+        left = right = True
+    elif sw == "left":
+        left, right = True, False
+    elif sw == "right":
+        left, right = False, True
+    elif sw in ("no", "none", "separate"):
+        left = right = False
+    for side in ("left", "right"):
+        v = t.get(f"sidewalk:{side}") or t.get("sidewalk:both")
+        if v in ("yes", "no", "separate"):
+            if side == "left":
+                left = v == "yes"
+            else:
+                right = v == "yes"
+    built_up = ALL_B.distance(line) < 25
+    if built_up:
+        corridor.append(line.buffer(w / 2 + 7, cap_style="flat"))
+    if left is None:
+        left = built_up
+    if right is None:
+        right = built_up
+    pw = 2.4 if hwy in ("primary", "secondary", "trunk") and built_up else 2.0
+    for on, sgn in ((left, 1), (right, -1)):
+        if not on:
+            continue
+        outer = line.buffer(sgn * (w / 2 + pw), single_sided=True, cap_style="flat")
+        bands.append(outer)
+        # town frontages: pave right up to buildings standing within 5.5 m of the kerb on this side
+        reach = line.buffer(sgn * (w / 2 + 6.0), single_sided=True, cap_style="flat")
+        for bi in ctx["B_TREE"].query(reach, predicate="intersects"):
+            b = _all[bi]
+            if b.distance(line) - w / 2 <= 5.5:
+                frontage_fill.append(reach.intersection(b.buffer(3.6, join_style="mitre")))
+sep = []
+for e in osm:
+    t = e.get("tags", {})
+    if e["type"] == "way" and t.get("highway") == "footway" and t.get("footway") == "sidewalk" and e.get("geometry"):
+        sep.append(LineString(proj(e["geometry"])).buffer(1.0, cap_style="flat"))
+ROADS_U = shapely.union_all(road_surf)
+pave = shapely.union_all(bands + frontage_fill + sep)
+# close narrow gaps (< 5 m) between kerb, separately-mapped footways and building frontages,
+# but only inside built-up street corridors so back gardens and parks stay green
+solid = shapely.union_all([pave, ROADS_U, ALL_B])
+closed = solid.buffer(2.5, join_style="mitre").buffer(-2.5, join_style="mitre")
+CORR = shapely.union_all(corridor)
+closed2 = solid.buffer(5.0, join_style="mitre").buffer(-5.0, join_style="mitre")
+pave = shapely.union_all([pave, closed.intersection(CORR), closed2.intersection(CORR).intersection(ALL_B.buffer(12))])
+pave = pave.difference(ROADS_U).difference(ALL_B)
+if water_u is not None:
+    pave = pave.difference(water_u)
+pave = pave.intersection(TILE.buffer(-2)).simplify(0.15)
+pave_polys = [p_ for p_ in polys_of(pave) if p_.area > 1.0]
+print("pavement polygons", len(pave_polys), "area m2", round(sum(p_.area for p_ in pave_polys)))
+# triangles (2D, local coords) + kerb edges (pavement edges lying on a carriageway edge)
+road_edge = ROADS_U.boundary
+pv_tris, kerbs = [], []
+for p_ in pave_polys:
+    pp = shapely.segmentize(p_, 2.0)
+    for t_ in shapely.get_parts(shapely.constrained_delaunay_triangles(pp)):
+        co = shapely.get_coordinates(t_)[:3]
+        for E, N in co:
+            pv_tris += [round(v, 2) for v in to_local(E, N)]
+    for ring in [pp.exterior] + list(pp.interiors):
+        co = shapely.get_coordinates(ring)
+        mids = (co[:-1] + co[1:]) / 2
+        on_road = shapely.distance(road_edge, shapely.points(mids)) < 0.08
+        for (a_, b_), k_ in zip(zip(co[:-1], co[1:]), on_road):
+            if k_:
+                kerbs += [round(v, 2) for v in to_local(*a_)] + [round(v, 2) for v in to_local(*b_)]
+np.array(pv_tris, np.float32).tofile(os.path.join(OUT, "pave_tris.bin"))
+np.array(kerbs, np.float32).tofile(os.path.join(OUT, "kerbs.bin"))
+print("pavement tris", len(pv_tris) // 6, "kerb segments", len(kerbs) // 4)
+
+# bus stop bays: yellow box on the carriageway at the kerb nearest each stop
+for f in furn:
+    if f["t"] != "busstop":
+        continue
+    E, N = f["x"] + E0, N0 - f["z"]
+    d, w, (tx, ty), (qx, qy) = road_dir(E, N)
+    if d > 15:
+        continue
+    nx, ny = ty, -tx
+    if (E - qx) * nx + (N - qy) * ny < 0:
+        nx, ny = -nx, -ny
+    cx, cy = qx + nx * (w / 2 - 1.3), qy + ny * (w / 2 - 1.3)
+    lx, lz = to_local(cx, cy)
+    furn.append({"t": "busbay", "x": round(lx, 2), "z": round(lz, 2), "r": yaw_local(tx, ty), "w": 2.4})
 json.dump({"furniture": furn, "barriers": barriers}, open(os.path.join(OUT, "street.json"), "w"), separators=(",", ":"))
 from collections import Counter as _C
 print("furniture", _C(f["t"] for f in furn), "barriers", len(barriers))
@@ -951,10 +1067,8 @@ img = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
 d = ImageDraw.Draw(img)
 for p in polys_of(water_u):
     fill_poly(p, (52, 78, 82))
-PAVED = {"primary", "secondary", "tertiary", "residential", "unclassified", "living_street", "primary_link", "pedestrian"}
-for rd in roads_out:
-    if rd["t"] in PAVED:
-        d.line([P(x + E0, N0 - z) for x, z, _ in rd["pts"]], fill=(166, 163, 156), width=max(2, int((rd["w"] + 5) * sc)))
+for p_ in pave_polys:
+    fill_poly(p_, (168, 165, 158))
 for coords, hw in paths_lines:
     col = (176, 170, 158) if hw != "cycleway" else (160, 120, 110)
     d.line([P(x, y) for x, y in coords], fill=col, width=max(2, int(2.2 * sc)))
