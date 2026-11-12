@@ -1,0 +1,64 @@
+# Shopfront colours read by eye from Mapillary street-level photos (CC BY-SA), 2020-2025.
+# Only shops whose name was legible on the fascia in the photo are listed.
+# Format: OSM shop name | shopfront paint (hex) | fascia/sign background (hex, optional; defaults to the paint)
+Betfred | 1f3a8a
+Card Factory | 1f3c88
+Ladbrokes | c8102e
+The Anchor | 3a3f44
+Longfield | 86b2d6
+Peter Ball | 2f7d5c
+Holland & Barrett | 1e4a32
+The Edinburgh Woollen Mill | 7a1f2e
+Whimsical Dreams | 8fc6dc
+Break Vintage | 1f2f6b
+Get Connected | 3c4248
+Rosado Lounge | 9e6b6b
+Images Hair & Beauty | f2f2ee
+CGT | 1e9a4a
+Peacocks | 1a1a1a
+Rage Hair | 2a2a2c
+St. Richard's Hospice | 1f2c4a
+Savers | f2f2ee
+The Salvation Army | e8e4da
+Avonside Private Hire | c8202c
+Poundland | 00857a
+Coffee#1 | 3a3f45
+Zitto e Mangia | 6a6e72
+Alexander Burn | 1e1e20
+The Photo Studio | 2a3c8c | 1c1c1e
+Electro Clouds Vape Co | 8fc0de
+Coffee Mer Med | 33373c
+TAG Estate Agents | 1e1e20
+Blow Hair & Beauty | 2a2a2e
+Great Wall Chinese Restaurant | 2f4f9c
+Wonderland Tattoo & Art Studio | 23365e
+Bookworm | f0f0ea
+Indika | 2a2a2a
+Nail Express | 151515
+O'Brien | f0eee8
+Tewkesbury Angling Centre | 24453a
+Coversure | 6f9a5a
+Laskeys | 2c2e33
+Mezbaan | 2e3134
+Tewkesbury House Dental | eeeeea
+Chocolat | 8a9a6a
+Tewkesbury Cards & Gifts | 8a1f4a
+Kurdish Barber Shop | b8202a
+Scrivens | 23409a
+Courtney World Travel | 1f2a44
+Haywards | 1f4a32
+Gira Capelli | 1c1c1e
+Simply Stone Memorials | 4a6070
+Blue Cross | e8e8e4
+Andrews | 5a2a3e
+Tewkesbury Phones | 6e1f2e
+Ladybirds | e3c63a
+Alan Verrinder Opticians | f0f0ee
+Carousel Tea Room | 6a2034
+Parsons | 1e1e20
+The Card Rack | b3202a
+Timpson | 7a1e30
+Raj Shahi | 4a1a22
+Chicago Pizza | c0202a | e8c23a
+Halfords Traditional Butchers | ece0b4
+Subway | 1f6a3a

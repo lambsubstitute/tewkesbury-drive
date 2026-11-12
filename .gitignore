@@ -6,3 +6,4 @@ __pycache__/
 data/*.tif
 data/commons/
 data/le.html
+data/mly_thumbs/

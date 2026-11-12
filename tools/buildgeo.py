@@ -382,7 +382,8 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
                 if name == "gable" or not bays_ok:
                     kind, col = KIND_PLAIN, list(s_col)
                 elif name == "gf" and is_shop and street:
-                    kind, col = KIND_SHOP, list(shop_paint)
+                    sp = shop_paint((x0 + x1) / 2, (y0 + y1) / 2) if callable(shop_paint) else shop_paint
+                    kind, col = KIND_SHOP, list(sp)
                 else:
                     kind, col = KIND_WINDOW, list(s_col)
                 v = lambda y_: (y_ - base) / hs

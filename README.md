@@ -60,6 +60,14 @@ To refetch, save a Mapillary access token (Dashboard, Developers) to `~/.mapilla
 
 Street objects © Mapillary contributors, CC BY-SA 4.0.
 
+#### Shopfront colours
+
+`tools/shopfront_photos.py` finds the Mapillary photo that best faces each shop sign and lays crops out as labelled contact sheets. The paint and fascia colours of 60 shops were read by eye into `data/shopfronts_from_photos.txt`, for example Betfred navy, Holland & Barrett dark green, the Edinburgh Woollen Mill burgundy, Chicago Pizza red with a yellow fascia, and Tewkesbury Cards & Gifts magenta.
+
+A colour was only recorded where the shop's own name was legible on its fascia in the photo, because photo positions are a few metres out and often frame the neighbour instead. Where OSM maps several shops as one building, each stretch of frontage takes its nearest shop's colour. Shops without a legible photo keep a generic paint colour.
+
+The photos date from 2020–2025, so a shop that has been repainted or rebranded since (e.g. WHSmith to TG Jones) may show its older colours or none. The crops (`data/mly_thumbs/`) are Mapillary imagery and are not in the repo.
+
 ### Wall materials
 
 Listed buildings use materials observed in photos. Wikidata (CC0) links 366 Tewkesbury listings to their NHLE numbers, and 280 have a Wikimedia Commons photo (property P18). `tools/sheets.py` lays the photos out as labelled contact sheets. Each facade was then classified by eye into `data/materials_by_photo.txt`: red brick, white render, coloured render (with hex colour), timber frame (with infill colour) or stone.

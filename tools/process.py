@@ -477,6 +477,21 @@ for e in street_osm:
         SHOPS.append((Point(E, N), t.get("name"), t))
 SHOP_TREE = shapely.STRtree([s_[0] for s_ in SHOPS])
 SHOP_PAINT = [(30, 52, 40), (28, 36, 62), (24, 24, 26), (96, 24, 32), (60, 66, 70), (226, 220, 200), (40, 70, 90), (112, 80, 40)]
+# real shopfront colours read from Mapillary photos (data/shopfronts_from_photos.txt)
+_hex = lambda h: tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+PHOTO_SHOP = {}
+_fn = os.path.join(DATA, "shopfronts_from_photos.txt")
+if os.path.exists(_fn):
+    _names = sorted({n_ for _, n_, _ in SHOPS if n_})
+    for line in open(_fn):
+        if not line.strip() or line.startswith("#"):
+            continue
+        parts = [x_.strip() for x_ in line.split("|")]
+        k = parts[0].lower()
+        m = [n_ for n_ in _names if n_.lower() == k] or [n_ for n_ in _names if n_.lower().startswith(k) or k in n_.lower()]
+        if len(m) == 1:
+            PHOTO_SHOP[m[0]] = (_hex(parts[1]), _hex(parts[2]) if len(parts) > 2 and parts[2] else _hex(parts[1]))
+    print("shopfront colours from photos:", len(PHOTO_SHOP))
 signs_out = []
 ctx = {"E_MIN": E_MIN, "N_MAX": N_MAX, "E0": E0, "N0": N0, "dsm_s": dsm_s, "dtm": dtm, "sample": sample,
        "ALL_B": ALL_B, "road_near": road_near, "B_LIST": _all, "B_TREE": shapely.STRtree(_all)}
@@ -609,6 +624,14 @@ for e in osm:
         shops_here = [SHOPS[i] for i in SHOP_TREE.query(poly.buffer(1.0), predicate="intersects")]
         is_shop = bool(shops_here) or btype in ("retail", "commercial", "shop")
         paint = SHOP_PAINT[h32(bid + "p") % len(SHOP_PAINT)]
+        if any(sn_ in PHOTO_SHOP for (_, sn_, _) in shops_here):
+            stats["photo_shopfronts"] = stats.get("photo_shopfronts", 0) + 1
+            per_shop = [(spt_, PHOTO_SHOP[sn_][0] if sn_ in PHOTO_SHOP else SHOP_PAINT[h32(bid + str(i_)) % len(SHOP_PAINT)])
+                        for i_, (spt_, sn_, _) in enumerate(shops_here)]
+            if len(per_shop) == 1:
+                paint = per_shop[0][1]
+            else:   # several shops in one OSM block: each stretch of frontage takes its nearest shop's colour
+                paint = lambda mx, my, _c=per_shop: min(_c, key=lambda c_: c_[0].distance(Point(mx, my)))[1]
         res = buildgeo.build(ctx, poly, bid, base, ipm, use_lidar, eave, style, wc, rc, is_church,
                              seg_material, paint, is_shop, sink)
         if res is None:
@@ -630,7 +653,7 @@ for e in osm:
             lx, lz = to_local(mx + nx * 0.14, my + ny * 0.14)
             signs_out.append({"x": round(lx, 2), "y": round(max(gy, base) + res["hs"] - 0.5, 2), "z": round(lz, 2),
                               "r": round(math.atan2(nx, -ny), 3), "w": round(w, 2), "n": sname,
-                              "c": "#%02x%02x%02x" % paint})
+                              "c": "#%02x%02x%02x" % (PHOTO_SHOP[sname][1] if sname in PHOTO_SHOP else (paint if not callable(paint) else SHOP_PAINT[h32(bid + "p") % len(SHOP_PAINT)]))})
         # footprints for collision / minimap / labels
         ring_local = [[round(v, 2) for v in to_local(x, y)] for x, y in poly.exterior.coords]
         rec = {"p": ring_local, "h": round(eave, 1)}
