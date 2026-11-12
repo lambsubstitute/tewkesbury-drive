@@ -1,0 +1,6441 @@
+{
+  "head" : {
+    "vars" : [ "le", "item", "itemLabel", "mat", "matLabel", "img" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201159"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q3405514"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20Abbey%202011.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tewkesbury Abbey"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201209"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17526401"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Building%20in%20Tewkesbury%20%284442%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Lawn Cottages, 41-48 Church Street"
+      },
+      "mat" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q268547"
+      },
+      "matLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "roof tile"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201209"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17526401"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Building%20in%20Tewkesbury%20%284442%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Lawn Cottages, 41-48 Church Street"
+      },
+      "mat" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q629000"
+      },
+      "matLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "timber framing"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282793"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17526419"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/British%20Legion%20club%20-%20geograph.org.uk%20-%201037267.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Royal British Legion Club"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201225"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538639"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/89%20and%2090%20Church%20Street%20EH%201201225.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "89 and 90, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201226"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538641"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/YMCA-geograph.org.uk-3226255.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Young Mens Christian Association"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201285"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538958"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Abbey%20Mill%20EH%201201285%20from%20north%202.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Mill"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201287"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538983"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/King%20John%27s%20Bridge%20EH%201201287.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "King John's Bridge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205058"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539050"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2892%29%20%28geograph%206887116%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "81 And 82, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205919"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539127"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/91%20and%2092%20Church%20Street%20EH%201205919.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "91 and 92, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206025"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539164"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Abbey%20gates%20-%20geograph.org.uk%20-%201415875.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Churchyard Gates"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207425"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539244"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/The%20Old%20Baptist%20Chapel%2C%20Tewkesbury%20-%20geograph.org.uk%20-%20319385.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Old Baptist Chapel, Tewkesbury"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280735"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539405"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/9ChurchStreet.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "9 Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1372300"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17541004"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28157%29%20%28geograph%206893612%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "135, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025019"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26275862"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28142%29%20%28geograph%206891653%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "117 And 118, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025054"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26275896"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28139%29%20%28geograph%206891625%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "108, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025076"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26276316"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28135%29%20%28geograph%206891538%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "104, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1091466"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26383781"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/The%20Lower%20Lode%20Inn%20-%20geograph.org.uk%20-%201724082.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Lower Lode Hotel"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187201"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482424"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28154%29%20%28geograph%206892773%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "3, Walls Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187323"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482539"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28169%29%20%28geograph%206893667%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "152, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187330"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482546"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28170%29%20%28geograph%206893672%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "153, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187366"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482578"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "11, Mill Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187375"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482586"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "12 And 13, Mill Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187387"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482597"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "3, Mill Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201169"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496913"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Robert Smith Monument Approximately 15 Metres East Of Banaster Monument"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201170"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496914"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "William Tunnicliffe Monument By Abbey Lodge Wall Approximately 20 Metres South East Of Car Park"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201171"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496915"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Welling Monument Approximately 13 Metres North Of North East Corner Of Abbey Porch"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201172"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496916"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Group Of 6 Monuments Adjacent To Car Park Approximately 10 Metres From North East Corner Of Abbey"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201175"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496919"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Healings Warehouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201177"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496921"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2855%29%20%28geograph%206883222%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "1 and 2, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201178"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496922"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2856%29%20%28geograph%206883228%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "4, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201179"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496923"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2859%29%20%28geograph%206883249%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "7, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201180"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496924"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2861%29%20%28geograph%206884026%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "9 And 10, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201181"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496925"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201181%2015%20Barton%20Street%20Tewkesbury%2020240601%200218%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "15, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201189"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496933"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201189%2053%20Barton%20Street%20Tewkesbury%2020240601%200270%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "53, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201193"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496938"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2844%29%20%28geograph%206885886%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "61 And 61A, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201195"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496940"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2882%29%20%28geograph%206885938%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "65, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201199"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496943"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2891%29%20%28geograph%206887111%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Chapel Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201200"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496944"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2893%29%20%28geograph%206887121%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "83, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201204"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496947"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2814%29%20%28geograph%206870435%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "12, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201217"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496957"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2830%29%20%28geograph%206879588%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "69, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201219"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496959"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2833%29%20%28geograph%206879593%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "73, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201230"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496967"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Osborne%20House%20-%20geograph.org.uk%20-%202183029.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Osborne House (15) Including Wall And Outbuilding"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201236"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496973"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Old%20Toll%20House%20by%20Gloucester%20Road%2C%20Tewkesbury%20%28geograph%206114823%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gatehouse"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201240"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496976"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28100%29%20%28geograph%206888326%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "6, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201241"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496977"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201241%208%20High%20Street%20Tewkesbury%2020240601%200364%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "8, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201242"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496978"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Former%20Swan%20Hotel%2C%20Tewkesbury%20-%20geograph.org.uk%20-%20805525.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Former Swan Hotel"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201244"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496979"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201244%2014%20High%20Street%20Tewkesbury%2020240601%200346%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "14, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201246"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496981"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Lloyds%20TSB%2C%20Tewkesbury%20-%20geograph.org.uk%20-%203770643.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Lloyds Bank And Bank House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201249"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496984"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201249%2037%20High%20Street%20Tewkesbury%2020240601%200315%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Nortonbury House And Nortonbury Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201250"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496985"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201250%2043%2C%2044%20High%20Street%20Tewkesbury%2020240601%200300%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "43 And 44, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201251"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496986"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28124%29%20%28geograph%206890522%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "49 And 49A, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201252"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496987"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28125%29%20%28geograph%206890525%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "51, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201258"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496992"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2860%29%20%28geograph%206890575%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "69, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201260"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496994"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2866%29%20%28geograph%206891516%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "75 And 76, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201262"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496996"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28138%29%20%28geograph%206891542%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "107, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201263"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496997"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28141%29%20%28geograph%206891641%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "116, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201265"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496999"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "121, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201268"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497002"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28151%29%20%28geograph%206892765%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "127, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201271"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497004"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28161%29%20%28geograph%206893620%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "138 And 139, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201281"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497012"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Weavers' Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201282"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497013"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "4, Mill Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201284"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497015"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Raised Pavement To Front Of Numbers 12 To 15"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201286"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497016"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Stables"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201288"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497017"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "2 and 3 King John's Cottages, Mythe Road"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201292"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497021"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gazebo Adjacent To River Avon"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201293"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497022"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Bridge%20over%20the%20Mill%20Avon%20-%20geograph.org.uk%20-%205457464.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Iron Bridge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204494"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26499934"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Remains Of Churchyard Cross"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204721"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500138"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1204721%203%20Barton%20Street%20Tewkesbury%2020240601%200198%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "3, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204840"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500244"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2836%29%20%28geograph%206884971%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Kings Head"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205374"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500722"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2895%29%20%28geograph%206887135%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Plough Inn"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205412"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500753"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1205412%207%20Church%20Street%20Tewkesbury%2020240601%200012%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "7, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205535"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500870"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1205535%2023%20Church%20Street%20Tewkesbury%2020240601%200043%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "23, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205881"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501162"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2838%29%20%28geograph%206882229%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "85 and 86, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206048"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501310"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2848%29%20-%20geograph.org.uk%20-%206887148.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "North East Terrace  Oldbury Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206099"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501360"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "7, Fletcher's Alley"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206289"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501529"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Former%20abbey%20precinct%20wall%20%28geograph%207429898%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Precinct Wall"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206342"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501578"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1206342%2011%20High%20Street%20Tewkesbury%2020240601%200353%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Midland Bank"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206421"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501640"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28115%29%20%28geograph%206889365%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "21, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206430"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501648"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28117%29%20%28geograph%206889373%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "23 And 24, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206445"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501661"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1206445%2036%20High%20Street%20Tewkesbury%2020240601%200317%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "36, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206674"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501871"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28122%29%20%28geograph%206889406%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "45, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207402"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502551"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2871%29%20%28geograph%206894728%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Runnymede, King John's Cottages, with attached stable"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207504"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502647"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "2, 3 And 4, Orchard Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207559"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502704"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1207559%206%20St%20Mary%20Lane%20Tewkesbury%2020240601%200039%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "6, St Mary's Lane"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207658"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502798"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2875%29%20%28geograph%206895878%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tudor Cottage, 6 Trinity Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1279721"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26568917"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Graham Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280309"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569459"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Swilgate Bridge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280322"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569470"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Webber%20House%20-%20geograph.org.uk%20-%208021854.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Webber House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280926"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570014"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2885%29%20%28geograph%206887089%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "71, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282741"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571660"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "148 And 149, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282751"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571669"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20features%20%2811%29%20%28geograph%206894778%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Boundary Wall Adjacent To Gazebo At Rear Of Number 51 High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282772"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571689"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tudor%20House%20Hotel%2C%20Tewkesbury%20-%20geograph.org.uk%20-%201018100.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Boundary Walls And Gateway To Tudor Hotel"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282785"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571701"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282785%2060%20Barton%20Street%20Tewkesbury%2020240601%200281%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "60, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282799"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571713"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2841%29%20%28geograph%206882247%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "93, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282811"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571723"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Byrne Monument Aproximately 2 Metres North Of Nave Central Buttress"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282812"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571724"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Andrew Hoskins Monument Approximately 18 Metres North Of North Porch Adjacent To Path"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282818"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571730"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2827%29%20%28geograph%206884043%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "23, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1386810"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26666492"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/The%20Old%20Police%20Station%20%28geograph%205762381%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Old Police Station And The Old Police Station Dental Practice"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201235"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26889322"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "10 Abbey Terrace"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201161"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q4664008"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/The%20Gatehouse%2C%20Tewkesbury%20Abbey%20-%20geograph.org.uk%20-%20319431.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Gatehouse, Tewkesbury"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282810"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q13528012"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20Bridge.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Mythe Bridge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282810"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q13528012"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/The%20Mythe%20Bridge%20-%20geograph.org.uk%20-%204938.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Mythe Bridge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1052263"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538459"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28160%29%20%28geograph%206893616%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "137, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201210"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538636"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Bell%20Hotel%20EH%201201210.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Bell Hotel"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201239"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538648"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2897%29%20%28geograph%206888322%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "1, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201256"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538890"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Avonside%2C%20Tewkesbury%20High%20Street%20-%20geograph.org.uk%20-%205398946.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Avonside"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201269"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538904"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Andrews%20and%20The%20Nottingham%20Arms%2C%20Tewkesbury%20-%20geograph.org.uk%20-%204009747.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Nottingham Arms"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201274"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538916"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28171%29%20%28geograph%206893682%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "154, High Street, Tewkesbury"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201278"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538932"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1%20and%202%20Mill%20Bank%20EH%201201278.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "1 and 2, Mill Bank"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204935"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539027"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20Museum-geograph.org.uk-3870305.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tewkesbury Museum  building"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205712"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539063"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2821%29%20%28geograph%206879170%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Jessop House Hotel"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205867"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539095"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Craik%20House%20EH%201205867.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Craik House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205905"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539116"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2826%29%20%28geograph%206882235%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "88 and 88a, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206326"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539188"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/GoldenKeyHouse.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Golden Key House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206372"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539202"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/15highst.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "15, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207382"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539229"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Old%20Bear%20Inn%20EH%201207382.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Black Bear Inn"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280681"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539393"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2810%29%20%28geograph%206870464%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "15 and 16, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281018"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539438"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Malthouse to rear of Number 23"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1024983"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26275827"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28150%29%20%28geograph%206892764%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "126, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025009"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26275852"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Auriol%20House%2C%20High%20Street%2C%20Tewkesbury%20-%20geograph.org.uk%20-%20808084.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Auriol House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025035"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26275880"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1025035%20120%20High%20Street%20Tewkesbury%2020240601%200323%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "120, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025104"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26275911"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Outbuilding To Rear Of Number 67"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1052212"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26304012"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28164%29%20%28geograph%206893632%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "142 And 143, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187221"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482445"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28167%29%20%28geograph%206893657%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "150, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187270"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482487"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Number 9 Including Privy"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187342"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482558"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Barn"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201160"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496906"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%282%29%20%28geograph%206867360%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Barn  The Almonry"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201167"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496911"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201173%20Unidentified%20Monument%2C%20Abbey%20Precincts%20Tewkesbury%2020240601%200152%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Easthope Monument Approximately 2 Metres North Of Nave Wall Of Abbey Church"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201174"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496918"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Unidentified Monument Approximately 4 Metres West Of Path And 25 Metres North Of Abbey North Porch"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201176"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496920"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Barton%20House%20B%5EB%2C%20Tewkesbury%20-%20geograph.org.uk%20-%203870092.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barton House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201184"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496928"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2829%29%20%28geograph%206884956%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "32, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201187"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496931"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201187%2046%20Barton%20Street%20Tewkesbury%2020240601%200256%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "46, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201191"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496936"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201191%20586%20Barton%20Street%20Tewkesbury%2020240601%200279%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "58, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201192"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496937"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201192%2059%20Barton%20Street%20Tewkesbury%2020240601%200280%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "59, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201197"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496941"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2887%29%20%28geograph%206887093%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "74, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201198"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496942"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2889%29%20%28geograph%206887099%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "76, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201205"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496948"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201205%2018%20Church%20Street%20Tewkesbury%2020240601%200027%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "18, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201211"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496951"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201211%2054%20Church%20Street%20Tewkesbury%2020240601%200065%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "54, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201212"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496952"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2816%29%20%28geograph%206878911%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "56, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201220"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496960"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2822%29%20%28geograph%206881300%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "75, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201231"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496968"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "32, 33 And 34, East Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201232"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496969"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%283%29%20%28geograph%206868383%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "1 Abbey Terrace"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201245"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496980"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28111%29%20%28geograph%206889340%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "17, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201248"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496983"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201248%2035%20High%20Street%20Tewkesbury%2020240601%200319%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "35, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201253"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496988"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28129%29%20%28geograph%206890541%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "56 And 57, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201254"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496989"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28131%29%20%28geograph%206890547%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "60, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201259"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496993"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2862%29%20%28geograph%206890602%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "71, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201261"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496995"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28136%29%20%28geograph%206891539%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "105, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201264"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496998"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28143%29%20%28geograph%206892754%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "119, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201266"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497000"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28147%29%20%28geograph%206892761%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "123, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201270"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497003"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28159%29%20%28geograph%206893615%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "136, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201273"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497006"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28168%29%20%28geograph%206893662%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "151, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201276"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497008"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Claypipes"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201279"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497010"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Emms Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201280"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497011"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Raised Pavement To Front Of Numbers 1 To 9"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201283"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497014"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Stonemason's Yard"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201289"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497018"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2856%29%20%28geograph%206888320%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "10 and 11, Nelson Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201297"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497026"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tewkesbury Boat Centre"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201298"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497027"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "1, Stephens Alley"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201300"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497029"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "1 and 2, Tolzey Lane"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204474"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26499915"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Mythe%20Bridge%20Toll%20House%20-%20geograph.org.uk%20-%204763072.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Toll House At East End Of Mythe Bridge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204534"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26499971"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1204534%20Healing%20Monument%2C%20Abbey%20Precincts%20Tewkesbury%2020240601%200150%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Healing Monument Approximately 3 Metres North Of North Wall Of Abbey House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204759"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500173"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2862%29%20%28geograph%206884027%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "11, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204792"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500202"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2867%29%20%28geograph%206884040%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "21, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204825"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500233"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2872%29%20%28geograph%206884950%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "29, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204827"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500234"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2873%29%20%28geograph%206884953%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "31, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204845"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500249"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2874%29%20%28geograph%206884973%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "42 And 43, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204869"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500271"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2841%29%20%28geograph%206885852%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "51 And 52, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205501"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500839"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2815%29%20%28geograph%206871489%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Sherford House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205617"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500937"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Abbeyfield%20House%2C%20Tewkesbury%20-%20geograph.org.uk%20-%202033611.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbeyfield"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205636"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500952"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/The%20former%20National%20School%20at%20Tewkesbury%20Abbey%20-%20geograph.org.uk%20-%201766551.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "National School"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206034"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501297"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1206034%20St%20Mary%27s%20Cottage%20Tewkesbury%2020240601%200153%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "St Mary's Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206096"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501356"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2854%29%20%28geograph%206888306%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "25 And 26, East Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206381"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501606"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28110%29%20%28geograph%206889335%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "16, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206617"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501819"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1206617%2041%20High%20Street%20Tewkesbury%2020240601%200306%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "41, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206624"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501825"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1206624%2042%20High%20Street%20Tewkesbury%2020240601%200304%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Anchor"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206682"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501879"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1206682%2046%20High%20Street%20Tewkesbury%2020240601%200297%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "46, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206691"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501888"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1206691%2050%20High%20Street%20Tewkesbury%2020240601%200293%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "50, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207418"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502568"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "1, Old Baptist Chapel Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207491"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502634"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Sheep Market Office"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207516"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502660"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28178%29%20%28geograph%206895338%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "2, Quay Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280250"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569406"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280250%2013%20High%20Street%20Tewkesbury%2020240601%200341%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "13, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280422"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569560"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280422%20106%20Church%20Street%20Tewkesbury%2020240601%200195%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "106, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280586"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569705"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280586%2062%20Church%20Street%20Tewkesbury%2020240601%200063%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "62, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280722"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569823"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Bicknor And Bicknor Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280995"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570077"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2834%29%20%28geograph%206884967%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "38, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281002"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570084"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2838%29%20%28geograph%206884983%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "46A And 47, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282762"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571680"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2853%29%20%28geograph%206888303%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "22, 23 And 24, East Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282769"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571687"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28118%29%20%28geograph%206889383%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "25, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282773"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571690"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28130%29%20%28geograph%206890545%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "58 And 59, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282780"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571696"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28163%29%20%28geograph%206893629%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "141, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282790"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571705"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%289%29%20%28geograph%206870459%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "14, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282792"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571707"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282792%20Crescent%20Cottage%2C%2028%20Church%20Street%20Tewkesbury%2020240601%200044%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Crescent Cottage  Newton Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282813"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571725"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "William Proctor Monument Approximately 17 Metres West Of North West Corner Of Abbey Church"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282816"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571728"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Group Of Six Monuments By Hedge At South West End Of Car Park"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1298824"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26586270"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28166%29%20%28geograph%206893653%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "147, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1366070"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26647702"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "3, Turners Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201233"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26678864"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%287%29%20%28geograph%206869612%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "4 Abbey Terrace"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207409"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26678955"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2873%29%20%28geograph%206894735%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "4 King John's Cottages, Mythe Road"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282809"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q7752968"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/The%20Mythe%20-%20geograph.org.uk%20-%201887214.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Mythe"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282809"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q7752968"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/The%20Mythe%20on%20the%20Mythe%2C%20near%20Tewkesbury%20-%20geograph.org.uk%20-%205526171.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Mythe"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201208"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17526393"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Abbey%20Lawn%20Cottages%20EH%201201208.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Lawn Cottages, 34-39 Church Street"
+      },
+      "mat" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q268547"
+      },
+      "matLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "roof tile"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201208"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17526393"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Abbey%20Lawn%20Cottages%20EH%201201208.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Lawn Cottages, 34-39 Church Street"
+      },
+      "mat" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q629000"
+      },
+      "matLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "timber framing"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205593"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17526413"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1205593%2040%20Church%20Street%20Tewkesbury%2020240601%200057%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "40, Church Street"
+      },
+      "mat" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q40089"
+      },
+      "matLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "brick"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205593"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17526413"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1205593%2040%20Church%20Street%20Tewkesbury%2020240601%200057%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "40, Church Street"
+      },
+      "mat" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q268547"
+      },
+      "matLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "roof tile"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205593"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17526413"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1205593%2040%20Church%20Street%20Tewkesbury%2020240601%200057%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "40, Church Street"
+      },
+      "mat" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q629000"
+      },
+      "matLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "timber framing"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1052276"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538461"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28162%29%20%28geograph%206893624%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Clarence House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201203"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538633"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Berkeley%20Arms%20EH%201201203.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Berkeley Arms And Outbuilding"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204795"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539011"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2868%29%20%28geograph%206884042%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "22, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206399"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539216"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Town%20Hall%20EH%201206399.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Town Hall"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280099"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539288"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tudor%20Hotel%2C%20Tewkesbury%20-%20geograph.org.uk%20-%20805727.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tudor Hotel"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280304"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539315"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2898%29%20%28geograph%206888323%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "2, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280450"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539328"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/100%20Church%20Stree%20EH%201280450.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "100, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280534"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539353"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2823%29%20%28geograph%206881310%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Number 77 Including Gate Piers"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280642"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539366"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Newton House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282770"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539472"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/40%20High%20Street%2C%20Tewkesbury%20%28geograph%203770981%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "39 and 40, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282779"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17540606"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/132%20High%20Street.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "132, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025056"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26275899"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28140%29%20%28geograph%206891634%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "111, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025065"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26276306"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2867%29%20%28geograph%206891520%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "77 And 78, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025093"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26276334"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2865%29%20%28geograph%206891512%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "74, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187173"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482396"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28155%29%20%28geograph%206892778%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "131, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187267"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482484"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Pump Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187378"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482589"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Mill Cottage  Roshine"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187382"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482593"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "1, Mill Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187708"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482891"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Georgian-style%20houses%20in%20Tewkesbury%20-%20geograph.org.uk%20-%206545622.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Brothers Public House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201165"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496909"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Old%20Toll%20House%20shelter%20opposite%20Mythe%20Bridge%20Toll%20House%20%28geograph%206115285%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Turnpike Shelter At East End Of Mythe Bridge"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201166"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496910"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Banaster Monument Approximately 10 Metres South East Of Hedge To Car Park, Adjoining South West"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201173"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496917"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Unidentified Monument Approximately 10 Metres North Of North East Corner Of Abbey Porch"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201182"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496926"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2866%29%20%28geograph%206884038%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "17, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201183"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496927"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2869%29%20%28geograph%206884045%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "24, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201185"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496929"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201185%2034%20Barton%20Street%20Tewkesbury%2020240601%200239%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "34, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201186"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496930"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2835%29%20%28geograph%206884970%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "39 Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201188"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496932"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2840%29%20%28geograph%206885851%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "50, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201190"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496934"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2876%29%20%28geograph%206885858%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Kingdom Hall, With Classroom Wing, And Boundary Railings With Gates"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201194"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496939"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201194%2063%20Barton%20Street%20Tewkesbury%2020240601%200285%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "63, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201201"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496945"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Pound Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201202"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496946"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%289%29%20%28geograph%206869740%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "6, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201206"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496949"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201206%20Abbeyfold%2C%2020%20Church%20Street%20Tewkesbury%2020240601%200030%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbeyfold"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201207"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496950"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2817%29%20%28geograph%206871491%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Avonbrook House  Tewkesbury High School"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201213"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496953"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201213%2057%20and%2058%20Church%20Street%20Tewkesbury%2020240601%200061%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "57 and 58, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201214"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496954"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2817%29%20%28geograph%206878957%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "60, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201221"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496961"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gazebo To North Of Number 77"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201223"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496963"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2837%29%20%28geograph%206882226%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "84, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201224"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496964"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2825%29%20%28geograph%206882231%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "87, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201227"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496965"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2846%29%20%28geograph%206882275%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "99, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201247"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496982"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28116%29%20%28geograph%206889370%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "22, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201255"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496990"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28132%29%20%28geograph%206890552%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "62, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201267"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497001"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28149%29%20%28geograph%206892763%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "125, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201272"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497005"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "144 And 145, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201277"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497009"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Lincoln%20Green%20Lane%20%28geograph%206821664%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Lincoln Green Farmhouse And Attached Outbuilding"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201294"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497023"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201294%202%20St%20Mary%20Lane%20Tewkesbury%2020240601%200035%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "2, St Mary's Lane"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201295"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497024"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "16 And 18, St Mary's Lane"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201296"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497025"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "34, St Mary's Lane"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201299"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497028"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/War%20Memorial%20EH%201201299.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tewkesbury War Memorial"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204529"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26499968"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Group Of 5 Monuments, Dumble And Others, Approximately 6 Metres South Of Cartland Memorial"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204629"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500052"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "2, Back Of Avon"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204640"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500062"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2855%29%20%28geograph%206888313%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barton Terrace"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204833"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500238"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2832%29%20%28geograph%206884962%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "35, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205043"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500428"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2890%29%20%28geograph%206887104%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "77, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205392"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500738"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Croft Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205505"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500843"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2816%29%20%28geograph%206871490%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "19, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205799"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501085"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1205799%2070%20Church%20Street%20Tewkesbury%2020240601%200076%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "70, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205808"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501094"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2832%29%20%28geograph%206879591%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "72, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205816"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501101"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1205816%2074%20Church%20Street%20Tewkesbury%2020240601%200081%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "74, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205836"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501120"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "78, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205967"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501239"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2845%29%20%28geograph%206882258%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Rowland Hill House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1206441"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26501657"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28120%29%20%28geograph%206889391%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Britannia Inn"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207375"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502530"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "1, Mythe Road"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207444"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502590"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gothic Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1207539"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26502684"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Warehouse Opposite Clarke's Alley"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1279647"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26568850"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "4, Tolzey Lane"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280509"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569637"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2835%29%20%28geograph%206881312%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "79 and 80, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280649"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569759"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Houses%20on%20Tewkesbury%20Crescent%20-%20geograph.org.uk%20-%207248569.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "30, 31 and 32, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280714"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569816"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%288%29%20%28geograph%206870449%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "13, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280739"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569836"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2894%29%20%28geograph%206887128%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "84 And 84A, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281031"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570109"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2830%29%20%28geograph%206884958%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "33 And 33A, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281036"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570113"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2860%29%20%28geograph%206883273%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Duke Of York Public House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281040"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570118"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Financial%20services%20centre%2C%20Tewkesbury%20-%20geograph.org.uk%20-%202171763.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Mustard House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281065"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570144"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1281065%205%20Barton%20Street%20Tewkesbury%2020240601%200203%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "5, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281116"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570189"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Group Of Three Monuments Approximately 20 Metres North Of North Wall Of Abbey Nave"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281189"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570258"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Barber And Godsall Monuments"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282753"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571671"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "28, 30 And 32, St Mary's Lane"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282754"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571672"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Boundary Wall From Folly Cottage To Numbers 11, 12 And 13 Mill Bank"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282755"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571673"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Footbridge Over River Swilgate"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282763"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571681"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Abbey%20Lodge%20from%20the%20Abbey%20Precinct%2C%20Tewkesbury%20-%20geograph.org.uk%20-%204766747.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Lodge Including Boundary Walls"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282775"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571692"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2859%29%20%28geograph%206890564%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Trafalgar House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282777"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571694"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2864%29%20%28geograph%206891510%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "73, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282778"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571695"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/79%20High%20Street%2C%20Tewkesbury%20-%20geograph.org.uk%20-%207477493.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Hereford House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282786"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571702"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2879%29%20%28geograph%206885889%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "62, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282787"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571703"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2847%29%20%28geograph%206887086%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "68, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282788"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571704"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282788%204%20Church%20Street%20Tewkesbury%2020240601%200002%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "4, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282794"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571708"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2814%29%20%28geograph%206878891%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "53, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282795"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571709"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282795%2055%20Church%20Street%20Tewkesbury%2020240601%200066%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "55, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282797"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571711"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282797%2061%20Church%20Street%20Tewkesbury%2020240601%200062%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "61, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282798"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571712"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/One%20of%20Tewkesbury%27s%20many%20timbered%20buildings%20-%20geograph.org.uk%20-%201037021.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "66, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282800"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571714"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282800%20105%20Church%20Street%20Tewkesbury%2020240601%200196%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "105, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282806"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571720"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Boundary Wall, South Of Church Of St Mary"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282814"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571726"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Waldron Monument Approximately 15 Metres North Of Central Buttress To Abbey Nave"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282815"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571727"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Williams Monument Approximately 3 1/2 Metres West Of North West Corner Of North Porch Of Abbey"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282807"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17526424"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Abbey%20House%2C%20Tewkesbury%20-%20geograph.org.uk%20-%202032836.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201243"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17538650"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/No.%2012%20the%20High%20Street%2C%20Tewkesbury%20-%20geograph.org.uk%20-%20805661.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Old Fleece"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282742"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17539453"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/155%20High%20Street%20EH%201282742.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "155, High Street, Tewkesbury"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282789"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17540617"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2813%29%20%28geograph%206870423%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "10, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201228"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q17565075"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Cross%20House%2C%20Tewkesbury%20-%20geograph.org.uk%20-%201576387.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Cross House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1025004"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26275847"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28146%29%20%28geograph%206892760%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "122, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1187395"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26482605"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "5, Mill Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201164"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496908"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Carriage House Approximately 60 Metres West Of The Mythe"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201168"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496912"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Mew And Unidentified Monuments Approximately 13 Metres North Of North West Corner Of Abbey Church"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201215"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496955"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Malt House At Rear Of Number 62"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201216"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496956"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201216%2064%20Church%20Street%20Tewkesbury%2020240601%200072%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "64, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201218"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496958"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1201218%2071%20Church%20Street%20Tewkesbury%2020240601%200077%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "71, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201222"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496962"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2836%29%20%28geograph%206881314%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "81, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201257"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26496991"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Riverside%20nightclub%20%5E%20bistro%2C%20Tewkesbury%20-%20geograph.org.uk%20-%203771376.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "66, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201275"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497007"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28173%29%20%28geograph%206893701%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "156, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201290"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497019"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "2 And 3, Old Baptist Chapel Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201291"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497020"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Holy%20Trinity%20Church%20-%20geograph.org.uk%20-%203081136.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Church of Holy Trinity"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201301"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26497030"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2874%29%20%28geograph%206895877%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Lucia House"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1204748"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500163"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2858%29%20%28geograph%206883240%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "6, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205010"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26500396"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2884%29%20%28geograph%206887088%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "69, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1279671"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26568872"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28175%29%20%28geograph%206894771%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gazebo To Garden Of Number 51  Gazebo To Garden Of Number 51 High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280126"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569297"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280126%2038%20High%20Street%20Tewkesbury%2020240601%200312%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "38, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280269"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569424"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28101%29%20%28geograph%206888327%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "7, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280385"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569526"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2850%29%20%28geograph%206887158%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "17 And 18, East Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280453"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569588"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280453%20101%20Church%20Street%20Tewkesbury%2020240601%200194%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Number 101 With Cottage To Rear"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280555"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569676"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280555%2067%20Church%20Street%20Tewkesbury%2020240601%200074%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Hotel And Attached Boundary Wall To St Mary's Lane"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280594"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569712"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280594%2063%20Church%20Street%20Tewkesbury%2020240601%200071%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "63, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280693"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569798"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280693%2021%20Church%20Street%20Tewkesbury%2020240601%200032%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "21, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280707"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26569810"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280707%2011%20Church%20Street%20Tewkesbury%2020240601%200020%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "11, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280935"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570023"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2888%29%20%28geograph%206887097%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "75, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280955"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570042"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2883%29%20%28geograph%206887085%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "67, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1280965"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570051"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1280965%2066%20Barton%20Street%20Tewkesbury%2020240601%200290%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "66, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281000"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570082"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1281000%2045%20Barton%20Street%20Tewkesbury%2020240601%200255%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "45, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281008"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570090"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2839%29%20%28geograph%206885849%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "49A, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281042"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570120"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2865%29%20%28geograph%206884036%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "16, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281107"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570182"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1281107%206-9%20Barton%20Road%20Tewkesbury%2020240601%200265%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "6-9, Barton Road"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1281131"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26570202"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Unidentified Monument Approximately 12 Metres East Of Abbey Churchyard Gates"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282745"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571663"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "4, Mill Bank"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282746"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571664"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "7, Mill Bank"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282747"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571665"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "2, Mill Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282748"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571666"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "8 And 9, Mill Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282750"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571668"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282750%20Orchard%20House%2C%20Orchard%20Court%20Tewkesbury%2020240601%200269%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Orchard Cottage  Orchard Court"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282752"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571670"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "7, St Mary's Lane"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282756"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571674"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20Antique%20Centre%20%28geograph%207429850%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tolsey Hall"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282761"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571679"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Russell%20Almshouse%20%28geograph%207187047%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Russell Almshouses"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282768"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571686"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%282%29%20%28geograph%206868381%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Abbey Cottages"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282771"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571688"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28123%29%20%28geograph%206890520%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "47 And 48, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282774"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571691"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2857%29%20%28geograph%206890550%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "61, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282776"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571693"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "67, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282781"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571697"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282781%2044%20Barton%20Street%20Tewkesbury%2020240601%200253%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "44, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282782"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571698"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282782%2048%20Barton%20Street%20Tewkesbury%2020240601%200258%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "48, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282783"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571699"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282783%2054%20Barton%20Street%20Tewkesbury%2020240601%200271%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "54, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282784"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571700"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Autospares%2C%2057%20Barton%20Street%2C%20Tewkesbury%20-%20geograph.org.uk%20-%206914411.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "57, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282791"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571706"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "22, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282796"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571710"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%2824%29%20%28geograph%206878919%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "59, Church Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282808"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571721"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Monastery Cottage"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282819"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571731"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2828%29%20%28geograph%206884952%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "30, Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1298779"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26586230"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "10, Mill Bank"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1355189"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26637868"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28152%29%20%28geograph%206892766%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "128, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1355128"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26638008"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2861%29%20%28geograph%206890578%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "70, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1355154"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26638034"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2863%29%20%28geograph%206891509%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "72, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1355175"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26638048"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20buildings%20%28137%29%20%28geograph%206891540%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "106, High Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1201234"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26889320"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%285%29%20%28geograph%206869605%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "5-8 Abbey Terrace"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282820"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26892728"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%2833%29%20%28geograph%206884963%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tudor Cottage and 37 Barton Street"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1461284"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q66479983"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Healing%27s%20Mill%2C%20Tewkesbury%20-%20geograph.org.uk%20-%201931767.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Healings Flour Mill and Warehouses"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282766"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q66480460"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "11 Abbey Terrace"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282764"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q66477502"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%284%29%20%28geograph%206868389%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "2 and 3 Abbey Terrace"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282765"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q66480459"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tewkesbury%20houses%20%286%29%20%28geograph%206869609%29.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "9 Abbey Terrace"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1393680"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26672828"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Chapel%20of%20Rest%20at%20Tewkesbury%20Cemetery%20-%20geograph.org.uk%20-%20872129.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Anglican and Non-Conformist Chapels at Tewkesbury Cemetery"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282743"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26683379"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tudor%20Cottage%2C%20Lilley%27s%20Alley%2C%20Tewkesbury%20-%20geograph.org.uk%20-%206127913.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tudor Cottage, 1 Lilley's Alley"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205936"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q28404714"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Royal%20Hop%20Pole.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Royal Hop Pole"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1205936"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q28404714"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Royal%20Hop%20Pole%20Hotel%20EH%201205936.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "The Royal Hop Pole"
+      }
+    }, {
+      "le" : {
+        "type" : "literal",
+        "value" : "1282817"
+      },
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q26571729"
+      },
+      "img" : {
+        "type" : "uri",
+        "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/1282817%2012%20Barton%20Street%20Tewkesbury%2020240601%200212%20DxO.jpg"
+      },
+      "itemLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "12, Barton Street"
+      }
+    } ]
+  }
+}
