@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import { makeFacadeAtlases, facadeMaterial, roofTexture, buildSigns } from './facades.js';
+import { makeFacadeAtlases, facadeMaterial, roofTexture } from './facades.js';
 import { buildStreet, buildPavements } from './street.js';
+import { buildShopfronts } from './shopfronts.js';
 
 // ------------------------------------------------------------------ loading
 const D = 'data/';
@@ -14,9 +15,9 @@ const V = (f) => D + f + (BUILD ? `?v=${BUILD}` : '');
 const bin = async (f, T) => { const b = await (await fetch(V(f))).arrayBuffer(); tick(); return new T(b); };
 const json = async (f) => { const j = await (await fetch(V(f))).json(); tick(); return j; };
 
-const [terrMeta, terrH, driveH, kindG, roads, foots, water, trees, meta, signs, street] = await Promise.all([
+const [terrMeta, terrH, driveH, kindG, roads, foots, water, trees, meta, shopUnits, street] = await Promise.all([
   json('terrain.json'), bin('terrain.bin', Uint16Array), bin('drive.bin', Uint16Array), bin('kind.bin', Uint8Array),
-  json('roads.json'), json('footprints.json'), json('water.json'), json('trees.json'), json('meta.json'), json('signs.json'), json('street.json'),
+  json('roads.json'), json('footprints.json'), json('water.json'), json('trees.json'), json('meta.json'), json('shopfronts.json'), json('street.json'),
 ]);
 const wallData = await Promise.all([0, 1, 2, 3, 4, 5].map(async s => ({
   pos: await bin(`walls${s}_pos.bin`, Float32Array), uv: await bin(`walls${s}_uv.bin`, Float32Array),
@@ -264,7 +265,6 @@ const ROAD_RANK = { primary: 6, trunk: 7, secondary: 5, tertiary: 4, primary_lin
   const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map: roofTexture(renderer), vertexColors: true, roughness: 0.82, side: THREE.DoubleSide }));
   m.castShadow = m.receiveShadow = true;
   scene.add(m);
-  scene.add(buildSigns(signs));
 }
 
 // ------------------------------------------------------------------ trees (positions & heights from LIDAR canopy)
@@ -308,7 +308,9 @@ for (const [x, , z, h] of trees) {
 let onPavement = () => false;
 {
   onPavement = buildPavements(scene, paveTris, kerbSegs, terrainY);
-  const { posts, segs } = buildStreet(scene, street, (x, z) => terrainY(x, z) + (onPavement(x, z) ? 0.31 : 0));
+  const groundY = (x, z) => terrainY(x, z) + (onPavement(x, z) ? 0.31 : 0);
+  const { posts, segs } = buildStreet(scene, street, groundY);
+  buildShopfronts(scene, shopUnits, groundY);
   for (const [x, z, r] of posts) {
     const k = hkey(Math.floor(x / CELL), Math.floor(z / CELL)); if (!treeHash.has(k)) treeHash.set(k, []); treeHash.get(k).push([x, z, r]);
   }

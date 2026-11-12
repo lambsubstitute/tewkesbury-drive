@@ -27,7 +27,13 @@ Each building's 1 m LIDAR surface is region-grown into flat roof facets. This wo
 
 Patches inside an OSM outline where the LIDAR shows open ground (12 m² or more) are cut out, so courtyards and yards that OSM drew inside a block stay open. `tools/roof_check.py` rasterises the finished roofs and compares them with the LIDAR surface. The current result is a 0.21 m area-weighted median error, with 10% of roof area more than 1 m off, mostly at edges and steps.
 
-Walls are split into ground floor, upper storeys and gable. Timber-framed buildings get jettied upper storeys, each oversailing the one below by 0.22 m, plus deeper eaves. Top storeys get shorter windows than the floors below, and brick, rendered and stone fronts get a cornice at the eaves. Storey height comes from the eave height, and window bays are spaced evenly per wall. Party walls get no windows. Ground floors of buildings with an OSM shop, café, pub or office facing a street become shopfronts, with a fascia sign showing the business's OSM name.
+Walls are split into ground floor, upper storeys and gable. Timber-framed buildings get jettied upper storeys, each oversailing the one below by 0.22 m, plus deeper eaves. Top storeys get shorter windows than the floors below, and brick, rendered and stone fronts get a cornice at the eaves. Storey height comes from the eave height, and window bays are spaced evenly per wall. Party walls get no windows. Each building's street frontage is split into shop units: every 1 m of frontage goes to the nearest OSM shop, café, pub or office, giving one unit per shop. Each unit gets a 3D shopfront (`game/shopfronts.js`) in one of three styles:
+
+- **Traditional:** painted pilasters with console brackets, a moulded fascia and cornice, mullioned display windows with transom lights, a panelled stallriser and a recessed door.
+- **Modern:** a flat fascia with slim aluminium frames, full-height glass and a side door. Used for national chains and banks.
+- **Pub:** dark paint, small-paned windows and a hanging sign.
+
+Butchers, greengrocers, bakeries, cafés and the shops seen with awnings in Mapillary photos get canvas awnings, in their photographed colours where known. The shop's name is lettered onto its own fascia, edge to edge between its pilasters, so signs can't overlap or drift off their shop.
 
 ### Street level (`game/street.js`, `data/osm_street.json`)
 

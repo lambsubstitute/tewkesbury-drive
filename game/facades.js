@@ -185,39 +185,3 @@ export function roofTexture(renderer) {
   t.anisotropy = renderer.capabilities.getMaxAnisotropy();
   return t;
 }
-
-// shop fascia signs from OSM names
-export function buildSigns(signs) {
-  const COLS = 4, CELLW = 512, CELLH = 64;
-  const rows = Math.ceil(signs.length / COLS);
-  const c = document.createElement('canvas'); c.width = COLS * CELLW; c.height = Math.max(64, rows * CELLH);
-  const x = c.getContext('2d');
-  const pos = [], uv = [];
-  signs.forEach((s, i) => {
-    const cx = (i % COLS) * CELLW, cy = Math.floor(i / COLS) * CELLH;
-    const h = 0.5, used = Math.min(CELLW, Math.round(CELLH * s.w / h));
-    x.fillStyle = s.c; x.fillRect(cx, cy, used, CELLH);
-    const lum = parseInt(s.c.slice(1, 3), 16) * .3 + parseInt(s.c.slice(3, 5), 16) * .59 + parseInt(s.c.slice(5, 7), 16) * .11;
-    x.fillStyle = lum > 140 ? '#2a2a2a' : '#f3ead2';
-    x.font = `600 38px Georgia, "Times New Roman", serif`;
-    const tw = x.measureText(s.n).width, maxw = used - 24;
-    x.save(); x.translate(cx + used / 2, cy + CELLH / 2 + 13);
-    if (tw > maxw) x.scale(maxw / tw, 1);
-    x.textAlign = 'center'; x.fillText(s.n, 0, 0); x.restore();
-    x.strokeStyle = 'rgba(0,0,0,.35)'; x.lineWidth = 3; x.strokeRect(cx + 1.5, cy + 1.5, used - 3, CELLH - 3);
-    const u0 = cx / c.width, u1 = (cx + used) / c.width, v1 = 1 - cy / c.height, v0 = 1 - (cy + CELLH) / c.height;
-    const rx = Math.cos(s.r), rz = -Math.sin(s.r), hw = s.w / 2;
-    const P = (a, b) => [s.x + rx * a, s.y + b, s.z + rz * a];
-    const q = [P(-hw, -h / 2), P(hw, -h / 2), P(hw, h / 2), P(-hw, -h / 2), P(hw, h / 2), P(-hw, h / 2)];
-    const quv = [[u0, v0], [u1, v0], [u1, v1], [u0, v0], [u1, v1], [u0, v1]];
-    q.forEach(p => pos.push(...p)); quv.forEach(p => uv.push(...p));
-  });
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
-  g.computeVertexNormals();
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
-  const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map: t, roughness: 0.6, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -2 }));
-  m.receiveShadow = true;
-  return m;
-}

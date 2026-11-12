@@ -524,9 +524,96 @@ if os.path.exists(_fn):
             PHOTO_SHOP[m[0]] = (_hex(parts[1]), _hex(parts[2]) if len(parts) > 2 and parts[2] else _hex(parts[1]))
     print("shopfront colours from photos:", len(PHOTO_SHOP))
 signs_out = []
+shopfront_out = []
 ctx = {"E_MIN": E_MIN, "N_MAX": N_MAX, "E0": E0, "N0": N0, "dsm_s": dsm_s, "dtm": dtm, "sample": sample,
        "ALL_B": ALL_B, "road_near": road_near, "B_LIST": _all, "B_TREE": shapely.STRtree(_all)}
 sink = buildgeo.Sink(NSTYLES)
+
+
+CHAINS = ("betfred", "card factory", "ladbrokes", "poundland", "savers", "peacocks", "shoe zone", "subway", "kfc",
+          "papa john", "holland & barrett", "tsb", "lloyds", "boots", "superdrug", "costa", "greggs", "specsavers",
+          "scrivens", "coffee#1", "age uk", "tgjones", "m&co", "timpson", "edinburgh woollen mill", "domino",
+          "sue ryder", "cancer research", "british heart", "oxfam", "salvation army", "st. richard", "blue cross",
+          "coral", "william hill", "halifax", "hsbc", "nationwide", "santander", "co-op", "tesco", "sainsbury",
+          "iceland", "vodafone", "cex", "ee", "post office", "card rack", "tewkesbury phones")
+AWNING_SHOPS = {"butcher", "greengrocer", "bakery", "deli", "florist", "fishmonger", "confectionery", "farm"}
+AWNING_AMEN = {"cafe", "ice_cream"}
+# awnings seen in the Mapillary photos: (kind, canvas colour)
+SEEN_AWNINGS = {"The Card Rack": ("plain", "#b3202a"), "Halfords Traditional Butchers": ("stripe", "#26386e"),
+                "Chocolat": ("stripe", "#2f5a3a")}
+PUB_PAINT = [(28, 40, 32), (60, 22, 28), (24, 24, 26), (30, 36, 52)]
+TRAD_PAINT = [(30, 52, 40), (28, 36, 62), (24, 24, 26), (96, 24, 32), (60, 66, 70), (226, 220, 200), (40, 70, 90),
+              (112, 80, 40), (238, 236, 228), (70, 90, 70)]
+MODERN_PAINT = [(40, 44, 50), (30, 50, 110), (180, 30, 40), (20, 110, 90), (60, 60, 64), (230, 230, 228)]
+
+
+def shop_style(name, tags, old_building):
+    n = (name or "").lower()
+    amen = tags.get("amenity")
+    if amen in ("pub", "bar"):
+        return "pub"
+    if any(c in n for c in CHAINS) or amen == "bank" or tags.get("shop") in ("mobile_phone", "supermarket", "convenience"):
+        return "modern"
+    return "trad" if old_building or h32(n) % 10 < 6 else "modern"
+
+
+def shop_units(pieces, shops_here, bid, old_building, hs):
+    """Group street-facing 1 m wall pieces into shop units (one per shop, contiguous along one wall)."""
+    named = shops_here
+    assign = []
+    for (x0, y0, x1, y1, nx, ny, ei, ri) in pieces:
+        mp = Point((x0 + x1) / 2, (y0 + y1) / 2)
+        k = -1
+        if named:
+            k = min(range(len(named)), key=lambda k_: named[k_][0].distance(mp))
+            if named[k][0].distance(mp) > 30:
+                k = -1
+        assign.append(k)
+    runs = []
+    for pc, k in zip(pieces, assign):
+        x0, y0, x1, y1, nx, ny, ei, ri = pc
+        cur = runs[-1] if runs else None
+        if cur and cur["k"] == k and cur["ei"] == ei and abs(cur["b"][0] - x0) < 1e-6 and abs(cur["b"][1] - y0) < 1e-6:
+            cur["b"] = (x1, y1)
+        else:
+            runs.append({"k": k, "ei": ei, "a": (x0, y0), "b": (x1, y1), "n": (nx, ny)})
+    runs = [r for r in runs if math.hypot(r["b"][0] - r["a"][0], r["b"][1] - r["a"][1]) >= 2.0]
+    # a shop's name goes on its longest stretch of frontage only (corner shops have two)
+    longest = {}
+    for r in runs:
+        L = math.hypot(r["b"][0] - r["a"][0], r["b"][1] - r["a"][1])
+        if r["k"] >= 0 and L > longest.get(r["k"], (0, None))[0]:
+            longest[r["k"]] = (L, id(r))
+    out = []
+    for r in runs:
+        k = r["k"]
+        sname, tags = (named[k][1], named[k][2]) if k >= 0 else (None, {})
+        style_ = shop_style(sname, tags, old_building)
+        key = sname or (bid + str(len(out)))
+        if sname in PHOTO_SHOP:
+            paint, signc = PHOTO_SHOP[sname]
+        else:
+            pal = PUB_PAINT if style_ == "pub" else TRAD_PAINT if style_ == "trad" else MODERN_PAINT
+            paint = pal[h32(key) % len(pal)]
+            signc = paint
+        aw, awc = SEEN_AWNINGS.get(sname, ("", None))
+        if not aw:
+            aw = ("stripe" if tags.get("shop") in ("butcher", "greengrocer", "fishmonger") else
+                  "plain" if (tags.get("shop") in AWNING_SHOPS or tags.get("amenity") in AWNING_AMEN) else "")
+        door = "c" if style_ in ("trad",) else ("r" if h32(key + "d") % 2 else "l")
+        ax, az = to_local(*r["a"])
+        bx, bz = to_local(*r["b"])
+        rec = {"a": [round(ax, 2), round(az, 2)], "b": [round(bx, 2), round(bz, 2)],
+               "n": [round(r["n"][0], 4), round(-r["n"][1], 4)], "h": round(hs, 2), "st": style_,
+               "c": "#%02x%02x%02x" % paint, "sc": "#%02x%02x%02x" % signc, "d": door}
+        if aw:
+            rec["aw"] = aw
+            rec["ac"] = awc or rec["c"]
+        if sname and longest.get(k, (0, None))[1] == id(r):
+            rec["name"] = sname
+        out.append(rec)
+    return out
+
 
 n_b = 0
 stats = {"lidar": 0, "fallback": 0, "listed": 0}
@@ -676,21 +763,13 @@ for e in osm:
         stats["planar"] = stats.get("planar", 0) + 1
         facade_hit = facade_hit[0]
         eave = res["eave"]
-        # fascia signs for named shops, on the nearest street-facing wall
-        used = []
-        for (spt, sname, stags) in shops_here:
-            if not sname or not res["street"]:
-                continue
-            cand = sorted(res["street"], key=lambda sg: (sg[0] - spt.x) ** 2 + (sg[1] - spt.y) ** 2)
-            sg = next((c_ for c_ in cand if all((c_[0] - u[0]) ** 2 + (c_[1] - u[1]) ** 2 > 9 for u in used)), cand[0])
-            used.append(sg)
-            mx, my, nx, ny, Le, _, _ = sg
-            w = max(2.2, min(6.5, 0.28 * len(sname) + 1.2, Le * 0.95))
-            gy = float(sample(dtm, mx, my)[0])
-            lx, lz = to_local(mx + nx * 0.14, my + ny * 0.14)
-            signs_out.append({"x": round(lx, 2), "y": round(max(gy, base) + res["hs"] - 0.5, 2), "z": round(lz, 2),
-                              "r": round(math.atan2(nx, -ny), 3), "w": round(w, 2), "n": sname,
-                              "c": "#%02x%02x%02x" % (PHOTO_SHOP[sname][1] if sname in PHOTO_SHOP else (paint if not callable(paint) else SHOP_PAINT[h32(bid + "p") % len(SHOP_PAINT)]))})
+        # shop units: split the building's street frontage between its shops (each 1 m piece of
+        # frontage goes to the nearest shop node), one shopfront + one fascia sign per unit
+        if is_shop and res["pieces"]:
+            units = shop_units(res["pieces"], shops_here, bid, listed is not None or style == STYLE_TIMBER, res["hs"])
+            for u_ in units:
+                u_["y"] = round(base, 2)        # first-floor line = y + h, shared with the walls
+            shopfront_out.extend(units)
         # footprints for collision / minimap / labels
         ring_local = [[round(v, 2) for v in to_local(x, y)] for x, y in poly.exterior.coords]
         rec = {"p": ring_local, "h": round(eave, 1)}
@@ -711,7 +790,7 @@ for e in osm:
         bdraw.polygon([((x - E_MIN), (N_MAX - y)) for x, y in poly.buffer(1.5).exterior.coords], fill=255)
         n_b += 1
 
-print("buildings:", n_b, stats, "roof tris", len(sink.roof["pos"]) // 9, "signs", len(signs_out))
+print("buildings:", n_b, stats, "roof tris", len(sink.roof["pos"]) // 9)
 
 for s_, W in sink.walls.items():  # one mesh per wall style
     np.array(W["pos"], np.float32).tofile(os.path.join(OUT, f"walls{s_}_pos.bin"))
@@ -721,7 +800,12 @@ for s_, W in sink.walls.items():  # one mesh per wall style
 np.array(sink.roof["pos"], np.float32).tofile(os.path.join(OUT, "roof_pos.bin"))
 np.array(sink.roof["uv"], np.float32).tofile(os.path.join(OUT, "roof_uv.bin"))
 np.array(sink.roof["col"], np.uint8).tofile(os.path.join(OUT, "roof_col.bin"))
-json.dump(signs_out, open(os.path.join(OUT, "signs.json"), "w"), separators=(",", ":"))
+json.dump(shopfront_out, open(os.path.join(OUT, "shopfronts.json"), "w"), separators=(",", ":"))
+if os.path.exists(os.path.join(OUT, "signs.json")):
+    os.remove(os.path.join(OUT, "signs.json"))
+print("shop units", len(shopfront_out), "named", sum(1 for u in shopfront_out if "name" in u),
+      "styles", {k: sum(1 for u in shopfront_out if u["st"] == k) for k in ("trad", "modern", "pub")},
+      "awnings", sum(1 for u in shopfront_out if "aw" in u))
 for f_ in ("roof_idx.bin",):
     if os.path.exists(os.path.join(OUT, f_)):
         os.remove(os.path.join(OUT, f_))

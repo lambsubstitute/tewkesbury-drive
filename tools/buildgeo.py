@@ -309,6 +309,7 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
     nfl = max(1, int(round(eave / 2.9)))
     hs = eave / nfl
     street_segs = []
+    street_pieces = []           # (x0, y0, x1, y1, nx, ny, edge, ring) of every street-facing 1 m wall piece
     off = 0
     gf_top = base + hs
     e_line = base + eave
@@ -349,6 +350,7 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
                     street = d < w / 2 + 9 and (tox * nx + toy * ny) / tl > 0.35
             if street:
                 street_segs.append((mx, my, nx, ny, Le, ei, ri))
+                street_pieces.append((x0, y0, x1, y1, nx, ny, ei, ri))
             segs.append((ei, party, s_style, s_col, street))
         # merge consecutive 1 m segments on the same edge with the same attributes while the
         # wall top and ground stay linear (keeps gable apexes, drops redundant vertices)
@@ -399,8 +401,7 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
                 if name == "gable" or not bays_ok:
                     kind, col = KIND_PLAIN, list(s_col)
                 elif name == "gf" and is_shop and street:
-                    sp = shop_paint((x0 + x1) / 2, (y0 + y1) / 2) if callable(shop_paint) else shop_paint
-                    kind, col = KIND_SHOP, list(sp)
+                    kind, col = KIND_PLAIN, list(s_col)
                 elif name == "top":
                     kind, col = KIND_TOP, list(s_col)
                 else:
@@ -438,4 +439,4 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
                                [0, 0], [1, 0], [1, 0.03], [0, 0.03], [int(c_ * 0.8) for c_ in ccol], KIND_PLAIN)
             i = j
         off += n
-    return {"eave": eave, "hs": hs, "street": street_segs}
+    return {"eave": eave, "hs": hs, "street": street_segs, "pieces": street_pieces}
