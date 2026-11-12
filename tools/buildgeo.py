@@ -306,22 +306,66 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
     ext_tops = [btop[i] for i, (ri, _) in enumerate(bmeta) if ri == 0 and not seg_info[0][bmeta[i][1]][2]]
     eave = float(np.percentile(ext_tops, 20)) if ext_tops else float(np.min(btop))
     eave = max(eave, LO)
-    nfl = max(1, int(round(eave / 2.9)))
-    hs = eave / nfl
+    # storeys are counted from the ground along the street front, not the lowest corner of the plot:
+    # many town plots fall away behind the street, and measuring from the back sinks the whole facade
+    fsamples = []
+    ep0 = ring_ep[0]
+    for i_ in range(len(ep0)):
+        nx_, ny_, party_ = seg_info[0][i_]
+        if party_:
+            continue
+        x0_, y0_ = ep0[i_][:2]
+        x1_, y1_ = ep0[(i_ + 1) % len(ep0)][:2]
+        mx_, my_ = (x0_ + x1_) / 2, (y0_ + y1_) / 2
+        rn_ = road_near(mx_, my_)
+        if rn_ is None:
+            continue
+        d_, w_, (rx_, ry_) = rn_
+        tox_, toy_ = rx_ - mx_, ry_ - my_
+        tl_ = math.hypot(tox_, toy_) or 1
+        if d_ < w_ / 2 + 9 and (tox_ * nx_ + toy_ * ny_) / tl_ > 0.35:
+            fsamples.append(float(sample(dtm, mx_ + nx_ * 1.5, my_ + ny_ * 1.5)[0]))
+    if fsamples:
+        fbase = float(np.median(fsamples)) + 0.1
+    else:
+        arr0 = np.array([(p_[0], p_[1]) for p_ in ep0])
+        fbase = float(np.median(sample(dtm, arr0[:, 0], arr0[:, 1])))
+    fbase = min(max(fbase, base), base + 3.0)
+    e_abs = base + eave
+    rise = e_abs - fbase
+    nfl = max(1, int(round(rise / 2.9))) if rise > 2.4 else 1
+    # the ground storey is taller than the ones above (shops, halls); upper storeys share the rest
+    if nfl == 1:
+        gfh, uph = max(2.4, rise), max(2.4, rise)
+    else:
+        while True:
+            gfh = min(4.2, max(2.9, rise / nfl * 1.2))
+            uph = (rise - gfh) / (nfl - 1)
+            if uph >= 2.3 or nfl == 2:
+                break
+            nfl -= 1
+        if uph < 2.2:                       # two low storeys: keep a usable shop floor, upper floor takes the rest
+            if rise >= 5.0:
+                gfh = max(2.8, rise - 2.2)
+                uph = rise - gfh
+            else:                           # too low for two: one tall storey under the eaves
+                nfl, gfh, uph = 1, max(2.4, rise), max(2.4, rise)
+    hs = gfh
     street_segs = []
     street_pieces = []           # (x0, y0, x1, y1, nx, ny, edge, ring) of every street-facing 1 m wall piece
     off = 0
-    gf_top = base + hs
-    e_line = base + eave
-    # one band per storey: (bottom, top, name, storey index)
+    gf_top = fbase + gfh
+    e_line = e_abs
+    # one band per storey: (bottom, top, name, storey index, texture base, texture storey height)
     if nfl == 1:
-        bands = [(-1e9, e_line, "gf", 0), (e_line, 1e9, "gable", 0)]
+        bands = [(-1e9, e_line, "gf", 0, fbase, gfh), (e_line, 1e9, "gable", 0, e_line, uph)]
     else:
-        bands = [(-1e9, gf_top, "gf", 0)]
+        bands = [(-1e9, gf_top, "gf", 0, fbase, gfh)]
         for k_ in range(1, nfl):
-            bands.append((base + hs * k_, base + hs * (k_ + 1) if k_ < nfl - 1 else e_line,
-                          "top" if (k_ == nfl - 1 and nfl >= 3) else "up", k_))
-        bands.append((e_line, 1e9, "gable", nfl - 1))
+            lo_ = gf_top + uph * (k_ - 1)
+            bands.append((lo_, lo_ + uph if k_ < nfl - 1 else e_line,
+                          "top" if (k_ == nfl - 1 and nfl >= 3) else "up", k_, lo_, uph))
+        bands.append((e_line, 1e9, "gable", nfl - 1, e_line, uph))
     for ri, ep in enumerate(ring_ep):
         n = len(ep)
         arr = np.array([(p[0], p[1]) for p in ep])
@@ -392,7 +436,7 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
             nnx, nny, nparty = seg_info[ri][ib]
             nnl = (nnx, -nny)
             next_jettied = segs[ib][2] == 1 and not nparty and ri == 0 and not is_church
-            for lo_b, hi_b, name, lvl in bands:
+            for lo_b, hi_b, name, lvl, vb_, vh_ in bands:
                 b0, b1 = max(g0, lo_b), max(g1, lo_b)
                 tt0, tt1 = min(top0, hi_b), min(top1, hi_b)
                 if tt0 <= b0 + 1e-3 and tt1 <= b1 + 1e-3:
@@ -409,7 +453,7 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
                 o = jo(lvl)
                 q0 = [l0[0] + nl[0] * o, l0[1] + nl[1] * o]
                 q1 = [l1[0] + nl[0] * o, l1[1] + nl[1] * o]
-                v = lambda y_: (y_ - base) / hs
+                v = lambda y_, vb_=vb_, vh_=vh_: (y_ - vb_) / vh_
                 sink.wall_quad(s_style, [q0[0], b0, q0[1]], [q1[0], b1, q1[1]], [q1[0], tt1, q1[1]], [q0[0], tt0, q0[1]],
                                [u0, v(b0)], [u1, v(b1)], [u1, v(tt1)], [u0, v(tt0)], col, kind)
                 if o > 0:
@@ -439,4 +483,4 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
                                [0, 0], [1, 0], [1, 0.03], [0, 0.03], [int(c_ * 0.8) for c_ in ccol], KIND_PLAIN)
             i = j
         off += n
-    return {"eave": eave, "hs": hs, "street": street_segs, "pieces": street_pieces}
+    return {"eave": eave, "hs": hs, "fbase": fbase, "street": street_segs, "pieces": street_pieces}

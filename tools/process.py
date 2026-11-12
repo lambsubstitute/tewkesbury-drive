@@ -768,7 +768,7 @@ for e in osm:
         if is_shop and res["pieces"]:
             units = shop_units(res["pieces"], shops_here, bid, listed is not None or style == STYLE_TIMBER, res["hs"])
             for u_ in units:
-                u_["y"] = round(base, 2)        # first-floor line = y + h, shared with the walls
+                u_["y"] = round(res["fbase"], 2)   # first-floor line = y + h, shared with the walls
             shopfront_out.extend(units)
         # footprints for collision / minimap / labels
         ring_local = [[round(v, 2) for v in to_local(x, y)] for x, y in poly.exterior.coords]

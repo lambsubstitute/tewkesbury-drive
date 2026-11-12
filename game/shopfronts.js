@@ -81,7 +81,9 @@ export function buildShopfronts(scene, units, groundY) {
       }
     };
 
-    const fz0 = H - (u.st === 'modern' ? 0.7 : 0.62), fz1 = H - 0.05;
+    // fascia, transom and awning scale with the height of the shop storey
+    const fas = Math.min(u.st === 'modern' ? 0.7 : 0.62, Math.max(0.36, H * 0.19));
+    const fz0 = H - fas, fz1 = H - 0.05;
     const pil = u.st === 'modern' ? 0.1 : 0.3;
     const doorW = Math.min(1.05, L * 0.3);
     const ds0 = u.d === 'c' ? L / 2 - doorW / 2 : u.d === 'l' ? pil + 0.25 : L - pil - 0.25 - doorW;
@@ -101,7 +103,7 @@ export function buildShopfronts(scene, units, groundY) {
       box(ds0 + 0.1, ds1 - 0.1, 1.0, 1.05, glassD, glassD + 0.06, hex('#c9ccd0'));    // door push bar
     } else {
       const pub = u.st === 'pub';
-      const stall = pub ? 0.75 : 0.58;
+      const stall = Math.min(pub ? 0.75 : 0.58, H * 0.2);
       // pilasters with plinths and console brackets carrying the fascia
       for (const [s0, s1] of [[0, pil], [L - pil, L]]) {
         box(s0, s1, 0, fz0, 0, 0.16, base);
@@ -119,7 +121,7 @@ export function buildShopfronts(scene, units, groundY) {
         box(s0, s1, stall, stall + 0.06, 0, glassD + 0.06, light);
       }
       // transom bar, transom lights above it, display glazing below, divided by mullions
-      const tr = fz0 - 0.5;
+      const tr = fz0 - Math.min(0.5, Math.max(0.28, H * 0.15));
       box(pil, L - pil, tr - 0.06, tr, 0, glassD + 0.05, base);
       pane(pil, L - pil, tr, fz0, glassD);
       for (const [s0, s1] of [[pil, ds0 - 0.08], [ds1 + 0.08, L - pil]]) {
@@ -146,7 +148,7 @@ export function buildShopfronts(scene, units, groundY) {
     if (u.aw) {
       const ac = u.ac || u.c, key = ac + u.aw;
       if (!awn.has(key)) awn.set(key, { p: [], uv: [], tex: awningTexture(ac, u.aw === 'stripe') });
-      const A = awn.get(key), top = fz0 - 0.02, out = 1.35, drop = 0.7, s0 = pil * 0.5, s1 = L - pil * 0.5;
+      const A = awn.get(key), top = fz0 - 0.02, out = 1.35, drop = Math.min(0.7, H * 0.2), s0 = pil * 0.5, s1 = L - pil * 0.5;
       const push = (pts, uvs) => { for (const i of [0, 1, 2, 0, 2, 3]) { A.p.push(...pts[i]); A.uv.push(...uvs[i]); } };
       push([P(s0, top, 0.25), P(s1, top, 0.25), P(s1, top - drop, out), P(s0, top - drop, out)], [[0, 1], [(s1 - s0) / 1.3, 1], [(s1 - s0) / 1.3, 0.15], [0, 0.15]]);
       push([P(s0, top - drop, out), P(s1, top - drop, out), P(s1, top - drop - 0.22, out), P(s0, top - drop - 0.22, out)], [[0, 0.15], [(s1 - s0) / 1.3, 0.15], [(s1 - s0) / 1.3, 0], [0, 0]]);
