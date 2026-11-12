@@ -35,7 +35,30 @@ OSM has no street lamps mapped in Tewkesbury, so lamp posts are generated every 
 
 Pavements are raised 150 mm with kerb stones and 600 mm slab paving, and the car rides up onto them. Which sides of a street have one comes from the OSM `sidewalk=*` tags, plus separately mapped `footway=sidewalk` ways. Untagged streets get pavements on both sides when they are within 25 m of buildings. Where a frontage stands within 5.5 m of the kerb, the pavement runs right up to the building. Narrow leftover strips between kerb, footway and frontage are filled, as are junction corners in the town centre. Bus stops get a yellow bus-stop box on the carriageway.
 
-Google Street View isn't used: its terms don't allow deriving map data from its imagery. Mapillary (openly licensed street-level photos) is the usable alternative if more detail is needed.
+Google Street View isn't used: its terms don't allow deriving map data from its imagery.
+
+### Mapillary (`tools/mapillary.py`, `data/mapillary/`)
+
+Mapillary's computer-vision detections from 7,672 street-level photos (2020–2025) add real positions for:
+
+- 146 street lights
+- 119 bins
+- 87 telegraph poles
+- 43 street cabinets
+- 46 traffic-signal heads
+- 12 benches
+- 287 traffic signs (regulatory roundels, warning triangles, information panels, speed limits)
+
+Anything within a few metres of the same object already in OSM is skipped. Detections in the carriageway are pulled back onto the pavement edge. A generated lamp is dropped wherever a detected one stands within 20 m, so lamps are real where Mapillary has seen them and generated elsewhere. Detected positions are triangulated from photos and can be a few metres out.
+
+To refetch, save a Mapillary access token (Dashboard, Developers) to `~/.mapillary_token` and run:
+
+```bash
+.venv/bin/python tools/mapillary.py features
+.venv/bin/python tools/mapillary.py images
+```
+
+Street objects © Mapillary contributors, CC BY-SA 4.0.
 
 ### Wall materials
 

@@ -799,7 +799,96 @@ for e in street_osm:
         if kind:
             furn.append({"t": kind, "x": round(lx, 2), "z": round(lz, 2), "r": yaw_local(tx, ty), "w": w})
 
-# lamp posts: OSM has none mapped here, so place them along built-up streets every ~30 m (alternating sides)
+# ---- Mapillary: objects detected in street-level photos (CC BY-SA), if fetched (tools/mapillary.py)
+MLY_DIR = os.path.join(DATA, "mapillary")
+mly_feats, mly_signs, mly_cover = [], [], None
+if os.path.exists(os.path.join(MLY_DIR, "map_features.json")):
+    mly_feats = json.load(open(os.path.join(MLY_DIR, "map_features.json")))
+    mly_signs = [f_ for f_ in mly_feats if f_.get("object_value", "").startswith(("regulatory--", "warning--", "information--", "complementary--"))]
+if os.path.exists(os.path.join(MLY_DIR, "images.json")):
+    _ip = []
+    for im in json.load(open(os.path.join(MLY_DIR, "images.json"))):
+        lon, lat = im["geometry"]["coordinates"]
+        _ip.append(Point(*TF.transform(lon, lat)))
+    if _ip:
+        mly_cover = shapely.union_all([p_.buffer(25) for p_ in _ip])   # streets photographed within 25 m
+        shapely.prepare(mly_cover)
+MLY_KIND = {"object--street-light": "lamp", "object--bench": "bench", "object--trash-can": "bin",
+            "object--mailbox": "postbox", "object--phone-booth": "phone", "object--junction-box": "cabinet",
+            "object--bike-rack": "bikes", "object--support--utility-pole": "upole", "object--parking-meter": "meter",
+            "object--traffic-light--general-upright": "sighead", "object--traffic-light--pedestrians": "sighead",
+            "object--traffic-light--general-horizontal": "sighead"}
+mly_counts = {}
+
+
+def near_same(kind, x, z, r):
+    return any(f["t"] == kind and (f["x"] - x) ** 2 + (f["z"] - z) ** 2 < r * r for f in furn)
+
+
+for f_ in mly_feats:
+    v_ = f_.get("object_value", "")
+    kind = MLY_KIND.get(v_) or ("sighead" if v_.startswith("object--traffic-light--") else None)
+    if not kind:
+        continue
+    lon, lat = f_["geometry"]["coordinates"]
+    E, N = TF.transform(lon, lat)
+    if not (E_MIN < E < E_MIN + SIZE and N_MAX - SIZE < N < N_MAX) or shapely.contains_xy(ALL_B, E, N):
+        continue
+    d, w, (tx, ty), (qx, qy) = road_dir(E, N)
+    # detections are triangulated from photos (a few metres' error): pull roadside objects out of the
+    # carriageway onto the pavement edge
+    if kind in ("lamp", "upole", "sighead", "meter", "postbox", "bin") and d < w / 2 + 0.6:
+        nx, ny = E - qx, N - qy
+        nl = math.hypot(nx, ny)
+        if nl < 1e-3:
+            nx, ny = ty, -tx
+            nl = 1.0
+        E, N = qx + nx / nl * (w / 2 + 0.6), qy + ny / nl * (w / 2 + 0.6)
+    lx, lz = to_local(E, N)
+    if near_same(kind, lx, lz, 6 if kind in ("bench", "bin", "postbox", "phone", "cabinet", "bikes", "sighead") else 3):
+        continue
+    if kind == "sighead" and any(f["t"] in ("signals", "pelican") and (f["x"] - lx) ** 2 + (f["z"] - lz) ** 2 < 144 for f in furn):
+        continue   # already have signal poles from the OSM crossing / junction node
+    r = yaw_local(qx - E, qy - N)
+    furn.append({"t": kind, "x": round(lx, 2), "z": round(lz, 2), "r": r, "src": "mly"})
+    mly_counts[kind] = mly_counts.get(kind, 0) + 1
+
+# traffic signs: post + plate shaped by category (regulatory roundel / warning triangle / information panel)
+for f_ in mly_signs:
+    v = f_.get("object_value", "")
+    if not v or v.startswith("other-sign"):
+        continue
+    lon, lat = f_["geometry"]["coordinates"]
+    E, N = TF.transform(lon, lat)
+    if not (E_MIN < E < E_MIN + SIZE and N_MAX - SIZE < N < N_MAX) or shapely.contains_xy(ALL_B, E, N):
+        continue
+    d, w, (tx, ty), (qx, qy) = road_dir(E, N)
+    if d > 25:
+        continue
+    if d < w / 2 + 0.5:
+        nx, ny = E - qx, N - qy
+        nl = math.hypot(nx, ny) or 1.0
+        E, N = qx + nx / nl * (w / 2 + 0.5), qy + ny / nl * (w / 2 + 0.5)
+    cat = "warn" if v.startswith("warning") else "reg" if v.startswith(("regulatory", "complementary")) else "info"
+    sub = "speed" if "maximum-speed-limit" in v else "noentry" if "no-entry" in v else "stop" if "stop" in v.split("--")[1] else ""
+    ad = f_.get("aligned_direction")
+    r = yaw_local(math.sin(math.radians(ad)), math.cos(math.radians(ad))) if ad is not None else yaw_local(-tx, -ty)
+    # the plate faces the traffic it is for, i.e. opposite to the direction that traffic travels
+    lx, lz = to_local(E, N)
+    rec = {"t": "tsign", "x": round(lx, 2), "z": round(lz, 2), "r": r, "c": cat}
+    if sub:
+        rec["s"] = sub
+        if sub == "speed":
+            try:
+                rec["n"] = int(v.split("maximum-speed-limit-")[1].split("--")[0])
+            except ValueError:
+                pass
+    furn.append(rec)
+    mly_counts["tsign"] = mly_counts.get("tsign", 0) + 1
+print("mapillary added", mly_counts, "coverage", "yes" if mly_cover is not None else "none")
+
+# lamp posts: OSM has none mapped; on streets Mapillary has photographed, its detected street lights are
+# used instead. Elsewhere, generate one every ~30 m along built-up streets (alternating sides).
 LAMP_ROADS = {"primary", "secondary", "tertiary", "residential", "unclassified", "living_street", "primary_link"}
 lamps = 0
 lamp_pts = []
@@ -821,6 +910,8 @@ for rd in roads_out:
         x, z = b[0] + nx * off, b[1] + nz * off
         E, N = x + E0, N0 - z
         if shapely.contains_xy(ALL_B, E, N) or not ALL_B.distance(Point(E, N)) < 30:
+            continue
+        if any(f_["t"] == "lamp" and f_.get("src") == "mly" and (f_["x"] - x) ** 2 + (f_["z"] - z) ** 2 < 400 for f_ in furn):
             continue
         if any((x - px) ** 2 + (z - pz) ** 2 < 100 for px, pz in lamp_pts[-40:]):
             continue
