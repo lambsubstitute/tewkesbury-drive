@@ -8,8 +8,11 @@ const bar = document.querySelector('#bar i');
 let loaded = 0;
 const FILES = 37;
 const tick = () => { loaded++; bar.style.width = `${Math.min(100, loaded / FILES * 100)}%`; };
-const bin = async (f, T) => { const b = await (await fetch(D + f)).arrayBuffer(); tick(); return new T(b); };
-const json = async (f) => { const j = await (await fetch(D + f)).json(); tick(); return j; };
+// every data file carries the map build stamp, so an updated map never mixes with cached old files
+const BUILD = (await (await fetch(D + 'meta.json', { cache: 'no-store' })).json()).build || '';
+const V = (f) => D + f + (BUILD ? `?v=${BUILD}` : '');
+const bin = async (f, T) => { const b = await (await fetch(V(f))).arrayBuffer(); tick(); return new T(b); };
+const json = async (f) => { const j = await (await fetch(V(f))).json(); tick(); return j; };
 
 const [terrMeta, terrH, driveH, kindG, roads, foots, water, trees, meta, signs, street] = await Promise.all([
   json('terrain.json'), bin('terrain.bin', Uint16Array), bin('drive.bin', Uint16Array), bin('kind.bin', Uint8Array),
@@ -129,7 +132,7 @@ const roadTex = (marked) => canvasTex(64, 256, (x, w, h) => {
   g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   g.setIndex(new THREE.BufferAttribute(idx, 1));
   g.computeVertexNormals();
-  const tex = new THREE.TextureLoader().load(D + 'ground.jpg', tick);
+  const tex = new THREE.TextureLoader().load(V('ground.jpg'), tick);
   tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95 }));
   m.receiveShadow = true;
@@ -609,6 +612,12 @@ function updateCamera(dt) {
   } else if (camMode === 1) {
     want = new THREE.Vector3(S.x + fx * 0.2, S.y + 1.25, S.z + fz * 0.2);
     look = new THREE.Vector3(S.x + fx * 20, S.y + 1.0, S.z + fz * 20);
+  } else if (camMode === 4 && window.__pose) {
+    // fixed pose (used to line the view up with a real street photo)
+    const P = window.__pose;
+    want = new THREE.Vector3(P.x, terrainY(P.x, P.z) + (P.h ?? 2.2), P.z);
+    look = new THREE.Vector3(P.x + Math.sin(P.yaw) * 20, want.y + Math.tan(P.pitch ?? 0.05) * 20, P.z - Math.cos(P.yaw) * 20);
+    camera.fov = P.fov ?? 60; camera.updateProjectionMatrix();
   } else if (camMode === 3) {
     want = new THREE.Vector3(S.x - fx * 110, S.y + 140, S.z - fz * 110);
     look = new THREE.Vector3(S.x + fx * 30, S.y, S.z + fz * 30);
@@ -616,8 +625,8 @@ function updateCamera(dt) {
     want = new THREE.Vector3(S.x - fx * 24, S.y + 34, S.z - fz * 24);
     look = new THREE.Vector3(S.x + fx * 6, S.y, S.z + fz * 6);
   }
-  const k = camMode === 1 || !camInit ? 1 : 1 - Math.exp(-dt * 6);
-  camPos.lerp(want, k); camLook.lerp(look, camMode === 1 || !camInit ? 1 : 1 - Math.exp(-dt * 10));
+  const k = camMode === 1 || camMode === 4 || !camInit ? 1 : 1 - Math.exp(-dt * 6);
+  camPos.lerp(want, k); camLook.lerp(look, camMode === 1 || camMode === 4 || !camInit ? 1 : 1 - Math.exp(-dt * 10));
   camInit = true;
   camera.position.copy(camPos);
   if (shake > 0) { camera.position.x += (Math.random() - 0.5) * shake; camera.position.y += (Math.random() - 0.5) * shake; shake = Math.max(0, shake - dt * 2); }

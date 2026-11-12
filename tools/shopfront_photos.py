@@ -89,7 +89,7 @@ for si, (score, iid, diff, year, dist) in picks:
     cx = W * (0.5 + diff / HFOV)
     half = W * 0.36
     box = (int(max(0, cx - half)), int(H * 0.12), int(min(W, cx + half)), int(H * 0.82))
-    crops.append((si, im.crop(box), year))
+    crops.append((si, im.crop(box), year, iid))
 
 C, R, TW, TH = 3, 3, 400, 330
 font = ImageFont.load_default(size=13)
@@ -97,14 +97,14 @@ n = 0
 for s0 in range(0, len(crops), C * R):
     sheet = Image.new("RGB", (C * TW, R * TH), (30, 30, 30))
     d = ImageDraw.Draw(sheet)
-    for k, (si, crop, year) in enumerate(crops[s0:s0 + C * R]):
+    for k, (si, crop, year, iid) in enumerate(crops[s0:s0 + C * R]):
         x, y = (k % C) * TW, (k // C) * TH
         c = crop.copy()
         c.thumbnail((TW - 6, TH - 30))
         sheet.paste(c, (x + 3, y + 26))
         d.rectangle([x, y, x + TW, y + 24], fill=(0, 0, 0))
         d.text((x + 4, y + 5), f"#{n} {signs[si]['n'][:30]} ({year})", fill=(255, 230, 120), font=font)
-        index.append({"n": n, "sign": si, "name": signs[si]["n"], "year": year})
+        index.append({"n": n, "sign": si, "name": signs[si]["n"], "year": year, "img": iid})
         n += 1
     sheet.save(os.path.join(OUT_SHEETS, f"shops_{s0 // (C * R):02d}.jpg"), quality=85)
 json.dump(index, open(os.path.join(D, "shopfront_index.json"), "w"), indent=0)

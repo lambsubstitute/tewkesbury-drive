@@ -13,6 +13,7 @@ from scipy.spatial import Delaunay
 import shapely
 from shapely.geometry import Polygon, MultiPolygon, LineString, box, Point
 from shapely.ops import unary_union
+import shapely.ops
 from PIL import Image, ImageDraw, ImageFilter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import buildgeo
@@ -274,6 +275,36 @@ def pix_mask(poly):
     return rr[inside], cc[inside], Ex[inside], Ny[inside]
 
 
+def carve_open_ground(poly):
+    """Remove parts of an OSM outline where LIDAR shows open ground (courtyards, yards, gaps between
+    houses that OSM drew as one block). Returns the trimmed polygon (or the original if trimming
+    would remove most of it, e.g. a building LIDAR predates)."""
+    pm = pix_mask(poly)
+    if pm is None or len(pm[0]) < 20:
+        return poly, 0.0
+    rows, cols = pm[0], pm[1]
+    r0, c0 = rows.min(), cols.min()
+    grid = np.zeros((rows.max() - r0 + 1, cols.max() - c0 + 1), bool)
+    grid[rows - r0, cols - c0] = (dsm_s[rows, cols] - dtm[rows, cols]) < 1.8
+    grid = ndimage.binary_opening(grid, np.ones((3, 3), bool))
+    comp, n = ndimage.label(grid)
+    holes = []
+    for ci in range(1, n + 1):
+        rr, cc = np.nonzero(comp == ci)
+        if len(rr) < 12:
+            continue
+        x0 = E_MIN + cc + c0
+        y1 = N_MAX - (rr + r0)
+        holes.append(shapely.union_all(shapely.box(x0, y1 - 1, x0 + 1, y1)))
+    if not holes:
+        return poly, 0.0
+    open_ = shapely.union_all(holes).buffer(0.35, join_style="mitre").buffer(-0.35, join_style="mitre").simplify(0.4)
+    trimmed = poly.difference(open_)
+    if trimmed.is_empty or trimmed.area < 0.4 * poly.area:
+        return poly, 0.0
+    return trimmed, poly.area - trimmed.area
+
+
 def densify_ring(coords, step=1.0):
     out = []
     for (x0, y0), (x1, y1) in zip(coords[:-1], coords[1:]):
@@ -509,9 +540,15 @@ for e in osm:
     if g is None:
         continue
     g = g.intersection(TILE)
-    for poly in polys_of(g):
-        if poly.area < 6:
+    trimmed_parts = []
+    for poly0 in polys_of(g):
+        if poly0.area < 6:
             continue
+        t_, cut_ = carve_open_ground(poly0)
+        if cut_ > 0:
+            stats["courtyards_m2"] = stats.get("courtyards_m2", 0) + round(cut_)
+        trimmed_parts += [p_ for p_ in polys_of(t_) if p_.area >= 6]
+    for poly in trimmed_parts:
         bid = f"{e['type']}{e['id']}"
         btype = t.get("building", "yes")
         name = t.get("name")
@@ -1028,6 +1065,19 @@ if water_u is not None:
     pave = pave.difference(water_u)
 pave = pave.intersection(TILE.buffer(-2)).simplify(0.15)
 pave_polys = [p_ for p_ in polys_of(pave) if p_.area > 1.0]
+# drop paved "islands" left between road arms: small, nowhere near a building, ringed mostly by kerb
+_re = ROADS_U.buffer(0.1)
+def _is_island(p_):
+    if p_.area > 250 or p_.distance(ALL_B) < 3:
+        return False
+    ring = p_.exterior
+    return ring.intersection(_re).length > 0.6 * ring.length
+_n0 = len(pave_polys)
+road_islands = [p_ for p_ in pave_polys if _is_island(p_)]
+pave_polys = [p_ for p_ in pave_polys if not _is_island(p_)]
+print("pavement islands removed:", _n0 - len(pave_polys))
+PAVE_U = shapely.union_all(pave_polys)
+shapely.prepare(PAVE_U)
 print("pavement polygons", len(pave_polys), "area m2", round(sum(p_.area for p_ in pave_polys)))
 # triangles (2D, local coords) + kerb edges (pavement edges lying on a carriageway edge)
 road_edge = ROADS_U.boundary
@@ -1063,6 +1113,56 @@ for f in furn:
     cx, cy = qx + nx * (w / 2 - 1.3), qy + ny * (w / 2 - 1.3)
     lx, lz = to_local(cx, cy)
     furn.append({"t": "busbay", "x": round(lx, 2), "z": round(lz, 2), "r": yaw_local(tx, ty), "w": 2.4})
+# ---- crossing poles (Belisha beacons / signal poles) as their own objects, so they get checked below too
+for f in list(furn):
+    if f["t"] not in ("zebra", "pelican", "signals"):
+        continue
+    cx_, cz_ = math.cos(f["r"]), -math.sin(f["r"])         # across the road, local frame
+    for sgn in (-1, 1):
+        o = sgn * (f["w"] / 2 + 0.7)
+        furn.append({"t": "beacon" if f["t"] == "zebra" else "signal",
+                     "x": round(f["x"] + cx_ * o, 2), "z": round(f["z"] + cz_ * o, 2),
+                     "r": round(f["r"] + (math.pi if (sgn > 0 and f["t"] != "zebra") else 0), 3)})
+
+# ---- keep every standing object off the carriageway: push it to the nearest kerb + 0.6 m, or drop it
+ROAD_KEEP_OUT = ROADS_U.buffer(0.35)
+ROAD_EDGE_OUT = ROADS_U.buffer(0.6)
+shapely.prepare(ROAD_KEEP_OUT)
+MARKINGS = {"zebra", "pelican", "signals", "busbay"}
+from collections import Counter
+kept, moved_n, dropped = [], 0, Counter()
+for f in furn:
+    if f["t"] in MARKINGS or f["t"] == "memorial":
+        kept.append(f)
+        continue
+    E, N = f["x"] + E0, N0 - f["z"]
+    if shapely.contains_xy(ROAD_KEEP_OUT, E, N):
+        pt = Point(E, N)
+        q = shapely.ops.nearest_points(ROAD_EDGE_OUT.exterior if ROAD_EDGE_OUT.geom_type == "Polygon" else ROAD_EDGE_OUT.boundary, pt)[0]
+        if q.distance(pt) > 7 or shapely.contains_xy(ALL_B, q.x, q.y) or shapely.contains_xy(ROAD_KEEP_OUT, q.x, q.y):
+            dropped[f["t"]] += 1
+            continue
+        f["x"], f["z"] = [round(v, 2) for v in to_local(q.x, q.y)]
+        moved_n += 1
+    # where there is pavement nearby, a street object belongs on it, not on a verge or island
+    E, N = f["x"] + E0, N0 - f["z"]
+    pt = Point(E, N)
+    if not shapely.contains_xy(PAVE_U, E, N) and ROADS_U.distance(pt) < 2.5:
+        near = PAVE_U.distance(pt)
+        if near < 9:
+            q = shapely.ops.nearest_points(PAVE_U, pt)[0]
+            dx_, dy_ = q.x - E, q.y - N
+            dl = math.hypot(dx_, dy_) or 1
+            q2 = (q.x + dx_ / dl * 0.4, q.y + dy_ / dl * 0.4)
+            if shapely.contains_xy(PAVE_U, *q2) and not shapely.contains_xy(ROAD_KEEP_OUT, *q2):
+                f["x"], f["z"] = [round(v, 2) for v in to_local(*q2)]
+                moved_n += 1
+            else:
+                dropped[f["t"]] += 1
+                continue
+    kept.append(f)
+furn = kept
+print("objects moved off carriageways / onto pavements:", moved_n, "dropped:", dict(dropped))
 json.dump({"furniture": furn, "barriers": barriers}, open(os.path.join(OUT, "street.json"), "w"), separators=(",", ":"))
 from collections import Counter as _C
 print("furniture", _C(f["t"] for f in furn), "barriers", len(barriers))
@@ -1141,9 +1241,24 @@ LEIS = {"park": (98, 148, 66), "pitch": (92, 154, 70), "golf_course": (100, 152,
 
 
 def fill_poly(p, col):
-    d.polygon([P(x, y) for x, y in p.exterior.coords], fill=col)
+    """Paint polygon p in col on the ground texture, leaving its holes showing whatever is underneath."""
+    if not p.interiors:
+        d.polygon([P(x, y) for x, y in p.exterior.coords], fill=col)
+        return
+    target = d._image
+    minx, miny, maxx, maxy = p.bounds
+    x0, y0 = P(minx, maxy)
+    x1, y1 = P(maxx, miny)
+    x0, y0 = max(0, int(x0) - 1), max(0, int(y0) - 1)
+    x1, y1 = min(target.size[0], int(x1) + 2), min(target.size[1], int(y1) + 2)
+    if x1 <= x0 or y1 <= y0:
+        return
+    m = Image.new("L", (x1 - x0, y1 - y0), 0)
+    md = ImageDraw.Draw(m)
+    md.polygon([(P(x, y)[0] - x0, P(x, y)[1] - y0) for x, y in p.exterior.coords], fill=255)
     for r in p.interiors:
-        d.polygon([P(x, y) for x, y in r.coords], fill=(104, 132, 70))
+        md.polygon([(P(x, y)[0] - x0, P(x, y)[1] - y0) for x, y in r.coords], fill=0)
+    target.paste(col, (x0, y0, x1, y1), m)
 
 
 layers = []
@@ -1183,6 +1298,13 @@ for p in polys_of(water_u):
     fill_poly(p, (52, 78, 82))
 for p_ in pave_polys:
     fill_poly(p_, (168, 165, 158))
+# leftover space between road arms (removed islands, narrow wedges between carriageways) reads as tarmac
+road_gaps = shapely.union_all([
+    ROADS_U.buffer(3.0, join_style="mitre").buffer(-3.0, join_style="mitre"),
+    ROADS_U.buffer(5.0, join_style="mitre").buffer(-5.0, join_style="mitre").intersection(CORR),   # wider in town
+]).difference(ROADS_U).difference(PAVE_U).difference(ALL_B)
+for p_ in road_islands + [g_ for g_ in polys_of(road_gaps) if g_.area > 0.5] + polys_of(ROADS_U):
+    fill_poly(p_, (86, 88, 90))
 for coords, hw in paths_lines:
     col = (176, 170, 158) if hw != "cycleway" else (160, 120, 110)
     d.line([P(x, y) for x, y in coords], fill=col, width=max(2, int(2.2 * sc)))
@@ -1197,5 +1319,6 @@ H, C = named_pts("High Street"), named_pts("Church Street")
 dd = np.hypot(H[:, None, 0] - C[None, :, 0], H[:, None, 1] - C[None, :, 1])
 i, j = np.unravel_index(np.argmin(dd), dd.shape)
 spawn = ((H[i] + C[j]) / 2).tolist()
-json.dump({"spawn": spawn}, open(os.path.join(OUT, "meta.json"), "w"))
+import time as _time
+json.dump({"spawn": spawn, "build": _time.strftime("%Y%m%d%H%M%S")}, open(os.path.join(OUT, "meta.json"), "w"))
 print("done")

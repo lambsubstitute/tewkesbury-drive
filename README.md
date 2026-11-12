@@ -25,7 +25,9 @@ OSM lon/lat → BNG uses the OSTN15 grid (pyproj network grids) so footprints li
 
 Each building's 1 m LIDAR surface is region-grown into flat roof facets. This works even where OSM maps a whole terrace as one outline. Each facet becomes a polygon. Shared edges are simplified as a coverage, so neighbouring facets stay watertight, and vertices are snapped onto the exact line where two roof planes meet (ridges, hips, valleys). The facets are then triangulated. Neighbouring facets at different heights get vertical step walls. Eaves overhang 0.32 m except against neighbours, and small LIDAR spikes become chimneys.
 
-Walls are split into ground floor, upper storeys and gable. Storey height comes from the eave height, and window bays are spaced evenly per wall. Party walls get no windows. Ground floors of buildings with an OSM shop, café, pub or office facing a street become shopfronts, with a fascia sign showing the business's OSM name.
+Patches inside an OSM outline where the LIDAR shows open ground (12 m² or more) are cut out, so courtyards and yards that OSM drew inside a block stay open. `tools/roof_check.py` rasterises the finished roofs and compares them with the LIDAR surface. The current result is a 0.21 m area-weighted median error, with 10% of roof area more than 1 m off, mostly at edges and steps.
+
+Walls are split into ground floor, upper storeys and gable. Timber-framed buildings get jettied upper storeys, each oversailing the one below by 0.22 m, plus deeper eaves. Top storeys get shorter windows than the floors below, and brick, rendered and stone fronts get a cornice at the eaves. Storey height comes from the eave height, and window bays are spaced evenly per wall. Party walls get no windows. Ground floors of buildings with an OSM shop, café, pub or office facing a street become shopfronts, with a fascia sign showing the business's OSM name.
 
 ### Street level (`game/street.js`, `data/osm_street.json`)
 

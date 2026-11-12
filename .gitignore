@@ -7,3 +7,4 @@ data/*.tif
 data/commons/
 data/le.html
 data/mly_thumbs/
+data/roof_model_raster.npy

@@ -13,7 +13,9 @@ from scipy import ndimage
 
 import roofseg
 
-KIND_WINDOW, KIND_PLAIN, KIND_SHOP = 0, 1, 2
+KIND_WINDOW, KIND_PLAIN, KIND_SHOP, KIND_TOP = 0, 1, 2, 3
+JETTY = 0.22          # timber-frame upper storeys oversail the one below by this much (m)
+CORNICE_STYLES = (0, 4, 5)
 OVERHANG = 0.32
 LO = 2.3
 
@@ -129,10 +131,11 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
 
     # ---------------------------------------------------------- facet polygons
     # roof area = footprint + eaves overhang where it doesn't run into a neighbour
-    nb_idx = ctx["B_TREE"].query(poly.buffer(OVERHANG + 0.5), predicate="intersects")
+    nb_idx = ctx["B_TREE"].query(poly.buffer(0.62 + 0.5), predicate="intersects")
     neigh = [ctx["B_LIST"][i] for i in nb_idx]
     neigh = [g_ for g_ in neigh if g_.intersection(poly).area < 0.5 * min(g_.area, poly.area)]
-    zone = poly.buffer(OVERHANG, join_style="mitre", mitre_limit=2.0)
+    ovh = 0.62 if style == 1 else OVERHANG
+    zone = poly.buffer(ovh, join_style="mitre", mitre_limit=2.0)
     if neigh:
         zone = zone.difference(shapely.union_all(neigh))
     roof_area = shapely.union_all([poly, zone]).buffer(0)
@@ -309,8 +312,15 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
     off = 0
     gf_top = base + hs
     e_line = base + eave
-    bands = [(-1e9, e_line, "gf"), (e_line, 1e9, "gable")] if nfl == 1 else \
-        [(-1e9, gf_top, "gf"), (gf_top, e_line, "up"), (e_line, 1e9, "gable")]
+    # one band per storey: (bottom, top, name, storey index)
+    if nfl == 1:
+        bands = [(-1e9, e_line, "gf", 0), (e_line, 1e9, "gable", 0)]
+    else:
+        bands = [(-1e9, gf_top, "gf", 0)]
+        for k_ in range(1, nfl):
+            bands.append((base + hs * k_, base + hs * (k_ + 1) if k_ < nfl - 1 else e_line,
+                          "top" if (k_ == nfl - 1 and nfl >= 3) else "up", k_))
+        bands.append((e_line, 1e9, "gable", nfl - 1))
     for ri, ep in enumerate(ring_ep):
         n = len(ep)
         arr = np.array([(p[0], p[1]) for p in ep])
@@ -373,7 +383,14 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
             top0, top1 = tops[ia], tops[ib]
             g0, g1 = float(g[ia]), float(g[ib])
             l0, l1 = loc(x0, y0), loc(x1, y1)
-            for lo_b, hi_b, name in bands:
+            nxs, nys, _ = seg_info[ri][ia]
+            nl = (nxs, -nys)                                   # outward normal in local (x, z)
+            jettied = s_style == 1 and not party and ri == 0 and not is_church
+            jo = lambda k_: min(JETTY * k_, 2 * JETTY) if jettied else 0.0
+            nnx, nny, nparty = seg_info[ri][ib]
+            nnl = (nnx, -nny)
+            next_jettied = segs[ib][2] == 1 and not nparty and ri == 0 and not is_church
+            for lo_b, hi_b, name, lvl in bands:
                 b0, b1 = max(g0, lo_b), max(g1, lo_b)
                 tt0, tt1 = min(top0, hi_b), min(top1, hi_b)
                 if tt0 <= b0 + 1e-3 and tt1 <= b1 + 1e-3:
@@ -384,11 +401,41 @@ def build(ctx, poly, bid, base, ipm, use_lidar, eave_guess, style, wc, rc, is_ch
                 elif name == "gf" and is_shop and street:
                     sp = shop_paint((x0 + x1) / 2, (y0 + y1) / 2) if callable(shop_paint) else shop_paint
                     kind, col = KIND_SHOP, list(sp)
+                elif name == "top":
+                    kind, col = KIND_TOP, list(s_col)
                 else:
                     kind, col = KIND_WINDOW, list(s_col)
+                o = jo(lvl)
+                q0 = [l0[0] + nl[0] * o, l0[1] + nl[1] * o]
+                q1 = [l1[0] + nl[0] * o, l1[1] + nl[1] * o]
                 v = lambda y_: (y_ - base) / hs
-                sink.wall_quad(s_style, [l0[0], b0, l0[1]], [l1[0], b1, l1[1]], [l1[0], tt1, l1[1]], [l0[0], tt0, l0[1]],
+                sink.wall_quad(s_style, [q0[0], b0, q0[1]], [q1[0], b1, q1[1]], [q1[0], tt1, q1[1]], [q0[0], tt0, q0[1]],
                                [u0, v(b0)], [u1, v(b1)], [u1, v(tt1)], [u0, v(tt0)], col, kind)
+                if o > 0:
+                    # jetty soffit under this storey, from the storey below's face out to this one
+                    if lvl >= 1 and name != "gable" and b0 > g0 + 0.5:
+                        po = jo(lvl - 1)
+                        p0 = [l0[0] + nl[0] * po, l0[1] + nl[1] * po]
+                        p1 = [l1[0] + nl[0] * po, l1[1] + nl[1] * po]
+                        sink.wall_quad(1, [p0[0], b0, p0[1]], [p1[0], b1, p1[1]], [q1[0], b1, q1[1]], [q0[0], b0, q0[1]],
+                                       [0, 0], [1, 0], [1, 0.05], [0, 0.05], [70, 56, 44], KIND_PLAIN)
+                    # close the corner gap against the next run of wall
+                    o2 = min(JETTY * lvl, 2 * JETTY) if next_jettied else 0.0
+                    r1 = [l1[0] + nnl[0] * o2, l1[1] + nnl[1] * o2]
+                    if abs(r1[0] - q1[0]) + abs(r1[1] - q1[1]) > 0.02:
+                        sink.wall_quad(s_style, [q1[0], b1, q1[1]], [r1[0], b1, r1[1]], [r1[0], tt1, r1[1]], [q1[0], tt1, q1[1]],
+                                       [0, v(b1)], [0.08, v(b1)], [0.08, v(tt1)], [0, v(tt1)], list(s_col), KIND_PLAIN)
+            # cornice along the eaves of brick / rendered / stone fronts
+            if s_style in CORNICE_STYLES and not party and ri == 0 and not is_church and nfl >= 2 \
+                    and top0 >= e_line - 0.02 and top1 >= e_line - 0.02:
+                cz0, cz1 = e_line - 0.26, e_line
+                ccol = [236, 232, 224] if s_style != 4 else [226, 214, 192]
+                c0_ = [l0[0] + nl[0] * 0.13, l0[1] + nl[1] * 0.13]
+                c1_ = [l1[0] + nl[0] * 0.13, l1[1] + nl[1] * 0.13]
+                sink.wall_quad(0, [c0_[0], cz0, c0_[1]], [c1_[0], cz0, c1_[1]], [c1_[0], cz1, c1_[1]], [c0_[0], cz1, c0_[1]],
+                               [0, 0], [1, 0], [1, 0.08], [0, 0.08], ccol, KIND_PLAIN)
+                sink.wall_quad(0, [l0[0], cz0, l0[1]], [l1[0], cz0, l1[1]], [c1_[0], cz0, c1_[1]], [c0_[0], cz0, c0_[1]],
+                               [0, 0], [1, 0], [1, 0.03], [0, 0.03], [int(c_ * 0.8) for c_ in ccol], KIND_PLAIN)
             i = j
         off += n
     return {"eave": eave, "hs": hs, "street": street_segs}
