@@ -1,5 +1,5 @@
-// Facade texture atlases. Each wall style is a 3-cell atlas (768x256):
-//   cell 0 = one window bay (3.2 m wide x one storey), cell 1 = plain wall, cell 2 = shopfront.
+// Facade texture atlases. Each wall style is a 4-cell atlas (1024x256):
+//   cell 0 = one window bay (3.2 m wide x one storey), cell 1 = plain wall, cell 2 = shopfront, cell 3 = top-storey window.
 // Vertex colours tint the atlas, so walls/infill/fascias are drawn near-white where they should take the
 // building's real colour, and dark glass / black timbers stay dark.
 import * as THREE from 'three';
@@ -107,12 +107,21 @@ function shopfront(x) {
   x.fillStyle = '#c8b070'; x.fillRect(230, 180, 4, 14);
 }
 
-function atlas(bgFn, winFn, shopFn = shopfront) {
-  const c = document.createElement('canvas'); c.width = CW * 3; c.height = CH;
+// cell 3: top storey - the same window drawn about two-thirds the height (typical Georgian top floor)
+function atlas(bgFn, winFn, shopFn = shopfront, topFn = null) {
+  const c = document.createElement('canvas'); c.width = CW * 4; c.height = CH;
   const x = c.getContext('2d');
   bgFn(x); winFn(x);
   x.save(); x.translate(CW, 0); bgFn(x); x.restore();
   x.save(); x.translate(CW * 2, 0); shopFn(x); x.restore();
+  x.save(); x.translate(CW * 3, 0); bgFn(x);
+  if (topFn) topFn(x);
+  else {   // scale the window vertically about its sill
+    const t = document.createElement('canvas'); t.width = CW; t.height = CH;
+    const tx = t.getContext('2d'); winFn(tx);
+    x.drawImage(t, 0, 0, CW, CH, 0, CH * 0.28, CW, CH * 0.66);
+  }
+  x.restore();
   return c;
 }
 
@@ -146,8 +155,8 @@ export function facadeMaterial(map) {
       .replace('#include <map_fragment>', `
 #ifdef USE_MAP
   vec2 fu = fract(vMapUv);
-  vec2 cuv = vec2((fu.x * 0.97 + 0.015 + floor(vKind + 0.5)) / 3.0, fu.y * 0.98 + 0.01);
-  vec2 sc = vec2(0.3333, 1.0);
+  vec2 cuv = vec2((fu.x * 0.97 + 0.015 + floor(vKind + 0.5)) / 4.0, fu.y * 0.98 + 0.01);
+  vec2 sc = vec2(0.25, 1.0);
   vec4 sampledDiffuseColor = textureGrad(map, cuv, dFdx(vMapUv) * sc, dFdy(vMapUv) * sc);
   diffuseColor *= sampledDiffuseColor;
 #endif`);

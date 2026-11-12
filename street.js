@@ -98,13 +98,13 @@ export function buildStreet(scene, data, terrainY) {
       if (t === 'zebra') {
         const n = Math.max(5, Math.round(w / 0.55)) | 1;
         for (let i = 0; i < n; i++) { const o = -w / 2 + (i + 0.5) * w / n; if (i % 2 === 0) quad(x + cx * o, z + cz * o, r, 2.6, w / n, y); }
-        for (const s of [-1, 1]) { const o = s * (w / 2 + 0.8); put('beacon', x + cx * o, z + cz * o, r); posts.push([x + cx * o, z + cz * o, 0.2]); }
+        // Belisha beacons arrive as their own (kerb-checked) objects
       } else {
         if (t === 'pelican') for (const s of [-1.6, 1.6]) {
           const sx = Math.sin(r) * s, sz = Math.cos(r) * s;
           for (let i = 0; i < 8; i++) { const o = -w / 2 + (i + 0.5) * w / 8; quad(x + sx + cx * o, z + sz + cz * o, r, 0.12, w / 16, y); }
         }
-        for (const s of [-1, 1]) { const o = s * (w / 2 + 0.7); put('signal', x + cx * o, z + cz * o, s > 0 ? r + Math.PI : r); posts.push([x + cx * o, z + cz * o, 0.2]); }
+        // signal poles arrive as their own (kerb-checked) objects
       }
       continue;
     }
@@ -123,7 +123,7 @@ export function buildStreet(scene, data, terrainY) {
     if (!KINDS[t]) continue;
     put(t, x, z, r);
     if (t === 'busstop' && f.s) put('shelter', x, z, r);
-    if (['lamp', 'postbox', 'phone', 'busstop', 'memorial', 'bollard', 'upole', 'sighead', 'meter'].includes(t)) posts.push([x, z, t === 'phone' ? 0.6 : t === 'memorial' ? 0.8 : 0.25]);
+    if (['lamp', 'postbox', 'phone', 'busstop', 'memorial', 'bollard', 'upole', 'sighead', 'meter', 'beacon', 'signal'].includes(t)) posts.push([x, z, t === 'phone' ? 0.6 : t === 'memorial' ? 0.8 : 0.25]);
   }
 
   for (const [kind, mats] of Object.entries(placed)) {
